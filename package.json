@@ -1,0 +1,52 @@
+{
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "migrate:dev": "npx knex migrate:latest --env development --cwd ./server -x ts",
+    "migrate:prod": "npx knex migrate:latest --env production --cwd ./server -x ts",
+    "rollback": "npx knex migrate:rollback --cwd ./server -x ts",
+    "rollback:all": "npx knex migrate:rollback --all --cwd ./server -x ts",
+    "migrate:list": "npx knex migrate:list --cwd ./server -x ts",
+    "lint": "eslint . --ext .vue,.js,.ts,.cjs,.mjs --fix --ignore-path .gitignore",
+    "format": "prettier . --write"
+  },
+  "devDependencies": {
+    "@headlessui/vue": "^1.6.0",
+    "@heroicons/vue": "^1.0.6",
+    "@nuxtjs/color-mode": "^3.0.3",
+    "@nuxtjs/eslint-config": "^10.0.0",
+    "@nuxtjs/eslint-module": "^3.1.0",
+    "@pinia/nuxt": "^0.1.8",
+    "@tailwindcss/aspect-ratio": "^0.4.0",
+    "@tailwindcss/forms": "^0.5.0",
+    "@tailwindcss/typography": "^0.5.2",
+    "@vueuse/nuxt": "^8.4.2",
+    "autoprefixer": "^10.4.7",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
+    "eslint": "^8.15.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-nuxt": "^3.2.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^8.7.1",
+    "nuxt": "3.0.0-rc.3",
+    "postcss": "^8.4.13",
+    "prettier": "^2.6.2",
+    "sass": "^1.51.0",
+    "tailwindcss": "^3.0.24",
+    "vite-plugin-eslint": "^1.6.0"
+  },
+  "dependencies": {
+    "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge",
+    "argon2": "^0.28.5",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^2.0.0",
+    "objection": "^3.0.1",
+    "pg": "^8.7.3",
+    "pinia": "^2.0.13"
+  }
+}
