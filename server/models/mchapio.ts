@@ -1,12 +1,10 @@
-import { nanoid } from "nanoid";
-
 import { BaseModel, IUser } from "@/server/models";
 
-class Link extends BaseModel {
+class Mchapio extends BaseModel {
   id!: number;
-  full!: string;
-  short!: string;
-  clicks?: number;
+  chapio!: string;
+  origin!: string;
+  description?: string;
   deleted?: boolean;
   user_id: IUser["id"];
   user?: IUser;
@@ -14,7 +12,7 @@ class Link extends BaseModel {
   updated_at?: string;
 
   static get tableName() {
-    return "links";
+    return "michapio";
   }
 
   $beforeInsert() {
@@ -28,13 +26,13 @@ class Link extends BaseModel {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["full", "short"],
+      required: ["chapio", "origin"],
 
       properties: {
         id: { type: "integer" },
-        full: { type: "string", minLength: 5, maxLength: 255 },
-        short: { type: "string", minLength: 3, maxLength: 8, default: nanoid(6) },
-        clicks: { type: "number", default: 0 },
+        chapio: { type: "string", minLength: 0, maxLength: 255 },
+        origin: { type: "string", minLength: 0, maxLength: 255 },
+        description: { type: "string", minLength: 0, maxLength: 1024 },
         deleted: { type: "boolean", default: false },
       },
     };
@@ -54,4 +52,4 @@ class Link extends BaseModel {
   }
 }
 
-export default Link;
+export default Mchapio;

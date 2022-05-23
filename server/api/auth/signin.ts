@@ -1,6 +1,6 @@
 import { useBody } from "h3";
 
-import { User, RefreshToken } from "@/server/models";
+import { User } from "@/server/models";
 import { comparePass, generateToken } from "@/utils";
 
 export default defineEventHandler(async event => {
@@ -19,7 +19,6 @@ export default defineEventHandler(async event => {
       return event.res.end(JSON.stringify({ message: "Invalid Password!" }));
     }
     const token = generateToken(exists);
-    const refreshToken = await RefreshToken.createToken(exists);
     event.res.statusCode = 200;
     return {
       user: {
@@ -28,7 +27,6 @@ export default defineEventHandler(async event => {
         email: exists.email,
       },
       token,
-      refresh: refreshToken,
     };
   } catch (err) {
     event.res.statusCode = 500;

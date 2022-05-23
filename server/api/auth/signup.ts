@@ -5,6 +5,7 @@ import { generateToken, hashPass } from "@/utils";
 
 export default defineEventHandler(async event => {
   const user = await useBody(event);
+  // TODO: username instead
   const exists = await User.query().findOne("email", user.email);
   if (exists) {
     event.res.statusCode = 302;

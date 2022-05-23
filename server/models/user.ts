@@ -1,12 +1,11 @@
-import { BaseModel, ILink, IRefreshToken } from "@/server/models";
+import { BaseModel, IMchapio } from "@/server/models";
 
 class User extends BaseModel {
   id!: number;
   username!: string;
-  email!: string;
+  email?: string;
   password!: string;
-  links?: ILink[];
-  refresh_token?: IRefreshToken;
+  michapio?: IMchapio[];
   created_at?: string;
   updated_at?: string;
 
@@ -25,7 +24,7 @@ class User extends BaseModel {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["username", "email", "password"],
+      required: ["username", "password"],
 
       properties: {
         id: { type: "integer" },
@@ -38,20 +37,12 @@ class User extends BaseModel {
 
   static get relationMappings() {
     return {
-      links: {
+      michapio: {
         relation: BaseModel.BelongsToOneRelation,
-        modelClass: "Link",
+        modelClass: "Mchapio",
         join: {
           from: "links.user_id",
           to: "users.id",
-        },
-      },
-      refresh_token: {
-        relation: BaseModel.HasOneRelation,
-        modelClass: "RefreshToken",
-        join: {
-          from: "users.id",
-          to: "refresh_tokens.user_id",
         },
       },
     };
