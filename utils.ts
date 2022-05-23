@@ -39,13 +39,15 @@ const comparePass = async (pass: string, hash: string): Promise<boolean> => {
 
 const generateToken = user => {
   const payload = {
-    iss: "fupi.app",
+    iss: "michapio",
     sub: {
       user_id: user.id,
       email: user.email,
     },
   };
-  return jwt.sign({ data: payload }, process.env.JWT_SECRET, { expiresIn: 3600 });
+  return jwt.sign({ data: payload }, process.env.JWT_SECRET, {
+    expiresIn: 3600,
+  });
 };
 
 const validateToken = (req: IncomingMessage, token: string) => {
@@ -58,7 +60,10 @@ const validateToken = (req: IncomingMessage, token: string) => {
   } catch (err) {
     const { TokenExpiredError } = jwt;
     if (err instanceof TokenExpiredError) {
-      return { valid: false, message: "Unauthorized! Access Token has Expired!" };
+      return {
+        valid: false,
+        message: "Unauthorized! Access Token has Expired!",
+      };
     }
     return { valid: false, message: "Unauthorized!" };
   }
@@ -208,4 +213,4 @@ const errorHandler = (err: {}, res: ServerResponse) => {
 };
 
 // module.exports = { hashPass, comparePass, generateToken, validateToken, errorHandler };
-export { hashPass, comparePass, generateToken, validateToken, errorHandler };
+export { comparePass, errorHandler, generateToken, hashPass, validateToken };
