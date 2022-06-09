@@ -2,7 +2,7 @@ import { defineNuxtConfig } from "nuxt";
 import eslintPlugin from "vite-plugin-eslint";
 import fs from "fs";
 
-const locales = fs.readdirSync("locales").map((file) => {
+const locales = fs.readdirSync("locales").map(file => {
   return { code: file.replace(".json", ""), file: file };
 });
 
@@ -60,7 +60,7 @@ export default defineNuxtConfig({
         },
       }
     }
-  }
+  },
   publicRuntimeconfig: {},
   privteRuntimeConfig: {},
   typescript: {
