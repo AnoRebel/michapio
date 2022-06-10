@@ -1,5 +1,5 @@
 import { Link } from "@/server/models";
-import { errorHandler } from "@/utils";
+import { errorHandler } from "@/server/utils";
 
 export default defineEventHandler(async event => {
   const code = event.context.params.code;
@@ -10,14 +10,20 @@ export default defineEventHandler(async event => {
     if (!exists) {
       event.res.statusCode = 404;
       return event.res.end(
-        JSON.stringify({ code: event.res.statusCode, message: "Link doesn't exist" })
+        JSON.stringify({
+          code: event.res.statusCode,
+          message: "Link doesn't exist",
+        })
       );
     }
     // TODO: Check if soft-deleted and ask to renew
     if (exists.deleted) {
       event.res.statusCode = 304;
       return event.res.end(
-        JSON.stringify({ code: event.res.statusCode, message: "Link Already Deleted" })
+        JSON.stringify({
+          code: event.res.statusCode,
+          message: "Link Already Deleted",
+        })
       );
     }
     await Link.query().findById(exists.id).patch({ deleted: true });

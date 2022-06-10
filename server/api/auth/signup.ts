@@ -1,7 +1,7 @@
 import { useBody } from "h3";
 
 import { User } from "@/server/models";
-import { generateToken, hashPass } from "@/utils";
+import { generateToken, hashPass } from "@/server/utils";
 
 export default defineEventHandler(async event => {
   const user = await useBody(event);

@@ -1,5 +1,5 @@
 import { User } from "@/server/models";
-import { errorHandler } from "@/utils";
+import { errorHandler } from "@/server/utils";
 
 export default defineEventHandler(async event => {
   const id = event.context.params.id;
@@ -17,7 +17,10 @@ export default defineEventHandler(async event => {
     }
     await User.query().deleteById(id);
     event.res.statusCode = 201;
-    return { code: event.res.statusCode, message: "Successfully Deleted User!" };
+    return {
+      code: event.res.statusCode,
+      message: "Successfully Deleted User!",
+    };
   } catch (err) {
     errorHandler(err, event.res);
   }

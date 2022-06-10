@@ -1,7 +1,7 @@
 import { useQuery } from "h3";
 
 import { Link } from "@/server/models";
-import { errorHandler } from "@/utils";
+import { errorHandler } from "@/server/utils";
 
 export default defineEventHandler(async event => {
   const { deleted } = useQuery(event);
@@ -16,7 +16,10 @@ export default defineEventHandler(async event => {
     if (!links.length) {
       event.res.statusCode = 404;
       return event.res.end(
-        JSON.stringify({ code: event.res.statusCode, message: "No Links Available!" })
+        JSON.stringify({
+          code: event.res.statusCode,
+          message: "No Links Available!",
+        })
       );
     }
     event.res.statusCode = 200;

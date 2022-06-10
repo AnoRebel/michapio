@@ -8,9 +8,9 @@ export default {
     connection: {
       host: "localhost",
       port: "5432",
-      user: process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASS,
-      database: process.env.DATABASE_NAME,
+      user: useRuntimeConfig().DATABASE_USER,
+      password: useRuntimeConfig().DATABASE_PASS,
+      database: useRuntimeConfig().DATABASE_NAME,
     },
     pool: { min: 0, max: 7 },
     migrations: {
@@ -22,7 +22,7 @@ export default {
   },
   production: {
     client: "pg",
-    connection: process.env.DATABASE_URL,
+    connection: useRuntimeConfig().DATABASE_URL,
     pool: {
       min: 2,
       max: 10,

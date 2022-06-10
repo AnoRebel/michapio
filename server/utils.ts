@@ -45,7 +45,7 @@ const generateToken = user => {
       email: user.email,
     },
   };
-  return jwt.sign({ data: payload }, process.env.JWT_SECRET, {
+  return jwt.sign({ data: payload }, useRuntimeConfig().JWT_SECRET, {
     expiresIn: 3600,
   });
 };
@@ -54,7 +54,7 @@ const validateToken = (req: IncomingMessage, token: string) => {
   try {
     const {
       data: { sub },
-    } = jwt.verify(token, process.env.JWT_SECRET);
+    } = jwt.verify(token, useRuntimeConfig().JWT_SECRET);
     req.sub = sub;
     return { valid: true };
   } catch (err) {

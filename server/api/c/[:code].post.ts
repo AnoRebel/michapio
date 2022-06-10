@@ -1,7 +1,7 @@
 import { useBody } from "h3";
 import { Link } from "@/server/models";
 import { nanoid } from "nanoid";
-import { errorHandler } from "@/utils";
+import { errorHandler } from "@/server/utils";
 
 export default defineEventHandler(async event => {
   const body = await useBody(event);

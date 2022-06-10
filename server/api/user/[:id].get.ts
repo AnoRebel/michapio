@@ -1,5 +1,5 @@
 import { User } from "@/server/models";
-import { errorHandler } from "@/utils";
+import { errorHandler } from "@/server/utils";
 
 export default defineEventHandler(async event => {
   const id = event.context.params.id;
@@ -9,7 +9,10 @@ export default defineEventHandler(async event => {
     if (!user) {
       event.res.statusCode = 404;
       return event.res.end(
-        JSON.stringify({ code: event.res.statusCode, message: `No User with this id: ${id} Found` })
+        JSON.stringify({
+          code: event.res.statusCode,
+          message: `No User with this id: ${id} Found`,
+        })
       );
     }
     console.log(user);

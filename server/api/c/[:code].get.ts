@@ -1,7 +1,7 @@
 import { useQuery } from "h3";
 
 import { Link } from "@/server/models";
-import { errorHandler } from "@/utils";
+import { errorHandler } from "@/server/utils";
 
 export default defineEventHandler(async event => {
   const code = event.context.params.code;
@@ -13,7 +13,10 @@ export default defineEventHandler(async event => {
     if (!link) {
       event.res.statusCode = 404;
       return event.res.end(
-        JSON.stringify({ code: event.res.statusCode, message: "Link doesn't exist" })
+        JSON.stringify({
+          code: event.res.statusCode,
+          message: "Link doesn't exist",
+        })
       );
     }
     return { code: event.res.statusCode, message: "Successful", data: link };

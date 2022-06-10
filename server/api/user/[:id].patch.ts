@@ -1,7 +1,7 @@
 import { useBody } from "h3";
 
 import { User } from "@/server/models";
-import { errorHandler } from "@/utils";
+import { errorHandler } from "@/server/utils";
 
 export default defineEventHandler(async event => {
   const body = await useBody(event);
@@ -20,7 +20,11 @@ export default defineEventHandler(async event => {
     }
     const user = await User.query().findById(id).patch(body).returning("*");
     event.res.statusCode = 201;
-    return { code: event.res.statusCode, message: "Successfully Updated User!", data: user };
+    return {
+      code: event.res.statusCode,
+      message: "Successfully Updated User!",
+      data: user,
+    };
   } catch (err) {
     errorHandler(err, event.res);
   }

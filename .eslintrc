@@ -1,15 +1,9 @@
 {
   "root": true,
   "extends": [
-    "@nuxtjs",
-    "eslint:recommended",
+    "@nuxtjs/eslint-config-typescript",
     "plugin:nuxt/recommended",
-    "plugin:prettier/recommended",
-    "plugin:vue/vue3-essential",
-    "@vue/typescript/recommended",
-    "@vue/prettier",
-    "@vue/eslint-config-typescript",
-    "@vue/eslint-config-prettier",
+    "plugin:prettier/recommended"
   ],
   "plugins": ["prettier"],
   "env": {
@@ -18,14 +12,14 @@
     "browser": true,
     "vue/setup-compiler-macros": true
   },
-  parserOptions: {
-    ecmaVersion: 2020,
+  "parserOptions": {
+    "ecmaVersion": 2020
   },
   "rules": {
     "no-var": "error",
     "no-unused-vars": "warn",
     "vue/no-unused-components": "warn",
-    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "no-console": "warn",
+    "no-debugger": "warn"
   }
 }

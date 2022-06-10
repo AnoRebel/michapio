@@ -1,7 +1,7 @@
 import { useBody } from "h3";
 
 import { User } from "@/server/models";
-import { errorHandler } from "@/utils";
+import { errorHandler } from "@/server/utils";
 
 export default defineEventHandler(async event => {
   const body = await useBody(event);
