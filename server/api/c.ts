@@ -1,29 +1,33 @@
 import { useQuery } from "h3";
 
-import { Link } from "@/server/models";
-import { errorHandler } from "@/server/utils";
+import { Mchapio } from "models";
+import { errorHandler } from "server/utils";
 
 export default defineEventHandler(async event => {
   const { deleted } = useQuery(event);
   console.log(deleted);
   try {
-    let links;
+    let michapio: Mchapio[];
     if (deleted) {
-      links = await Link.query().where("deleted", deleted);
+      michapio = await Mchapio.query().where("deleted", deleted);
     } else {
-      links = await Link.query();
+      michapio = await Mchapio.query();
     }
-    if (!links.length) {
+    if (!michapio.length) {
       event.res.statusCode = 404;
       return event.res.end(
         JSON.stringify({
           code: event.res.statusCode,
-          message: "No Links Available!",
+          message: "No Michapio Available!",
         })
       );
     }
     event.res.statusCode = 200;
-    return { code: event.res.statusCode, message: "Successful", data: links };
+    return {
+      code: event.res.statusCode,
+      message: "Successful",
+      data: michapio,
+    };
   } catch (err) {
     errorHandler(err, event.res);
   }

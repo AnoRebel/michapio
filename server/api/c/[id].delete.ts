@@ -1,18 +1,18 @@
-import { Link } from "@/server/models";
-import { errorHandler } from "@/server/utils";
+import { Mchapio } from "models";
+import { errorHandler } from "server/utils";
 
 export default defineEventHandler(async event => {
   const code = event.context.params.code;
   console.log("Code: ", code);
   try {
-    const exists = await Link.query().findOne("short", code);
+    const exists = await Mchapio.query().findOne("short", code);
     console.log("Exists: ", exists);
     if (!exists) {
       event.res.statusCode = 404;
       return event.res.end(
         JSON.stringify({
           code: event.res.statusCode,
-          message: "Link doesn't exist",
+          message: "Mchapio doesn't exist",
         })
       );
     }
@@ -22,13 +22,13 @@ export default defineEventHandler(async event => {
       return event.res.end(
         JSON.stringify({
           code: event.res.statusCode,
-          message: "Link Already Deleted",
+          message: "Mchapio Already Deleted",
         })
       );
     }
-    await Link.query().findById(exists.id).patch({ deleted: true });
+    await Mchapio.query().findById(exists.id).patch({ deleted: true });
     event.res.statusCode = 204;
-    return { code: event.res.statusCode, message: "Link Deleted!" };
+    return { code: event.res.statusCode, message: "Mchapio Deleted!" };
   } catch (err) {
     errorHandler(err, event.res);
   }

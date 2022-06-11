@@ -1,14 +1,48 @@
-import { defineNuxtConfig } from "nuxt";
 import fs from "fs";
+import { fileURLToPath } from "url";
+import { defineNuxtConfig } from "nuxt";
 
 const locales = fs.readdirSync("locales").map(file => {
-  return { code: file.replace(".json", ""), file: file };
+  return { code: file.replace(".json", ""), file };
 });
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
-  meta: {
-    title: "Michapio",
+  app: {
+    head: {
+      title: "Michapio",
+      titleTemplate: "%s - Michapio",
+      meta: [
+        // <meta name="viewport" content="width=device-width, initial-scale=1">
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+      ],
+      link: [
+        {
+          rel: "apple-touch-icon",
+          sizes: "180x180",
+          href: "/apple-touch-icon.png",
+        },
+        {
+          rel: "icon",
+          type: "image/png",
+          sizes: "32x32",
+          href: "/favicon-32x32.png",
+        },
+        {
+          rel: "icon",
+          type: "image/png",
+          sizes: "16x16",
+          href: "/favicon-16x16.png",
+        },
+        { rel: "manifest", href: "/site.webmanifest" },
+        { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      ],
+    },
+  },
+  router: {
+    options: {
+      linkActiveClass: "active",
+    },
   },
   vite: {
     optimizeDeps: {
@@ -23,7 +57,7 @@ export default defineNuxtConfig({
     [
       "@nuxtjs/i18n",
       {
-        locales: locales,
+        locales,
         defaultLocale: "en",
         langDir: "locales", // set the `locales` directory at source directory of your Nuxt application
         vueI18n: {
@@ -82,8 +116,18 @@ export default defineNuxtConfig({
     DATABASE_URL: process.env.NUXT_DATABASE_URL,
     JWT_SECRET: process.env.NUXT_JWT_SECRET,
   },
+  alias: {
+    server: fileURLToPath(new URL("./server", import.meta.url)),
+    models: fileURLToPath(new URL("./server/models", import.meta.url)),
+  },
   // runtimeConfig: {},
   typescript: {
     shim: false,
+    tsConfig: {
+      compilerOptions: {
+        types: ["@vueuse/nuxt", "@intlify/nuxt3", "@pinia/nuxt"],
+      },
+      include: ["server/**/*.{ts,js}", "src/**/*.{ts,js}", "src/**/*.d.ts", "src/**/*.vue"],
+    },
   },
 });

@@ -1,13 +1,13 @@
 import { useQuery } from "h3";
 
-import { User } from "@/server/models";
-import { errorHandler } from "@/server/utils";
+import { User } from "models";
+import { errorHandler } from "server/utils";
 
 export default defineEventHandler(async event => {
   const { michapio } = useQuery(event);
   console.log(michapio);
   try {
-    let users;
+    let users: User[];
     if (michapio) {
       users = await User.query().withGraphFetched("michapio");
     } else {

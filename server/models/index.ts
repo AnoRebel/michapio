@@ -1,6 +1,6 @@
-import BaseModel from "@/server/models/BaseModel";
-import Mchapio from "@/server/models/mchapio";
-import User from "@/server/models/user";
+import BaseModel from "models/BaseModel";
+import Mchapio from "models/mchapio";
+import User from "models/user";
 
 interface IUser {
   id: Number;

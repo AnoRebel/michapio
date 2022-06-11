@@ -1,12 +1,14 @@
 <template>
   <div>
-    Main Shit
-    <template #aside>Sidebar</template>
+    <NuxtLayout name="main">
+      Main Shit
+      <template #aside>Sidebar</template>
+    </NuxtLayout>
   </div>
 </template>
 
 <script setup lang="ts">
 definePageMeta({
-  layout: "main",
+  layout: false,
 });
 </script>

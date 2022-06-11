@@ -1,5 +1,5 @@
 import { User } from "@/server/models";
-import { errorHandler } from "@/server/utils";
+import { errorHandler } from "server/utils";
 
 export default defineEventHandler(async event => {
   const id = event.context.params.id;
