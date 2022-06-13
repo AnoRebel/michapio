@@ -79,7 +79,7 @@ export default defineNuxtConfig({
     },
     transpile: ["@headlessui/vue", "@heroicons/vue"],
   },
-  css: ["@/assets/main.scss"],
+  css: ["animate.css/animate.min.css", "@/assets/main.scss"],
   vueuse: {
     ssrHandlers: true,
   },

@@ -41,6 +41,7 @@
   "dependencies": {
     "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge",
     "@vueuse/motion": "^2.0.0-beta.18",
+    "animate.css": "^4.1.1",
     "argon2": "^0.28.5",
     "jsonwebtoken": "^8.5.1",
     "knex": "^2.1.0",
