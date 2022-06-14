@@ -1815,9 +1815,9 @@ colorette@2.0.16:
   integrity sha512-hUewv7oMjCp+wkBv5Rm0v87eJhq4woh5rSR+42YSQJKecCqgIqNkZ6lAlQms/BwHPJA5NKMRlpxPRv0n8HQW6g==
 
 colorette@^2.0.16:
-  version "2.0.17"
-  resolved "https://registry.yarnpkg.com/colorette/-/colorette-2.0.17.tgz#5dd4c0d15e2984b7433cb4a9f2ead45063b80c47"
-  integrity sha512-hJo+3Bkn0NCHybn9Tu35fIeoOKGOk5OCC32y4Hz2It+qlCO2Q3DeQ1hRn/tDDMQKRYUEzqsl7jbF6dYKjlE60g==
+  version "2.0.18"
+  resolved "https://registry.yarnpkg.com/colorette/-/colorette-2.0.18.tgz#4c260bcf86437ce94fa58e2e49a83b623f3c4d66"
+  integrity sha512-rHDY1i4V4JBCXHnHwaVyA202CKSj2kUrjI5cSJQbTdnFeI4ShV3e19Fe7EQfzL2tjSrvYyWugdGAtEc1lLvGDg==
 
 commander@^2.20.0:
   version "2.20.3"
@@ -2301,9 +2301,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.147:
-  version "1.4.152"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.152.tgz#7dedbe8f3dc1c597088982a203f392e60f7ee90a"
-  integrity sha512-jk4Ju5SGZAQQJ1iI4Rgru7dDlvkQPLpNPWH9gIZmwCD4YteA5Bbk1xPcPDUf5jUYs3e1e80RXdi8XgKQZaigeg==
+  version "1.4.154"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.154.tgz#d69c60499fc467a6c59591d29183e520afbc78a1"
+  integrity sha512-GbV9djOkrnj6xmW+YYVVEI3VCQnJ0pnSTu7TW2JyjKd5cakoiSaG5R4RbEtfaD92GsY10DzbU3GYRe+IOA9kqA==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -5518,9 +5518,9 @@ prettier-linter-helpers@^1.0.0:
     fast-diff "^1.1.2"
 
 prettier@^2.6.2:
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.6.2.tgz#e26d71a18a74c3d0f0597f55f01fb6c06c206032"
-  integrity sha512-PkUpF+qoXTqhOeWL9fu7As8LXsIUZ1WYaJiY/a7McAQzxjk82OF0tibkFXVCDImZtWxbvojFjerkiLb0/q8mew==
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.7.0.tgz#a4fdae07e5596c51c9857ea676cd41a0163879d6"
+  integrity sha512-nwoX4GMFgxoPC6diHvSwmK/4yU8FFH3V8XWtLQrbj4IBsK2pkYhG4kf/ljF/haaZ/aii+wNJqISrCDPgxGWDVQ==
 
 pretty-bytes@^6.0.0:
   version "6.0.0"
@@ -6203,10 +6203,10 @@ strip-json-comments@~2.0.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha512-4gB8na07fecVVkOI6Rs4e7T6NOTki5EmL7TUduTs6bu3EdnSycntVJ4re8kgZA+wx9IueI2Y11bfbgwtzuE0KQ==
 
-strip-literal@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/strip-literal/-/strip-literal-0.3.0.tgz#922502f1befeb08f2f79025d1be713e252ba3bd6"
-  integrity sha512-J+lfm3Pw5nzURj2B8acyvUSBqs3JbjM8WAfrmeH3qcn32+ew6kFwbZFV9+X8k9UOIAkQw9WPSzFZy3083c7l5Q==
+strip-literal@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/strip-literal/-/strip-literal-0.4.0.tgz#0f90e86daecc1eb23c61c62d25238ffad4524634"
+  integrity sha512-ql/sBDoJOybTKSIOWrrh8kgUEMjXMwRAkZTD0EwiwxQH/6tTPkZvMIEjp0CRlpi6V5FMiJyvxeRkEi1KrGISoA==
   dependencies:
     acorn "^8.7.1"
 
@@ -6579,9 +6579,9 @@ unimport@^0.1.6:
     unplugin "^0.6.3"
 
 unimport@^0.2.7:
-  version "0.2.8"
-  resolved "https://registry.yarnpkg.com/unimport/-/unimport-0.2.8.tgz#7ec27254beaf1aafce7264e2be3c9214d442fde0"
-  integrity sha512-p/p8vFjYaazasl5BuMfZg78HZq9luG3q5aeAq0Of6CB2aaNSYHn49ESM8QCJe9LqAyEnvYuFFq4XX5+Qt3rnVA==
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/unimport/-/unimport-0.2.9.tgz#62b720220c12a470e83bd01d9bf723b3534d2dd2"
+  integrity sha512-5SLmZZL2rwaNOQa/yTGaG0QI0meRhb6MDdIlS9s1uHPSYO6Gfzr7ugl5Rf35/CJioW6wYiNJsN9dru5JMzaD8w==
   dependencies:
     "@rollup/pluginutils" "^4.2.1"
     escape-string-regexp "^5.0.0"
@@ -6591,7 +6591,7 @@ unimport@^0.2.7:
     mlly "^0.5.2"
     pathe "^0.3.0"
     scule "^0.2.1"
-    strip-literal "^0.3.0"
+    strip-literal "^0.4.0"
     unplugin "^0.7.0"
 
 universalify@^2.0.0:
