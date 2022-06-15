@@ -22,12 +22,15 @@ const headerRef = ref(null);
 onMounted(() => {
   const typer = useTyping(headerRef.value, { loop: true, typingSpeed: 100, deletingSpeed: 100 });
   typer
-    .typeString(" Michapio")
+    .typeString(" Mipachio")
+    .pauseFor(250)
+    .deleteChars(6)
+    .typeString("chapio")
     .pauseFor(400)
     .deleteChars(8)
-    .typeString(" Tongue Slip")
+    .typeString(" Tongue of Slip")
     .pauseFor(500)
-    .deleteChars(11)
+    .deleteChars(14)
     .typeString(" Slip of Tongue")
     .deleteAll(70)
     .start();
