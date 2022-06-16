@@ -1,5 +1,8 @@
 <template>
-  <div class="flex h-screen w-full flex-col items-center justify-center bg-gray-800 text-gray-50">
+  <div
+    class="relative flex h-screen w-full flex-col items-center justify-center bg-gray-800 text-gray-50"
+  >
+    <AddButton />
     <div
       class="animate__animated animate__fadeInDown h-1/6 w-full flex flex-col justify-center items-center text-center"
     >

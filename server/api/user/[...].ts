@@ -1,3 +1,6 @@
 export default defineEventHandler(event => {
-  return { message: `Unkown User API Route: ${event.context.params}` };
+  let r = "";
+  const params = Object.entries(event.context.params);
+  params.forEach(p => (r += p[1]));
+  return { message: `Unkown User API Route: ${r}` };
 });
