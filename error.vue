@@ -1,15 +1,11 @@
 <template>
   <div class="relative font-sans" n="green6">
-    <div class="container max-w-200 mx-auto py-10 px-4">
+    <div class="container mx-auto py-10 px-4">
       <h1>{{ error.message }}</h1>
       There was an error 😱
 
       <br />
-      <button @click="handleError">Clear error</button>
-      <br />
-      <NuxtLink to="/404"> Trigger another error </NuxtLink>
-      <br />
-      <NuxtLink to="/"> Navigate home </NuxtLink>
+      <button @click="handleError">Clear error and Navigate home</button>
     </div>
   </div>
 </template>
@@ -19,5 +15,5 @@ defineProps<{
   error: Object;
 }>();
 
-const handleError = () => {}; // clearError({ redirect: "/" });
+const handleError = () => clearError({ redirect: "/" });
 </script>

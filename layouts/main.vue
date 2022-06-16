@@ -32,7 +32,7 @@ onMounted(() => {
     .pauseFor(500)
     .deleteChars(14)
     .typeString(" Slip of Tongue")
-    .deleteAll(70)
+    .deleteChars(14)
     .start();
 });
 </script>
