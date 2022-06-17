@@ -52,8 +52,7 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/color-mode",
     "@pinia/nuxt",
-    "@vueuse/nuxt",
-    "@nuxtjs/eslint-module",
+    "nuxt-lodash",
     [
       "@nuxtjs/i18n",
       {
@@ -66,7 +65,9 @@ export default defineNuxtConfig({
         },
       },
     ],
+    "@vueuse/nuxt",
     "@vueuse/motion/nuxt",
+    "@nuxtjs/eslint-module",
   ],
   build: {
     postcss: {

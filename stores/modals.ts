@@ -1,8 +1,12 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
 
+interface ModalState {
+  open: boolean;
+}
+
 export const useModal = defineStore("modal", {
   // id: "modal",
-  state: () => {
+  state: (): ModalState => {
     return {
       open: false,
     };

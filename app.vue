@@ -1,3 +1,34 @@
+<script setup lang="ts">
+const { $pinia } = useNuxtApp();
+
+const piniaLogger = ({ store }) => {
+  store.$subscribe((mutation, state) => {
+    const mut = `{"store": ${mutation.storeId}, "type": ${mutation.type}, "payload": ${mutation.payload}}`;
+
+    console.info(JSON.parse(JSON.stringify(mut)));
+  });
+  store.$onAction(action => {
+    const act = `{"store": ${action.store.$id}, "action": ${action.name}, "payload": ${action.args}}`;
+
+    console.info(JSON.parse(JSON.stringify(act)));
+  });
+};
+
+const piniaDebounce = ({ options, store }) => {
+  // console.log(options);
+  if (options.debounce) {
+    // we are overriding the actions with new ones
+    return Object.keys(options.debounce).reduce((debouncedActions, action) => {
+      debouncedActions[action] = useDebounce(store[action], options.debounce[action]);
+      return debouncedActions;
+    }, {});
+  }
+};
+
+$pinia.use(piniaLogger);
+$pinia.use(piniaDebounce);
+</script>
+
 <template>
   <div id="app" class="min-h-screen min-w-screen relative">
     <NuxtLayout>
