@@ -4,13 +4,11 @@ import { storeToRefs } from "pinia";
 import { useModal } from "@/stores/modals";
 
 const modal = useModal();
-const { toggle } = modal;
-const { isOpen } = storeToRefs(modal);
-
-// const toggle = () => {
-//   open.value = !open.value;
-//   console.log("Toggled");
-// };
+const isOpen = ref(false);
+const toggle = () => {
+  // open.value = !open.value;
+  console.log("Toggled");
+};
 </script>
 
 <template>

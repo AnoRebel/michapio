@@ -24,7 +24,7 @@ onMounted(() => {
     class="relative flex h-screen w-full flex-col items-center justify-center bg-slate-800 text-slate-50"
   >
     <AddButton />
-    <!-- <LazyAuthModal /> -->
+    <LazyAuthModal />
     <!-- <LazyChapioModal /> -->
     <div
       class="animate__animated animate__fadeInDown h-1/6 w-full flex flex-col justify-center items-center text-center"

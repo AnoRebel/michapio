@@ -1,25 +1,24 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
 
-interface ModalState {
-  open: boolean;
-}
-
 export const useModal = defineStore("modal", {
   // id: "modal",
-  state: (): ModalState => {
-    return {
-      open: false,
-    };
-  },
+  state: () => ({
+    modals: { auth: false, chapio: false },
+  }),
   actions: {
-    toggle: () => {},
-    setOpen: val => (this.open = val),
+    addModal: (name: string, open = false) => (this.modals[name] = open),
+    removeModal: (name: string) => delete this.modals[name],
+    toggle: (name: string) => (this.modals[name] = !this.modals[name]),
+    setState: (name: string, val: boolean) => {
+      console.log("Setting: ", this);
+      // this.modals[name] = val;
+    },
   },
   getters: {
-    isOpen: state => state.open,
-    // isOpen: state => {
-    //   return val => state.open == val;
-    // },
+    // isOpen: state => state.open,
+    isOpen: state => {
+      return (name: string) => state.modals[name] ?? false;
+    },
   },
 });
 

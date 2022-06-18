@@ -1,6 +1,6 @@
 <template>
-  <TransitionRoot as="template" :show="open">
-    <Dialog as="div" class="fixed z-10 inset-0 overflow-y-auto" @close="emit('close')">
+  <TransitionRoot as="template" :show="isOpen('auth')">
+    <Dialog as="div" class="fixed z-10 inset-0 overflow-y-auto" @close="setState('auth', false)">
       <div
         class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
       >
@@ -54,7 +54,7 @@
               <button
                 type="button"
                 class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
-                @click="emit('close')"
+                @click="setState('auth', false)"
               >
                 Go back to dashboard
               </button>
@@ -74,13 +74,14 @@ import {
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
+import { storeToRefs } from "pinia";
 
-defineProps({
-  open: {
-    type: Boolean,
-    required: true,
-  },
-});
+import { useModal } from "@/stores/modals";
 
-const emit = defineEmits(["close"]);
+const modals = useModal();
+const { addModal, removeModal, setState } = modals;
+const { isOpen } = storeToRefs(modals);
+
+onBeforeMount(() => addModal("auth"));
+onBeforeUnmount(() => removeModal("auth"));
 </script>

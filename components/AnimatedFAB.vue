@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const open = ref(false);
+</script>
+
 <template>
   <div>
     <div class="fab">
