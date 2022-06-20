@@ -21,7 +21,6 @@
     "@nuxtjs/eslint-config-typescript": "^10.0.0",
     "@nuxtjs/eslint-module": "^3.1.0",
     "@nuxtjs/tailwindcss": "^5.1.2",
-    "@pinia/nuxt": "^0.1.8",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/forms": "^0.5.0",
     "@tailwindcss/typography": "^0.5.2",
@@ -48,6 +47,7 @@
     "knex": "^2.1.0",
     "objection": "^3.0.1",
     "pg": "^8.7.3",
+    "@pinia/nuxt": "^0.1.8",
     "pinia": "^2.0.14"
   }
 }

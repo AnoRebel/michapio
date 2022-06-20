@@ -49,6 +49,7 @@ export default defineNuxtConfig({
       include: ["@headlessui/vue", "@heroicons/vue/solid", "@heroicons/vue/outline", "vue"],
     },
   },
+  buildModules: ["@pinia/nuxt"],
   modules: [
     "@nuxtjs/color-mode",
     "@pinia/nuxt",
@@ -126,7 +127,7 @@ export default defineNuxtConfig({
     shim: false,
     tsConfig: {
       compilerOptions: {
-        types: ["@vueuse/nuxt", "@intlify/nuxt3", "@pinia/nuxt"],
+        types: ["@vueuse/nuxt", "@nuxtjs/i18n", "@pinia/nuxt", "@intlify/nuxt3"],
       },
       include: ["server/**/*.{ts,js}", "src/**/*.{ts,js}", "src/**/*.d.ts", "src/**/*.vue"],
     },
