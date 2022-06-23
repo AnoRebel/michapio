@@ -1,8 +1,14 @@
 // import { knexSnakeCaseMappers } from "objection";
 const { knexSnakeCaseMappers } = require("objection");
+const path = require("path");
 
+require("dotenv").config({ path: path.resolve(__dirname, "..", ".env") });
+
+const extension =
+  process.env.NODE_CONFIG_ENV == "production" || process.env.NODE_CONFIG_ENV == "staging"
+    ? "js"
+    : "ts";
 // Update with your config settings.
-// export default {
 module.exports = {
   development: {
     client: "pg",
@@ -16,7 +22,8 @@ module.exports = {
     },
     pool: { min: 0, max: 7 },
     migrations: {
-      extension: "ts",
+      extension: extension,
+      loadExtensions: [`.${extension}`],
       tableName: "migrations",
     },
     debug: true,

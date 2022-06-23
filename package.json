@@ -6,7 +6,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "migrate:dev": "npx knex migrate:latest --env development --cwd ./server",
+    "migrate:dev": "TS_NODE_COMPILER_OPTIONS='{ \"module\": \"commonjs\" }' npx knex migrate:latest --env development --cwd ./server",
     "migrate:prod": "npx knex migrate:latest --env production --cwd ./server",
     "rollback": "npx knex migrate:rollback --cwd ./server",
     "rollback:all": "npx knex migrate:rollback --all --cwd ./server",
