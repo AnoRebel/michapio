@@ -6,11 +6,11 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "migrate:dev": "npx knex migrate:latest --env development --cwd ./server -x ts",
-    "migrate:prod": "npx knex migrate:latest --env production --cwd ./server -x ts",
-    "rollback": "npx knex migrate:rollback --cwd ./server -x ts",
-    "rollback:all": "npx knex migrate:rollback --all --cwd ./server -x ts",
-    "migrate:list": "npx knex migrate:list --cwd ./server -x ts",
+    "migrate:dev": "npx knex migrate:latest --env development --cwd ./server",
+    "migrate:prod": "npx knex migrate:latest --env production --cwd ./server",
+    "rollback": "npx knex migrate:rollback --cwd ./server",
+    "rollback:all": "npx knex migrate:rollback --all --cwd ./server",
+    "migrate:list": "npx knex migrate:list --cwd ./server",
     "lint": "eslint . --ext .vue,.js,.ts,.cjs,.mjs --fix --ignore-path .gitignore",
     "format": "prettier . --write"
   },
@@ -24,6 +24,7 @@
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/forms": "^0.5.0",
     "@tailwindcss/typography": "^0.5.2",
+    "@types/node": "^18.0.0",
     "@vueuse/nuxt": "^8.7.3",
     "autoprefixer": "^10.4.7",
     "eslint": "^8.15.0",
@@ -36,10 +37,12 @@
     "prettier": "^2.7.1",
     "sass": "^1.51.0",
     "tailwindcss": "^3.1.3",
+    "ts-node": "^10.8.1",
     "typescript": "^4.7.3"
   },
   "dependencies": {
     "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge",
+    "@pinia/nuxt": "^0.1.8",
     "@vueuse/motion": "^2.0.0-beta.18",
     "animate.css": "^4.1.1",
     "argon2": "^0.28.5",
@@ -47,7 +50,6 @@
     "knex": "^2.1.0",
     "objection": "^3.0.1",
     "pg": "^8.7.3",
-    "@pinia/nuxt": "^0.1.8",
     "pinia": "^2.0.14"
   }
 }

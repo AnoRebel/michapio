@@ -1,16 +1,18 @@
-import { knexSnakeCaseMappers } from "objection";
+// import { knexSnakeCaseMappers } from "objection";
+const { knexSnakeCaseMappers } = require("objection");
 
 // Update with your config settings.
-export default {
+// export default {
+module.exports = {
   development: {
     client: "pg",
     useNullAsDefault: true,
     connection: {
-      host: "localhost",
-      port: "5432",
-      user: useRuntimeConfig().DATABASE_USER,
-      password: useRuntimeConfig().DATABASE_PASS,
-      database: useRuntimeConfig().DATABASE_NAME,
+      host: process.env.NUXT_DATABASE_HOST,
+      port: process.env.NUXT_DATABASE_PORT,
+      user: process.env.NUXT_DATABASE_USER,
+      password: process.env.NUXT_DATABASE_PASS,
+      database: process.env.NUXT_DATABASE_NAME,
     },
     pool: { min: 0, max: 7 },
     migrations: {
@@ -22,7 +24,7 @@ export default {
   },
   production: {
     client: "pg",
-    connection: useRuntimeConfig().DATABASE_URL,
+    connection: process.env.NUXT_DATABASE_URL,
     pool: {
       min: 2,
       max: 10,
