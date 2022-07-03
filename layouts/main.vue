@@ -23,7 +23,9 @@ onMounted(() => {
   <div
     class="relative flex h-screen w-full flex-col items-center justify-center bg-slate-800 text-slate-50"
   >
+    <Header />
     <AddButton />
+    <AddModal />
     <AuthModal />
     <!-- <ChapioModal /> -->
     <div
