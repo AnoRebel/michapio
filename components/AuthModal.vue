@@ -39,30 +39,69 @@
           >
             <div>
               <div class="mt-3 text-center sm:mt-5">
-                <DialogTitle as="h3" class="text-lg leading-6 font-medium text-gray-900">
-                  Login / Sign Up
+                <DialogTitle
+                  as="h3"
+                  class="text-lg leading-6 font-medium text-slate-900 animate__animated animate__slideInTop"
+                >
+                  <span v-if="form.login">Login / Sign Up</span>
+                  <span v-if="form.forgot">Forgot Passord?</span>
+                  <span v-if="form.register">Register</span>
                 </DialogTitle>
-                <div class="mt-2">
+                <div v-if="form.login" class="mt-2 animate__animated animate__slideInLeft">
                   <form>
                     <div class="my-2 flex flex-col">
                       <label for="name" class="mb-1.5 text-sm text-slate-400"
                         >Username/Email:</label
                       >
                       <input
-                        v-model="data.name"
+                        v-model="loginData.name"
                         type="text"
                         name="name"
-                        class="rounded p-2 text-xs text-gray-800"
+                        class="rounded p-2 text-xs text-slate-800"
                         placeholder="Username"
                       />
                     </div>
                     <div class="my-2 flex flex-col">
                       <label for="password" class="mb-1.5 text-sm text-slate-400">Password:</label>
                       <input
-                        v-model="data.password"
+                        v-model="loginData.password"
                         type="password"
                         name="password"
-                        class="rounded p-2 text-xs text-gray-800"
+                        class="rounded p-2 text-xs text-slate-800"
+                        placeholder="Password"
+                      />
+                    </div>
+                  </form>
+                </div>
+                <div v-if="form.register" class="mt-2 animate__animated animate__slideInLeft">
+                  <form>
+                    <div class="my-2 flex flex-col">
+                      <label for="name" class="mb-1.5 text-sm text-slate-400">Username:</label>
+                      <input
+                        v-model="registerData.name"
+                        type="text"
+                        name="name"
+                        class="rounded p-2 text-xs text-slate-800"
+                        placeholder="Username"
+                      />
+                    </div>
+                    <div class="my-2 flex flex-col">
+                      <label for="name" class="mb-1.5 text-sm text-slate-400">Email:</label>
+                      <input
+                        v-model="registerData.name"
+                        type="email"
+                        name="name"
+                        class="rounded p-2 text-xs text-slate-800"
+                        placeholder="Username"
+                      />
+                    </div>
+                    <div class="my-2 flex flex-col">
+                      <label for="password" class="mb-1.5 text-sm text-slate-400">Password:</label>
+                      <input
+                        v-model="registerData.password"
+                        type="password"
+                        name="password"
+                        class="rounded p-2 text-xs text-slate-800"
                         placeholder="Password"
                       />
                     </div>
@@ -71,9 +110,33 @@
               </div>
             </div>
             <div class="mt-5 sm:mt-6">
+              <div class="inline-flex justify-center items-center">
+                <button
+                  v-if="!form.login"
+                  class="animate_animated animate_slideInLeft"
+                  @click="toggleForm('login')"
+                >
+                  Login
+                </button>
+                <button
+                  v-if="!form.register"
+                  class="animate_animated animate_slideInLeft"
+                  @click="toggleForm('register')"
+                >
+                  Register
+                </button>
+                OR
+                <button
+                  v-if="!form.forgot"
+                  class="animate_animated animate_slideInRight"
+                  @click="toggleForm('forgot')"
+                >
+                  Forgot Password?
+                </button>
+              </div>
               <button
                 type="button"
-                class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+                class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white animate__animated animate__slideInBottom hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
                 @click="setAuthState(false)"
               >
                 Go back to dashboard
@@ -106,7 +169,29 @@ const { loginForm, registerForm } = storeToRefs(forms);
 const { setAuthState } = modals;
 const { isAuthOpen } = storeToRefs(modals);
 
-const data = reactive({
+const form = reactive({
+  login: true,
+  forgot: false,
+  register: false,
+});
+const toggleForm = f => {
+  if (f == "login") {
+    form.login = true;
+    form.forgot = false;
+    form.register = false;
+  }
+  if (f == "forgot") {
+    form.login = false;
+    form.forgot = true;
+    form.register = false;
+  }
+  if (f == "register") {
+    form.login = false;
+    form.forgot = false;
+    form.register = true;
+  }
+};
+const loginData = reactive({
   name: computed({
     get: () => loginForm?.name ?? "",
     set: val => updateLogin({ name: val }),
@@ -114,6 +199,20 @@ const data = reactive({
   password: computed({
     get: () => loginForm?.password ?? "",
     set: val => updateLogin({ password: val }),
+  }),
+});
+const registerData = reactive({
+  name: computed({
+    get: () => registerForm?.name ?? "",
+    set: val => updateRegister({ name: val }),
+  }),
+  email: computed({
+    get: () => registerForm?.email ?? "",
+    set: val => updateRegister({ email: val }),
+  }),
+  password: computed({
+    get: () => registerForm?.password ?? "",
+    set: val => updateRegister({ password: val }),
   }),
 });
 </script>
