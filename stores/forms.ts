@@ -16,6 +16,10 @@ export const useForm = defineStore("forms", {
     updateRegister(payload: Object) {
       this.register[Object.keys(payload)[0]] = Object.values(payload)[0];
     },
+    async submitForm(form: String, data: Object) {
+      console.log(form, data);
+    },
+    logout() {},
   },
   getters: {
     chapioForm: state => state.chapio,

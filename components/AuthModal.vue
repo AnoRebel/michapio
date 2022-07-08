@@ -47,18 +47,19 @@
                   <span v-if="form.forgot">Forgot Passord?</span>
                   <span v-if="form.register">Register</span>
                 </DialogTitle>
-                <div v-if="form.login" class="mt-2 animate__animated animate__slideInLeft">
+                <div v-if="form.login" class="mt-2 animate__animated animate__fadeIn">
                   <form>
                     <div class="my-2 flex flex-col">
-                      <label for="name" class="mb-1.5 text-sm text-slate-400"
-                        >Username/Email:</label
-                      >
+                      <label for="name" class="mb-1.5 text-sm text-slate-400">
+                        Username/Email:
+                      </label>
                       <input
                         v-model="loginData.name"
                         type="text"
                         name="name"
                         class="rounded p-2 text-xs text-slate-800"
                         placeholder="Username"
+                        required
                       />
                     </div>
                     <div class="my-2 flex flex-col">
@@ -69,11 +70,12 @@
                         name="password"
                         class="rounded p-2 text-xs text-slate-800"
                         placeholder="Password"
+                        required
                       />
                     </div>
                   </form>
                 </div>
-                <div v-if="form.register" class="mt-2 animate__animated animate__slideInLeft">
+                <div v-if="form.register" class="mt-2 animate__animated animate__fadeIn">
                   <form>
                     <div class="my-2 flex flex-col">
                       <label for="name" class="mb-1.5 text-sm text-slate-400">Username:</label>
@@ -83,16 +85,17 @@
                         name="name"
                         class="rounded p-2 text-xs text-slate-800"
                         placeholder="Username"
+                        required
                       />
                     </div>
                     <div class="my-2 flex flex-col">
-                      <label for="name" class="mb-1.5 text-sm text-slate-400">Email:</label>
+                      <label for="email" class="mb-1.5 text-sm text-slate-400">Email:</label>
                       <input
-                        v-model="registerData.name"
+                        v-model="registerData.email"
                         type="email"
-                        name="name"
+                        name="email"
                         class="rounded p-2 text-xs text-slate-800"
-                        placeholder="Username"
+                        placeholder="Email"
                       />
                     </div>
                     <div class="my-2 flex flex-col">
@@ -103,6 +106,22 @@
                         name="password"
                         class="rounded p-2 text-xs text-slate-800"
                         placeholder="Password"
+                        required
+                      />
+                    </div>
+                  </form>
+                </div>
+                <div v-if="form.forgot" class="mt-2 animate__animated animate__fadeIn">
+                  <form>
+                    <div class="my-2 flex flex-col">
+                      <label for="name" class="mb-1.5 text-sm text-slate-400">Email:</label>
+                      <input
+                        v-model="loginData.email"
+                        type="email"
+                        name="email"
+                        class="rounded p-2 text-xs text-slate-800"
+                        placeholder="Email"
+                        required
                       />
                     </div>
                   </form>
@@ -110,7 +129,7 @@
               </div>
             </div>
             <div class="mt-5 sm:mt-6">
-              <div class="inline-flex justify-center items-center">
+              <div class="w-full inline-flex justify-around items-center mb-3 text-underline">
                 <button
                   v-if="!form.login"
                   class="animate_animated animate_slideInLeft"
@@ -125,7 +144,6 @@
                 >
                   Register
                 </button>
-                OR
                 <button
                   v-if="!form.forgot"
                   class="animate_animated animate_slideInRight"
@@ -135,11 +153,13 @@
                 </button>
               </div>
               <button
-                type="button"
-                class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white animate__animated animate__slideInBottom hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
-                @click="setAuthState(false)"
+                type="submit"
+                class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white animate__animated animate__slideInBottom hover:bg-indigo-700 focus:outline-none sm:text-sm"
+                @click="submit(form.active)"
               >
-                Go back to dashboard
+                <span v-if="form.login">Login</span>
+                <span v-if="form.forgot">Recover</span>
+                <span v-if="form.register">Register</span>
               </button>
             </div>
           </div>
@@ -164,7 +184,7 @@ import { useForm } from "@/stores/forms";
 
 const modals = useModal();
 const forms = useForm();
-const { updateLogin, updateRegister } = forms;
+const { updateLogin, updateRegister, submitForm } = forms;
 const { loginForm, registerForm } = storeToRefs(forms);
 const { setAuthState } = modals;
 const { isAuthOpen } = storeToRefs(modals);
@@ -173,22 +193,33 @@ const form = reactive({
   login: true,
   forgot: false,
   register: false,
+  active: "login",
 });
-const toggleForm = f => {
-  if (f == "login") {
-    form.login = true;
-    form.forgot = false;
-    form.register = false;
-  }
-  if (f == "forgot") {
-    form.login = false;
-    form.forgot = true;
-    form.register = false;
-  }
-  if (f == "register") {
-    form.login = false;
-    form.forgot = false;
-    form.register = true;
+const toggleForm = (f: string) => {
+  switch (f) {
+    case "register":
+      form.login = false;
+      form.forgot = false;
+      form.register = true;
+      form.active = "register";
+      break;
+    case "login":
+      form.login = true;
+      form.forgot = false;
+      form.register = false;
+      form.active = "login";
+      break;
+    case "forgot":
+      form.login = false;
+      form.forgot = true;
+      form.register = false;
+      form.active = "forgot";
+      break;
+    default:
+      form.login = true;
+      form.forgot = false;
+      form.register = false;
+      form.active = "login";
   }
 };
 const loginData = reactive({
@@ -215,4 +246,54 @@ const registerData = reactive({
     set: val => updateRegister({ password: val }),
   }),
 });
+const errors = reactive({
+  form: "",
+  active: false,
+  error: [],
+});
+const submit = (f: string) => {
+  switch (f) {
+    case "register":
+      errors.form = f;
+      if (registerData.name === "") {
+        errors.error.push("Name is Required");
+        errors.active = true;
+      }
+      if (registerData.email === "") {
+        errors.error.push("Email is Required");
+        errors.active = true;
+      }
+      if (registerData.password === "") {
+        errors.error.push("Password is Required");
+        errors.active = true;
+      }
+      submitForm(f, registerData);
+      setAuthState(errors.active);
+      break;
+    case "login":
+      errors.form = f;
+      if (loginData.name === "") {
+        errors.error.push("Name is Required");
+        errors.active = true;
+      }
+      if (loginData.password === "") {
+        errors.error.push("Password is Required");
+        errors.active = true;
+      }
+      submitForm(f, loginData);
+      setAuthState(errors.active);
+      break;
+    case "forgot":
+      errors.form = f;
+      if (loginData.name === "") {
+        errors.error.push("Email is Required");
+        errors.active = true;
+      }
+      submitForm(f, loginData);
+      setAuthState(errors.active);
+      break;
+    default:
+      setAuthState(false);
+  }
+};
 </script>
