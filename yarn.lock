@@ -1064,16 +1064,6 @@
     "@typescript-eslint/types" "5.30.5"
     eslint-visitor-keys "^3.3.0"
 
-"@vee-validate/i18n@^4.5.11":
-  version "4.5.11"
-  resolved "https://registry.yarnpkg.com/@vee-validate/i18n/-/i18n-4.5.11.tgz#a47e9808ded3f12e2ff4fcb4d9b108c0c25e195e"
-  integrity sha512-RMPF+nabSD4BIpbPpqKvsuAqUY00WfV9C/M3pEBzwgt2mUlv6nu9TsA5ybuI/UhLf8whqVnaiV2BOMwft+4OgQ==
-
-"@vee-validate/rules@^4.5.11":
-  version "4.5.11"
-  resolved "https://registry.yarnpkg.com/@vee-validate/rules/-/rules-4.5.11.tgz#0d300459c612938aa74ae522b7670a40317e8571"
-  integrity sha512-aGwxjr/5/w8LFVObPB6UrqYt0oRlHHFw8/nxZHowY4LP62GWlAi+mAp1fb15Paav/c9rgV4iiqsNYarS1zpNQw==
-
 "@vercel/nft@^0.20.1":
   version "0.20.1"
   resolved "https://registry.yarnpkg.com/@vercel/nft/-/nft-0.20.1.tgz#41e559af189405c526ac1f6709773bc99995b95b"

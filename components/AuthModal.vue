@@ -40,131 +40,23 @@
             <div>
               <div class="mt-3 text-center sm:mt-5">
                 <DialogTitle
-                  as="h3"
-                  class="text-lg leading-6 font-medium text-slate-900 animate__animated animate__slideInTop"
+                  as="div"
+                  class="text-2xl leading-6 font-medium text-slate-900 my-3 animate__animated animate__slideInTop"
                 >
-                  <span v-if="form.login">Login / Sign Up</span>
-                  <span v-if="form.forgot">Forgot Passord?</span>
-                  <span v-if="form.register">Register</span>
+                  <span v-if="isActiveForm('login')">Login / Sign Up</span>
+                  <span v-if="isActiveForm('forgot')">Forgot Passord?</span>
+                  <span v-if="isActiveForm('register')">Register</span>
                 </DialogTitle>
-                <div v-if="form.login" class="mt-2 animate__animated animate__fadeIn">
-                  <form>
-                    <div class="my-2 flex flex-col">
-                      <label for="lname" class="mb-1.5 text-sm text-slate-400"> Username: </label>
-                      <input
-                        v-model="lname"
-                        type="text"
-                        name="lname"
-                        class="rounded p-2 text-xs text-slate-800"
-                        placeholder="Username"
-                        required
-                      />
-                      <span class="text-xs my-0.5 text-red-600">{{ fnameError }}</span>
-                    </div>
-                    <div class="my-2 flex flex-col">
-                      <label for="password" class="mb-1.5 text-sm text-slate-400">Password:</label>
-                      <input
-                        v-model="password"
-                        :type="isPass ? 'password' : 'test'"
-                        name="password"
-                        class="rounded p-2 text-xs text-slate-800"
-                        placeholder="Password"
-                        required
-                      />
-                      <span class="text-xs my-0.5 text-red-600">{{ passwordError }}</span>
-                    </div>
-                  </form>
+                <div v-if="isActiveForm('login')" class="my-5 animate__animated animate__fadeIn">
+                  <Login @submitted="" />
                 </div>
-                <div v-if="form.register" class="mt-2 animate__animated animate__fadeIn">
-                  <form>
-                    <div class="my-2 flex flex-col">
-                      <label for="rname" class="mb-1.5 text-sm text-slate-400">Username:</label>
-                      <input
-                        v-model="rname"
-                        type="text"
-                        name="rname"
-                        class="rounded p-2 text-xs text-slate-800"
-                        placeholder="Username"
-                        required
-                      />
-                      <span class="text-xs my-0.5 text-red-600">{{ rnameError }}</span>
-                    </div>
-                    <div class="my-2 flex flex-col">
-                      <label for="remail" class="mb-1.5 text-sm text-slate-400">Email:</label>
-                      <input
-                        v-model="remail"
-                        type="email"
-                        name="remail"
-                        class="rounded p-2 text-xs text-slate-800"
-                        placeholder="Email"
-                      />
-                      <span class="text-xs my-0.5 text-red-600">{{ remailError }}</span>
-                    </div>
-                    <div class="my-2 flex flex-col">
-                      <label for="password" class="mb-1.5 text-sm text-slate-400">Password:</label>
-                      <input
-                        v-model="password"
-                        :type="isPass ? 'password' : 'test'"
-                        name="password"
-                        class="rounded p-2 text-xs text-slate-800"
-                        placeholder="Password"
-                        required
-                      />
-                      <span class="text-xs my-0.5 text-red-600">{{ passwordError }}</span>
-                    </div>
-                  </form>
+                <div v-if="isActiveForm('register')" class="mt-2 animate__animated animate__fadeIn">
+                  <Register @submitted="" />
                 </div>
-                <div v-if="form.forgot" class="mt-2 animate__animated animate__fadeIn">
-                  <form>
-                    <div class="my-2 flex flex-col">
-                      <label for="femail" class="mb-1.5 text-sm text-slate-400">Email:</label>
-                      <input
-                        v-model="femail"
-                        type="email"
-                        name="femail"
-                        class="rounded p-2 text-xs text-slate-800"
-                        placeholder="Email"
-                        required
-                      />
-                      <span class="text-xs my-0.5 text-red-600">{{ femailError }}</span>
-                    </div>
-                  </form>
+                <div v-if="isActiveForm('forgot')" class="mt-2 animate__animated animate__fadeIn">
+                  <Forgot @submitted="" />
                 </div>
               </div>
-            </div>
-            <div class="mt-5 sm:mt-6">
-              <div class="w-full inline-flex justify-around items-center mb-3 text-underline">
-                <button
-                  v-if="!form.login"
-                  class="animate_animated animate_slideInLeft"
-                  @click="toggleForm('login')"
-                >
-                  Login
-                </button>
-                <button
-                  v-if="!form.register"
-                  class="animate_animated animate_slideInLeft"
-                  @click="toggleForm('register')"
-                >
-                  Register
-                </button>
-                <button
-                  v-if="!form.forgot"
-                  class="animate_animated animate_slideInRight"
-                  @click="toggleForm('forgot')"
-                >
-                  Forgot Password?
-                </button>
-              </div>
-              <button
-                type="submit"
-                class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white animate__animated animate__slideInBottom hover:bg-indigo-700 focus:outline-none sm:text-sm"
-                @click="submit(form.active)"
-              >
-                <span v-if="form.login">Login</span>
-                <span v-if="form.forgot">Recover</span>
-                <span v-if="form.register">Register</span>
-              </button>
             </div>
           </div>
         </TransitionChild>
@@ -181,142 +73,13 @@ import {
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
-import { useField, useForm } from "vee-validate";
-import { string } from "yup";
 import { storeToRefs } from "pinia";
 
 import { useModals } from "@/stores/modals";
 import { useForms } from "@/stores/forms";
 
 const modals = useModals();
-const forms = useForms();
-const { submitForm } = forms;
 const { setAuthState } = modals;
 const { isAuthOpen } = storeToRefs(modals);
-
-const isPass = ref(true);
-const form = reactive({
-  login: true,
-  forgot: false,
-  register: false,
-  active: "login",
-});
-const toggleForm = (f: string) => {
-  switch (f) {
-    case "register":
-      form.login = false;
-      form.forgot = false;
-      form.register = true;
-      form.active = "register";
-      break;
-    case "login":
-      form.login = true;
-      form.forgot = false;
-      form.register = false;
-      form.active = "login";
-      break;
-    case "forgot":
-      form.login = false;
-      form.forgot = true;
-      form.register = false;
-      form.active = "forgot";
-      break;
-    default:
-      form.login = true;
-      form.forgot = false;
-      form.register = false;
-      form.active = "login";
-  }
-};
-const {
-  errorMessage: rnameError,
-  value: rname,
-  meta: rnameMeta,
-} = useField(
-  "rname",
-  string()
-    .required()
-    .test(
-      "name-taken",
-      "Username already taken",
-      async val => !(await checkExists("username", val))
-    )
-    .label("Username")
-);
-const {
-  errorMessage: lnameError,
-  value: lname,
-  meta: lnameMeta,
-} = useField(
-  "lname",
-  string()
-    .required()
-    .test(
-      "name-taken",
-      "Username already taken",
-      async val => !(await checkExists("username", val))
-    )
-    .label("Username")
-);
-const {
-  errorMessage: remailError,
-  value: remail,
-  meta: remailMeta,
-} = useField(
-  "remail",
-  string()
-    .email()
-    .required()
-    .test("email-taken", "Email already taken", async val => !(await checkExists("email", val)))
-    .label("Email")
-);
-const {
-  errorMessage: femailError,
-  value: femail,
-  meta: femailMeta,
-} = useField(
-  "femail",
-  string()
-    .email()
-    .required()
-    .test("email-taken", "Email already taken", async val => await checkExists("email", val))
-    .label("Email")
-);
-const {
-  errorMessage: passwordError,
-  value: password,
-  meta: passwordMeta,
-} = useField("password", string().required().min(2).label("Password"));
-const checkExists = async (name, field) => {
-  const { data: res } = await useFetch(`/api/check?field=${name}&value=${field}`);
-  return res ? true : false;
-};
-const { handleSubmit, isSubmitting, resetForm } = useForm({});
-const submit = (f: string) => {
-  switch (f) {
-    case "register":
-      handleSubmit(values => {
-        submitForm(f, values);
-      });
-      resetForm();
-      setAuthState(false);
-      break;
-    case "login":
-      handleSubmit(values => {
-        submitForm(f, values);
-      });
-      resetForm();
-      setAuthState(false);
-      break;
-    case "forgot":
-      handleSubmit(values => {
-        submitForm(f, values);
-      });
-      resetForm();
-      setAuthState(false);
-      break;
-    default:
-      setAuthState(false);
-  }
-};
+const { isActiveForm } = storeToRefs(useForms());
 </script>

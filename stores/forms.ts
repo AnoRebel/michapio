@@ -4,15 +4,24 @@ export const useForms = defineStore("forms", {
   state: () => ({
     user: "",
     token: "",
+    active: "login",
   }),
   actions: {
     async submitForm(form: String, data: Object) {
       console.log(form, data);
+      // const { data } = await $fetch("/api/auth/login", { method: "POST", body: {} }).catch(error => error.data);
+    },
+    toggleForm(form: string) {
+      this.active = form;
     },
     logout() {},
   },
   getters: {
     getUser: state => state.user,
+    activeForm: state => state.active,
+    isActiveForm: state => {
+      return (form: string) => state.active === form;
+    },
     isLoggedIn: state => !!state.token,
   },
 });

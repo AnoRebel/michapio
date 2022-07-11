@@ -43,8 +43,6 @@
   "dependencies": {
     "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge",
     "@pinia/nuxt": "^0.1.8",
-    "@vee-validate/i18n": "^4.5.11",
-    "@vee-validate/rules": "^4.5.11",
     "@vueuse/motion": "^2.0.0-beta.18",
     "animate.css": "^4.1.1",
     "argon2": "^0.28.7",
