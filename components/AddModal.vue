@@ -129,9 +129,9 @@ import {
 } from "@headlessui/vue";
 import { storeToRefs } from "pinia";
 
-import { useModal } from "@/stores/modals";
+import { useModals } from "@/stores/modals";
 
-const modals = useModal();
+const modals = useModals();
 const { setAddState } = modals;
 const { isAddOpen } = storeToRefs(modals);
 const addMchapio = () => {

@@ -54,8 +54,8 @@
 <script setup lang="ts">
 import { ExternalLinkIcon } from "@heroicons/vue/solid";
 
-import { useModal } from "@/stores/modals";
+import { useModals } from "@/stores/modals";
 
-const modals = useModal();
+const modals = useModals();
 const { setAddState, setAuthState } = modals;
 </script>

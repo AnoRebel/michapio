@@ -50,79 +50,83 @@
                 <div v-if="form.login" class="mt-2 animate__animated animate__fadeIn">
                   <form>
                     <div class="my-2 flex flex-col">
-                      <label for="name" class="mb-1.5 text-sm text-slate-400">
-                        Username/Email:
-                      </label>
+                      <label for="lname" class="mb-1.5 text-sm text-slate-400"> Username: </label>
                       <input
-                        v-model="loginData.name"
+                        v-model="lname"
                         type="text"
-                        name="name"
+                        name="lname"
                         class="rounded p-2 text-xs text-slate-800"
                         placeholder="Username"
                         required
                       />
+                      <span class="text-xs my-0.5 text-red-600">{{ fnameError }}</span>
                     </div>
                     <div class="my-2 flex flex-col">
                       <label for="password" class="mb-1.5 text-sm text-slate-400">Password:</label>
                       <input
-                        v-model="loginData.password"
-                        type="password"
+                        v-model="password"
+                        :type="isPass ? 'password' : 'test'"
                         name="password"
                         class="rounded p-2 text-xs text-slate-800"
                         placeholder="Password"
                         required
                       />
+                      <span class="text-xs my-0.5 text-red-600">{{ passwordError }}</span>
                     </div>
                   </form>
                 </div>
                 <div v-if="form.register" class="mt-2 animate__animated animate__fadeIn">
                   <form>
                     <div class="my-2 flex flex-col">
-                      <label for="name" class="mb-1.5 text-sm text-slate-400">Username:</label>
+                      <label for="rname" class="mb-1.5 text-sm text-slate-400">Username:</label>
                       <input
-                        v-model="registerData.name"
+                        v-model="rname"
                         type="text"
-                        name="name"
+                        name="rname"
                         class="rounded p-2 text-xs text-slate-800"
                         placeholder="Username"
                         required
                       />
+                      <span class="text-xs my-0.5 text-red-600">{{ rnameError }}</span>
                     </div>
                     <div class="my-2 flex flex-col">
-                      <label for="email" class="mb-1.5 text-sm text-slate-400">Email:</label>
+                      <label for="remail" class="mb-1.5 text-sm text-slate-400">Email:</label>
                       <input
-                        v-model="registerData.email"
+                        v-model="remail"
                         type="email"
-                        name="email"
+                        name="remail"
                         class="rounded p-2 text-xs text-slate-800"
                         placeholder="Email"
                       />
+                      <span class="text-xs my-0.5 text-red-600">{{ remailError }}</span>
                     </div>
                     <div class="my-2 flex flex-col">
                       <label for="password" class="mb-1.5 text-sm text-slate-400">Password:</label>
                       <input
-                        v-model="registerData.password"
-                        type="password"
+                        v-model="password"
+                        :type="isPass ? 'password' : 'test'"
                         name="password"
                         class="rounded p-2 text-xs text-slate-800"
                         placeholder="Password"
                         required
                       />
+                      <span class="text-xs my-0.5 text-red-600">{{ passwordError }}</span>
                     </div>
                   </form>
                 </div>
                 <div v-if="form.forgot" class="mt-2 animate__animated animate__fadeIn">
                   <form>
                     <div class="my-2 flex flex-col">
-                      <label for="name" class="mb-1.5 text-sm text-slate-400">Email:</label>
+                      <label for="femail" class="mb-1.5 text-sm text-slate-400">Email:</label>
                       <input
-                        v-model="loginData.email"
+                        v-model="femail"
                         type="email"
-                        name="email"
+                        name="femail"
                         class="rounded p-2 text-xs text-slate-800"
                         placeholder="Email"
                         required
                       />
+                      <span class="text-xs my-0.5 text-red-600">{{ femailError }}</span>
                     </div>
                   </form>
                 </div>
@@ -177,18 +181,20 @@ import {
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
+import { useField, useForm } from "vee-validate";
+import { string } from "yup";
 import { storeToRefs } from "pinia";
 
-import { useModal } from "@/stores/modals";
-import { useForm } from "@/stores/forms";
+import { useModals } from "@/stores/modals";
+import { useForms } from "@/stores/forms";
 
-const modals = useModal();
-const forms = useForm();
-const { updateLogin, updateRegister, submitForm } = forms;
-const { loginForm, registerForm } = storeToRefs(forms);
+const modals = useModals();
+const forms = useForms();
+const { submitForm } = forms;
 const { setAuthState } = modals;
 const { isAuthOpen } = storeToRefs(modals);
 
+const isPass = ref(true);
 const form = reactive({
   login: true,
   forgot: false,
@@ -222,75 +228,92 @@ const toggleForm = (f: string) => {
       form.active = "login";
   }
 };
-const loginData = reactive({
-  name: computed({
-    get: () => loginForm?.name ?? "",
-    set: val => updateLogin({ name: val }),
-  }),
-  password: computed({
-    get: () => loginForm?.password ?? "",
-    set: val => updateLogin({ password: val }),
-  }),
-});
-const registerData = reactive({
-  name: computed({
-    get: () => registerForm?.name ?? "",
-    set: val => updateRegister({ name: val }),
-  }),
-  email: computed({
-    get: () => registerForm?.email ?? "",
-    set: val => updateRegister({ email: val }),
-  }),
-  password: computed({
-    get: () => registerForm?.password ?? "",
-    set: val => updateRegister({ password: val }),
-  }),
-});
-const errors = reactive({
-  form: "",
-  active: false,
-  error: [],
-});
+const {
+  errorMessage: rnameError,
+  value: rname,
+  meta: rnameMeta,
+} = useField(
+  "rname",
+  string()
+    .required()
+    .test(
+      "name-taken",
+      "Username already taken",
+      async val => !(await checkExists("username", val))
+    )
+    .label("Username")
+);
+const {
+  errorMessage: lnameError,
+  value: lname,
+  meta: lnameMeta,
+} = useField(
+  "lname",
+  string()
+    .required()
+    .test(
+      "name-taken",
+      "Username already taken",
+      async val => !(await checkExists("username", val))
+    )
+    .label("Username")
+);
+const {
+  errorMessage: remailError,
+  value: remail,
+  meta: remailMeta,
+} = useField(
+  "remail",
+  string()
+    .email()
+    .required()
+    .test("email-taken", "Email already taken", async val => !(await checkExists("email", val)))
+    .label("Email")
+);
+const {
+  errorMessage: femailError,
+  value: femail,
+  meta: femailMeta,
+} = useField(
+  "femail",
+  string()
+    .email()
+    .required()
+    .test("email-taken", "Email already taken", async val => await checkExists("email", val))
+    .label("Email")
+);
+const {
+  errorMessage: passwordError,
+  value: password,
+  meta: passwordMeta,
+} = useField("password", string().required().min(2).label("Password"));
+const checkExists = async (name, field) => {
+  const { data: res } = await useFetch(`/api/check?field=${name}&value=${field}`);
+  return res ? true : false;
+};
+const { handleSubmit, isSubmitting, resetForm } = useForm({});
 const submit = (f: string) => {
   switch (f) {
     case "register":
-      errors.form = f;
-      if (registerData.name === "") {
-        errors.error.push("Name is Required");
-        errors.active = true;
-      }
-      if (registerData.email === "") {
-        errors.error.push("Email is Required");
-        errors.active = true;
-      }
-      if (registerData.password === "") {
-        errors.error.push("Password is Required");
-        errors.active = true;
-      }
-      submitForm(f, registerData);
-      setAuthState(errors.active);
+      handleSubmit(values => {
+        submitForm(f, values);
+      });
+      resetForm();
+      setAuthState(false);
       break;
     case "login":
-      errors.form = f;
-      if (loginData.name === "") {
-        errors.error.push("Name is Required");
-        errors.active = true;
-      }
-      if (loginData.password === "") {
-        errors.error.push("Password is Required");
-        errors.active = true;
-      }
-      submitForm(f, loginData);
-      setAuthState(errors.active);
+      handleSubmit(values => {
+        submitForm(f, values);
+      });
+      resetForm();
+      setAuthState(false);
       break;
     case "forgot":
-      errors.form = f;
-      if (loginData.name === "") {
-        errors.error.push("Email is Required");
-        errors.active = true;
-      }
-      submitForm(f, loginData);
-      setAuthState(errors.active);
+      handleSubmit(values => {
+        submitForm(f, values);
+      });
+      resetForm();
+      setAuthState(false);
       break;
     default:
       setAuthState(false);

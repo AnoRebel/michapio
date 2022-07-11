@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { PlusIcon } from "@heroicons/vue/solid";
 import { storeToRefs } from "pinia";
-import { useModal } from "@/stores/modals";
+import { useModals } from "@/stores/modals";
 
-const modal = useModal();
+const modal = useModals();
 const isOpen = ref(false);
 const toggle = () => {
   // open.value = !open.value;

@@ -1,6 +1,6 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
 
-export const useForm = defineStore("forms", {
+export const useForms = defineStore("forms", {
   state: () => ({
     chapio: {},
     login: {},
@@ -28,7 +28,7 @@ export const useForm = defineStore("forms", {
   },
 });
 
-// Make sure to pass the right store definition, `useModal` in this case
+// Make sure to pass the right store definition, `useForms` in this case
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useForm, import.meta.hot));
+  import.meta.hot.accept(acceptHMRUpdate(useForms, import.meta.hot));
 }
