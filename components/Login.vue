@@ -109,11 +109,7 @@ const isPass = ref(true);
 const schema = object({
   name: string()
     .required()
-    .test(
-      "name-taken",
-      "Username already taken",
-      async val => !(await checkExists("username", val))
-    )
+    .test("name-taken", "Username already taken", async val => await checkExists("username", val))
     .label("Username"),
   password: string().required().min(2).label("Password"),
 });
@@ -123,7 +119,7 @@ const { value: password, meta: passwordMeta } = useField("password");
 const { handleSubmit, isSubmitting, errors } = useForm({
   validationSchema: schema,
   initialValues: {
-    name: "Ano",
+    name: "",
     password: "",
   },
 });
