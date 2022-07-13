@@ -47,14 +47,23 @@
                   <span v-if="isActiveForm('forgot')">Forgot Passord?</span>
                   <span v-if="isActiveForm('register')">Register</span>
                 </DialogTitle>
-                <div v-if="isActiveForm('login')" class="my-5 animate__animated animate__fadeIn">
-                  <Login @submitted="" />
+                <div
+                  v-if="isActiveForm('login')"
+                  class="my-5 animate__animated animate__fadeIn animate__faster"
+                >
+                  <Login />
                 </div>
-                <div v-if="isActiveForm('register')" class="mt-2 animate__animated animate__fadeIn">
-                  <Register @submitted="" />
+                <div
+                  v-if="isActiveForm('register')"
+                  class="mt-2 animate__animated animate__fadeIn animate__faster"
+                >
+                  <Register />
                 </div>
-                <div v-if="isActiveForm('forgot')" class="mt-2 animate__animated animate__fadeIn">
-                  <Forgot @submitted="" />
+                <div
+                  v-if="isActiveForm('forgot')"
+                  class="mt-2 animate__animated animate__fadeIn animate__faster"
+                >
+                  <Forgot />
                 </div>
               </div>
             </div>

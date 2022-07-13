@@ -1,4 +1,5 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
+import { useModals } from "@/stores/modals";
 
 export const useForms = defineStore("forms", {
   state: () => ({
@@ -8,21 +9,42 @@ export const useForms = defineStore("forms", {
   }),
   actions: {
     async submitForm(form: String, data: Object) {
+      const modals = useModals();
       console.log(form, data);
-      // const { data } = await $fetch("/api/auth/login", { method: "POST", body: {} }).catch(error => error.data);
+      switch (form) {
+        case "login":
+          // const { data } = await $fetch("/api/auth/signin", { method: "POST", body: {} }).catch(error => error.data);
+          break;
+        case "register":
+          // const { data } = await $fetch("/api/auth/signup", { method: "POST", body: {} }).catch(error => error.data);
+          break;
+        case "forgot":
+          // const { data } = await $fetch("/api/auth/forgot", { method: "POST", body: {} }).catch(error => error.data);
+          break;
+
+        default:
+          break;
+      }
+      modals.setAuthState(false);
     },
     toggleForm(form: string) {
       this.active = form;
     },
-    logout() {},
+    async logout() {
+      const { data } = await $fetch("/api/auth/signout", {
+        method: "POST",
+        body: {},
+      }).catch(error => error.data);
+      return data;
+    },
   },
   getters: {
     getUser: state => state.user,
+    isLoggedIn: state => !!state.token,
     activeForm: state => state.active,
     isActiveForm: state => {
       return (form: string) => state.active === form;
     },
-    isLoggedIn: state => !!state.token,
   },
 });
 

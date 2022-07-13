@@ -24,21 +24,23 @@ onMounted(() => {
     class="relative flex h-screen w-full flex-col items-center justify-center bg-slate-800 text-slate-50"
   >
     <Header />
-    <AddButton />
+    <!-- <AddButton /> -->
     <AddModal />
     <AuthModal />
     <!-- <ChapioModal /> -->
     <div
-      class="animate__animated animate__fadeInDown h-1/6 w-full flex flex-col justify-center items-center text-center"
+      class="h-1/6 w-full flex flex-col justify-center items-center text-center animate__animated animate__fadeInDown"
     >
       <div ref="headerRef" class="typing"></div>
       <p class="">Language can be quite misleading???</p>
     </div>
     <div class="flex h-5/6 w-full flex-row space-x-3 px-3">
-      <main class="animate__animated animate__fadeInLeft w-4/6 rounded shadow p-4">
+      <main class="w-4/6 rounded shadow p-4 animate__animated animate__fadeInLeft animate__faster">
         <slot />
       </main>
-      <aside class="animate__animated animate__fadeInRight w-2/6 rounded shadow p-3">
+      <aside
+        class="w-2/6 rounded shadow p-3 animate__animated animate__fadeInRight animate__faster"
+      >
         <slot name="aside" />
       </aside>
     </div>
