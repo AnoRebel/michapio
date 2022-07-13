@@ -1,22 +1,21 @@
 import { useBody } from "h3";
 
 import { User } from "@/server/models";
-import { generateToken, hashPass } from "@/server/utils";
+import { errorHandler, generateToken, hashPass } from "@/server/utils";
 
 export default defineEventHandler(async event => {
   const user = await useBody(event);
-  // TODO: username instead
-  const exists = await User.query().findOne("email", user.email);
+  const exists = await User.query().findOne("username", user.name);
   if (exists) {
     event.res.statusCode = 302;
-    return event.res.end(JSON.stringify({ message: "User Already Exists!" }));
+    return { code: 302, message: "User Already Exists!" };
   }
   const hashedPassword = await hashPass(user.password);
   try {
     const trans = await User.transaction(async trx => {
       const link = await User.query(trx)
         .insert({
-          username: user.username,
+          username: user.name,
           email: user.email,
           password: hashedPassword,
         })
@@ -26,15 +25,16 @@ export default defineEventHandler(async event => {
     const token = generateToken(trans);
     event.res.statusCode = 201;
     return {
-      user: {
+      code: 201,
+      message: "Success",
+      data: {
         id: trans.id,
         username: trans.username,
         email: trans.email,
+        token,
       },
-      token,
     };
   } catch (err) {
-    event.res.statusCode = 500;
-    event.res.end(JSON.stringify({ message: err.message }));
+    errorHandler(err, event.res);
   }
 });

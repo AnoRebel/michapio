@@ -10,7 +10,7 @@ export default defineEventHandler(async event => {
     // TODO: Check if soft-deleted and ask to renew
     if (exists) {
       event.res.statusCode = 302;
-      return { message: "Mchapio already exists", data: exists };
+      return { code: 302, message: "Mchapio already exists", data: exists };
     }
     let mchapio: Mchapio = {};
     if (body.user_id) {
@@ -27,7 +27,7 @@ export default defineEventHandler(async event => {
     event.res.statusCode = 201;
     return {
       code: event.res.statusCode,
-      message: "Mchapio Created",
+      message: "Mchapio Created!",
       data: added,
     };
   } catch (err) {

@@ -1,25 +1,22 @@
-import { useBody } from "h3";
 import { Mchapio } from "models";
 import { errorHandler } from "server/utils";
 
 export default defineEventHandler(async event => {
   const body = await useBody(event);
-  const code = event.context.params.code;
-  console.log(`Code: ${code} , Body: ${body}`);
+  const { id } = useQuery(event);
+  console.log(`Id: ${id} , Body: ${body}`);
   try {
-    const exists = await Mchapio.query().findOne("short", code);
+    const exists = await Mchapio.query().findById(id);
     console.log("Exists: ", exists);
     // TODO: Check if soft-deleted and ask to renew
     if (!exists) {
       event.res.statusCode = 404;
-      return event.res.end(
-        JSON.stringify({
-          code: event.res.statusCode,
-          message: "Mchapio doesn't exist",
-        })
-      );
+      return {
+        code: event.res.statusCode,
+        message: "Mchapio Doesn't Exist!",
+      };
     }
-    const patched = await Mchapio.query().findById(exists.id).patch(body).returning("*").first();
+    const patched = await Mchapio.query().findById(exists.id).patch(body);
     event.res.statusCode = 201;
     return {
       code: event.res.statusCode,

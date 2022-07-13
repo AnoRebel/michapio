@@ -9,7 +9,6 @@ export default defineEventHandler(async event => {
     switch (field) {
       case "username":
         const name = await User.query().findOne(field, value);
-        console.log("Name: ", name);
         if (!name) {
           return false;
         }
@@ -17,15 +16,13 @@ export default defineEventHandler(async event => {
         break;
       case "email":
         const email = await User.query().findOne(field, value);
-        console.log("Email: ", email);
         if (!email) {
           return false;
         }
         return true;
         break;
-
       default:
-        return true;
+        return false;
         break;
     }
   } catch (err) {

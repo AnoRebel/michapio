@@ -1,22 +1,16 @@
 import { useBody } from "h3";
 
 import { User } from "@/server/models";
-import { comparePass, errorHandler, generateToken } from "@/server/utils";
+import { errorHandler } from "@/server/utils";
 
 export default defineEventHandler(async event => {
   const user = await useBody(event);
   try {
-    const exists = await User.query().findOne("username", user.name);
+    const exists = await User.query().where("email", user.email).first();
     if (!exists) {
       event.res.statusCode = 404;
-      return { code: 404, message: "User Not Found!" };
+      return { code: 404, message: "Email Not Found" };
     }
-    const validPass = comparePass(user.password, exists.password);
-    if (!validPass) {
-      event.res.statusCode = 401;
-      return { code: 401, message: "Invalid Password!" };
-    }
-    const token = generateToken(exists);
     event.res.statusCode = 200;
     return {
       code: 200,
@@ -26,7 +20,6 @@ export default defineEventHandler(async event => {
         username: exists.username,
         email: exists.email,
       },
-      token,
     };
   } catch (err) {
     errorHandler(err, event.res);

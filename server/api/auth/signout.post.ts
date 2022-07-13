@@ -1,6 +1,7 @@
 import { useBody } from "h3";
 
 import { User } from "@/server/models";
+import { errorHandler } from "@/server/utils";
 
 export default defineEventHandler(async event => {
   const { id } = await useBody(event);
@@ -8,11 +9,11 @@ export default defineEventHandler(async event => {
     const user = await User.query().findById(id);
     if (!user) {
       event.res.statusCode = 404;
-      return event.res.end(JSON.stringify({ message: "User Not Found" }));
+      return { code: 404, message: "User Not Found!" };
     }
     event.res.statusCode = 201;
-    return { code: event.res.statusCode, message: "Successful" };
+    return { code: 201, message: "Successful" };
   } catch (err) {
-    event.res.end(err);
+    errorHandler(err, event.res);
   }
 });
