@@ -6,12 +6,13 @@
       >
         <div class="flex justify-start lg:w-0 lg:flex-1">
           <a href="#">
-            <span class="sr-only">Workflow</span>
-            <img
-              class="h-8 w-auto sm:h-10"
-              src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-              alt=""
-            />
+            <span class="sr-only">Home</span>
+            <!-- <img -->
+            <!--   class="h-8 w-auto sm:h-10" -->
+            <!--   src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" -->
+            <!--   alt="" -->
+            <!-- /> -->
+            <span class="w-auto">Home</span>
           </a>
         </div>
         <div class="-mr-2 -my-2 md:hidden">
@@ -23,8 +24,16 @@
           </PopoverButton>
         </div>
         <PopoverGroup as="nav" class="hidden md:flex space-x-10">
-          <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900"> Add </a>
-          <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900"> Sign In </a>
+          <a
+            href="#"
+            class="text-base font-medium text-gray-500 hover:text-gray-900"
+            @click="setAuthState(true)"
+          >
+            Add
+          </a>
+          <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900" @click="">
+            Sign In
+          </a>
         </PopoverGroup>
         <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
           <router-link
