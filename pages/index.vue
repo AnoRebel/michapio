@@ -2,6 +2,7 @@
   <div>
     <NuxtLayout name="main">
       Main Shit
+      <ChapioCard :data="{}" />
       <template #aside>Sidebar</template>
     </NuxtLayout>
   </div>

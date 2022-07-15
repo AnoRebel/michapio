@@ -4,9 +4,9 @@
       <span class="sr-only">Username</span>
       <UserIcon class="h-5 w-5 text-slate-800 absolute inset-y-2.5 items-center" />
       <input
-        v-model="name"
+        v-model="username"
         type="text"
-        name="name"
+        name="username"
         class="bg-transparent text-slate-800 placeholder:text-sm placeholder:italic placeholder:text-slate-500 block w-full py-2 px-9 border-0 border-b-2 border-slate-800/70 focus:ring-0 focus:border-slate-300"
         :class="{
           'border-green-500/70': nameMeta.dirty && nameMeta.valid,
@@ -135,7 +135,7 @@ const { handleSubmit, isSubmitting } = useForm({
   },
 });
 const {
-  value: name,
+  value: username,
   meta: nameMeta,
   errorMessage: nameError,
 } = useField(
