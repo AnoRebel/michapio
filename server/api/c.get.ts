@@ -1,5 +1,3 @@
-import { useQuery } from "h3";
-
 import { Mchapio } from "models";
 import { errorHandler } from "server/utils";
 

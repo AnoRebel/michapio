@@ -1,5 +1,3 @@
-import { useBody } from "h3";
-
 import { User } from "@/server/models";
 import { errorHandler, generateToken, hashPass } from "@/server/utils";
 
