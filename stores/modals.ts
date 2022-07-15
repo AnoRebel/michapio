@@ -1,35 +1,35 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
+import { useForms } from "@/stores/forms";
 
 export const useModals = defineStore("modals", {
   state: () => ({
-    add: false,
-    auth: false,
-    chapio: false,
+    open: false,
+    active: "",
   }),
   actions: {
-    toggleAuth() {
-      this.auth = !this.auth;
+    toggleModal(modal: string) {
+      this.open = false;
+      this.active = modal;
+      this.open = true;
     },
-    toggleAdd() {
-      this.add = !this.add;
-    },
-    toggleChapio() {
-      this.chapio = !this.chapio;
-    },
-    setAuthState(val: boolean) {
-      this.auth = val;
-    },
-    setAddState(val: boolean) {
-      this.add = val;
-    },
-    setChapioState(val: boolean) {
-      this.chapio = val;
+    setAuthState(val: boolean, form = undefined) {
+      const forms = useForms();
+      this.open = val;
+      if (form === "register" || form === "login" || form === "forgot") {
+        this.active = "auth";
+      } else {
+        this.active = form;
+      }
+      if (!val) this.active = undefined;
+      if (form) forms.toggleForm(form);
     },
   },
   getters: {
-    isAuthOpen: state => state.auth,
-    isAddOpen: state => state.add,
-    isChapiopen: state => state.chapio,
+    isOpen: state => state.open,
+    activeModal: state => state.active,
+    isActiveModal: state => {
+      return (modal: string) => state.active === modal;
+    },
   },
 });
 

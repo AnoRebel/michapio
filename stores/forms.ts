@@ -21,6 +21,9 @@ export const useForms = defineStore("forms", {
         case "forgot":
           // const { data } = await $fetch("/api/auth/forgot", { method: "POST", body: {} }).catch(error => error.data);
           break;
+        case "add":
+          // const { data } = await $fetch("/api/c", { method: "POST", body: {} }).catch(error => error.data);
+          break;
 
         default:
           break;
@@ -33,7 +36,7 @@ export const useForms = defineStore("forms", {
     async logout() {
       const { data } = await $fetch("/api/auth/signout", {
         method: "POST",
-        body: {},
+        body: { id: this.user.id },
       }).catch(error => error.data);
       return data;
     },
