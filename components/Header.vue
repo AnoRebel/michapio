@@ -28,7 +28,7 @@
             Add
           </NuxtLink>
           <NuxtLink
-            class="text-base font-medium text-slate-300 cursor-pointer hover:text-slate-100"
+            class="text-base font-medium text-slate-300 cursor-pointer rounded-md hover:text-slate-100"
             :class="{ 'active bg-slate-700 px-4 py-1.5 shadow-sm': isActiveModal('auth') }"
             @click="setAuthState(true, 'login')"
           >
