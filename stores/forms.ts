@@ -1,14 +1,14 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
 import { useModals } from "@/stores/modals";
+import { useAuth } from "@/stores/auth";
 
 export const useForms = defineStore("forms", {
   state: () => ({
-    user: "",
-    token: "",
     active: "login",
   }),
   actions: {
     async submitForm(form: String, data: Object) {
+      const auth = useAuth();
       const modals = useModals();
       console.log(form, data);
       switch (form) {
@@ -42,8 +42,6 @@ export const useForms = defineStore("forms", {
     },
   },
   getters: {
-    getUser: state => state.user,
-    isLoggedIn: state => !!state.token,
     activeForm: state => state.active,
     isActiveForm: state => {
       return (form: string) => state.active === form;

@@ -1,9 +1,25 @@
 <template>
   <div>
     <NuxtLayout name="main">
-      Main Shit
       <ChapioCard :data="{}" />
-      <template #aside>Sidebar</template>
+      <template #aside>
+        <div class="h-full w-full flex flex-col">
+          <div class="h-1/2 w-full flex">
+            <div class="w-full text-underline">Recent Michapio</div>
+            <div class="w-full flex flex-col">
+              <ul class="w-full">
+                <li class="w-full">
+                  <div class="w-full rounded-md shadow-md h-20 m-2 bg-slate-500">1</div>
+                </li>
+                <li class="w-full">
+                  <div class="w-full rounded-md shadow-md h-20 m-2 bg-slate-500">2</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="h-1/2 w-full flex"><div class="text-underline">Most Viewed</div></div>
+        </div>
+      </template>
     </NuxtLayout>
   </div>
 </template>
