@@ -1,6 +1,6 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
 
-export const useAuth = defineStore("auth", () => {
+export const useAuth = defineStore("auth", {
   state: () => ({
     user: {},
     token: "",
@@ -30,4 +30,6 @@ export const useAuth = defineStore("auth", () => {
 });
 
 // Make sure to pass the right store definition, `useAuth` in this case
-if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(useAuth, import.meta.hot));
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useAuth, import.meta.hot));
+}
