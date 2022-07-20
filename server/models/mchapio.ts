@@ -4,6 +4,7 @@ class Mchapio extends BaseModel {
   id!: number;
   chapio!: string;
   origin!: string;
+  views: number;
   description?: string;
   deleted?: boolean;
   user_id: IUser["id"];
@@ -32,6 +33,7 @@ class Mchapio extends BaseModel {
         id: { type: "integer" },
         chapio: { type: "string", minLength: 0, maxLength: 255 },
         origin: { type: "string", minLength: 0, maxLength: 255 },
+        views: { type: "integer", default: 0 },
         description: { type: "string", minLength: 0, maxLength: 1024 },
         deleted: { type: "boolean", default: false },
       },
@@ -45,7 +47,7 @@ class Mchapio extends BaseModel {
         modelClass: "User",
         join: {
           from: "users.id",
-          to: "links.user_id",
+          to: "michapio.user_id",
         },
       },
     };

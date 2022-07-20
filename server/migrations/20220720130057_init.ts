@@ -15,6 +15,7 @@ export async function up(knex: Knex): Promise<void> {
     table.increments("id").primary();
     table.string("chapio", 255).notNullable();
     table.string("origin", 255).notNullable();
+    table.integer("views").defaultTo(0).notNullable();
     table.string("description", 1024).nullable();
     table.boolean("deleted").defaultTo(false);
     table.integer("user_id").references("id").inTable("users").onDelete("SET NULL").nullable();

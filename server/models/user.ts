@@ -41,7 +41,7 @@ class User extends BaseModel {
         relation: BaseModel.BelongsToOneRelation,
         modelClass: "Mchapio",
         join: {
-          from: "links.user_id",
+          from: "michapio.user_id",
           to: "users.id",
         },
       },
