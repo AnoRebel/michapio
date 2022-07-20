@@ -4,9 +4,9 @@
       <ChapioCard :data="{}" />
       <template #aside>
         <div class="h-full w-full flex flex-col">
-          <div class="h-1/2 w-full flex">
+          <div class="h-1/2 w-full flex flex-col">
             <div class="w-full text-underline">Recent Michapio</div>
-            <div class="w-full flex flex-col">
+            <div class="w-full flex">
               <ul class="w-full">
                 <li class="w-full">
                   <div class="w-full rounded-md shadow-md h-20 m-2 bg-slate-500">1</div>
@@ -17,7 +17,9 @@
               </ul>
             </div>
           </div>
-          <div class="h-1/2 w-full flex"><div class="text-underline">Most Viewed</div></div>
+          <div class="h-1/2 w-full flex flex-col">
+            <div class="text-underline">Most Viewed</div>
+          </div>
         </div>
       </template>
     </NuxtLayout>
