@@ -1,8 +1,10 @@
+import { dirname, resolve } from "path";
 import Knex from "knex";
 import { Model } from "objection";
 
 import knexConfig from "@/server/knexfile";
 
+const __dirname = resolve(dirname("."), "server", "models");
 const connection = Knex(knexConfig[process.env.NODE_ENV || "development"]);
 Model.knex(connection);
 

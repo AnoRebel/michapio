@@ -17,11 +17,13 @@ class Mchapio extends BaseModel {
   }
 
   $beforeInsert() {
-    this.created_at = new Date(Date.now()).toISOString().replace("T", " ").replace("Z", ""); // Date.now();
+    this.created_at = new Date(Date.now()).toISOString().replace("T", " ")
+      .replace("Z", ""); // Date.now();
   }
 
   $beforeUpdate() {
-    this.updated_at = new Date(Date.now()).toISOString().replace("T", " ").replace("Z", ""); // Date.now();
+    this.updated_at = new Date(Date.now()).toISOString().replace("T", " ")
+      .replace("Z", ""); // Date.now();
   }
 
   static get jsonSchema() {
