@@ -6,16 +6,13 @@ export default defineEventHandler(async event => {
   try {
     const exists = await User.query().findOne("username", user.name);
     if (!exists) {
-      event.res.statusCode = 404;
       return { code: 404, message: "User Not Found!" };
     }
     const validPass = comparePass(user.password, exists.password);
     if (!validPass) {
-      event.res.statusCode = 401;
       return { code: 401, message: "Invalid Password!" };
     }
     const token = generateToken(exists);
-    event.res.statusCode = 200;
     return {
       code: 200,
       message: "Success",

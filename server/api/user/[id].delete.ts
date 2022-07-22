@@ -3,20 +3,17 @@ import { errorHandler } from "server/utils";
 
 export default defineEventHandler(async event => {
   const { id } = useQuery(event);
-  console.log(id);
   try {
     const exists = await User.query().findById(id);
     if (!exists) {
-      event.res.statusCode = 404;
       return {
-        code: event.res.statusCode,
+        code: 404,
         message: `No User with this id: ${id} found!`,
       };
     }
     await User.query().deleteById(id);
-    event.res.statusCode = 201;
     return {
-      code: event.res.statusCode,
+      code: 201,
       message: "Successfully Deleted User!",
     };
   } catch (err) {

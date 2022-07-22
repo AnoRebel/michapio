@@ -6,10 +6,8 @@ export default defineEventHandler(async event => {
   try {
     const exists = await User.query().where("email", user.email).first();
     if (!exists) {
-      event.res.statusCode = 404;
       return { code: 404, message: "Email Not Found" };
     }
-    event.res.statusCode = 200;
     return {
       code: 200,
       message: "Success",

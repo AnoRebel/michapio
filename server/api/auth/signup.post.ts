@@ -5,7 +5,6 @@ export default defineEventHandler(async event => {
   const user = await useBody(event);
   const exists = await User.query().findOne("username", user.name);
   if (exists) {
-    event.res.statusCode = 302;
     return { code: 302, message: "User Already Exists!" };
   }
   const hashedPassword = await hashPass(user.password);
@@ -21,7 +20,6 @@ export default defineEventHandler(async event => {
       return link;
     });
     const token = generateToken(trans);
-    event.res.statusCode = 201;
     return {
       code: 201,
       message: "Success",

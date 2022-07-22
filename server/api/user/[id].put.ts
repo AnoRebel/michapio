@@ -8,16 +8,14 @@ export default defineEventHandler(async event => {
   try {
     const exists = await User.query().findById(id);
     if (!exists) {
-      event.res.statusCode = 404;
       return {
-        code: event.res.statusCode,
+        code: 404,
         message: `No User with this id: ${id} found!`,
       };
     }
     const user = await User.query().findById(id).patch(body);
-    event.res.statusCode = 201;
     return {
-      code: event.res.statusCode,
+      code: 201,
       message: "Successfully Updated User!",
       data: user,
     };

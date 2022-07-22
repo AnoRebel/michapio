@@ -2,15 +2,13 @@ import { Mchapio } from "models";
 import { errorHandler } from "server/utils";
 
 export default defineEventHandler(async event => {
-  const params = useQuery(event);
-  console.log(params);
+  const { id } = useQuery(event);
   try {
-    const mchapio = await Mchapio.query().findById(params.id);
+    const mchapio = await Mchapio.query().findById(id);
     // TODO: Check if soft-deleted and ask to renew
     if (!mchapio) {
-      event.res.statusCode = 404;
       return {
-        code: event.res.statusCode,
+        code: 404,
         message: "Chapio doesn't exist",
       };
     }

@@ -8,7 +8,6 @@ export default defineEventHandler(async event => {
     const exists = await Mchapio.query().findById(body.id);
     // TODO: Check if soft-deleted and ask to renew
     if (exists) {
-      event.res.statusCode = 302;
       return { code: 302, message: "Mchapio already exists", data: exists };
     }
     let mchapio: Mchapio = {};
@@ -25,7 +24,7 @@ export default defineEventHandler(async event => {
     const added = await Mchapio.query().insert(mchapio).returning("*").first();
     event.res.statusCode = 201;
     return {
-      code: event.res.statusCode,
+      code: 201,
       message: "Mchapio Created!",
       data: added,
     };

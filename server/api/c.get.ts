@@ -2,23 +2,24 @@ import { Mchapio } from "models";
 import { errorHandler } from "server/utils";
 
 export default defineEventHandler(async event => {
-  const { deleted } = useQuery(event);
-  console.log(deleted);
+  const { deleted, recent, views } = useQuery(event);
   try {
     let michapio: Mchapio[];
-    if (deleted) {
-      michapio = await Mchapio.query().where("deleted", deleted);
+    if (views) {
+      michapio = await Mchapio.query()
+        .where("deleted", deleted ?? false)
+        .orderBy("views", "desc");
     } else {
-      michapio = await Mchapio.query();
+      michapio = await Mchapio.query().where("deleted", deleted ?? false);
     }
     if (!michapio.length) {
-      event.res.statusCode = 404;
+      // event.res.statusCode = 404;
       return {
-        code: event.res.statusCode,
+        code: 404,
         message: "No Michapio Available!",
       };
     }
-    event.res.statusCode = 200;
+    // event.res.statusCode = 200;
     return {
       code: event.res.statusCode,
       message: "Successful",
