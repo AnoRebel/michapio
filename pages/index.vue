@@ -1,26 +1,12 @@
 <template>
   <div>
     <NuxtLayout name="main">
-      <ChapioCard :data="{}" />
+      <div class="grid gaps-4 grid-cols-1 sm:grid-cols-2">
+        <ChapioCard :data="{}" />
+        <ChapioCard :data="{}" />
+      </div>
       <template #aside>
-        <div class="h-full w-full flex flex-col">
-          <div class="h-1/2 w-full flex flex-col">
-            <div class="w-full text-underline">Recent Michapio</div>
-            <div class="w-full flex">
-              <ul class="w-full">
-                <li class="w-full">
-                  <div class="w-full rounded-md shadow-md h-20 m-2 bg-slate-500">1</div>
-                </li>
-                <li class="w-full">
-                  <div class="w-full rounded-md shadow-md h-20 m-2 bg-slate-500">2</div>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="h-1/2 w-full flex flex-col">
-            <div class="text-underline">Most Viewed</div>
-          </div>
-        </div>
+        <SideBar />
       </template>
     </NuxtLayout>
   </div>
