@@ -53,6 +53,7 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/color-mode",
     "@pinia/nuxt",
+    "@nuxt/image-edge",
     "nuxt-lodash",
     [
       "@nuxtjs/i18n",
@@ -67,7 +68,6 @@ export default defineNuxtConfig({
       },
     ],
     "@vueuse/nuxt",
-    "@vueuse/motion/nuxt",
     "@nuxtjs/eslint-module",
   ],
   build: {
@@ -82,28 +82,14 @@ export default defineNuxtConfig({
     transpile: ["@headlessui/vue", "@heroicons/vue"],
   },
   css: ["animate.css/animate.min.css", "@/assets/main.scss"],
+  // image: {
+  //   dir: "assets/images", // "static" // default
+  // },
   vueuse: {
     ssrHandlers: true,
   },
   colorMode: {
     classSuffix: "",
-  },
-  // Configure your animations
-  motions: {
-    directives: {
-      "pop-bottom": {
-        initial: {
-          scale: 0,
-          opacity: 0,
-          y: 100,
-        },
-        visible: {
-          scale: 1,
-          opacity: 1,
-          y: 0,
-        },
-      },
-    },
   },
   publicRuntimeconfig: {
     BASE_URL: process.env.NUXT_PUBLIC_BASE_URL,
