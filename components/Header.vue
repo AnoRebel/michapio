@@ -7,8 +7,7 @@
         <div class="flex justify-start lg:w-0 flex-1">
           <NuxtLink class="cursor-pointer">
             <span class="sr-only">Home</span>
-            <!-- <span ref="titleRef" class="w-auto">Home</span> -->
-            <span ref="titleRef" class="w-auto fw-bold text-xl"></span>
+            <span ref="titleRef" class="w-auto typing"></span>
           </NuxtLink>
         </div>
         <div class="-mr-2 -my-2 md:hidden">
@@ -159,3 +158,22 @@ onMounted(() => {
 const { setAuthState } = useModals();
 const { isActiveModal } = storeToRefs(useModals());
 </script>
+
+<style lang="scss">
+.typing {
+  @apply relative flex whitespace-pre-wrap text-2xl;
+  &::after {
+    content: "";
+    @apply absolute right-[1rem] w-px mr-[-1.2rem] h-full border-r-2 border-slate-100;
+    animation: blink 0.5s infinite ease;
+  }
+}
+@keyframes blink {
+  0% {
+    @apply opacity-0;
+  }
+  100% {
+    @apply opacity-100;
+  }
+}
+</style>
