@@ -1,4 +1,4 @@
-import TypeWriter from "./TypeWriter";
+import TypeWriter from "@/composables/typing/TypeWriter";
 
 const useTyping = (element: HTMLElement, options: Object) => {
   const typer = new TypeWriter(element, options);
