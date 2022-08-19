@@ -43,7 +43,6 @@
   },
   "dependencies": {
     "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge",
-    "@nuxtjs/i18n#next": "^7.2.3",
     "@pinia/nuxt": "^0.4.0",
     "animate.css": "^4.1.1",
     "argon2": "^0.28.7",
