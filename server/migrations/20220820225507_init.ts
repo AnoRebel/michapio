@@ -21,6 +21,20 @@ export async function up(knex: Knex): Promise<void> {
     table.integer("user_id").references("id").inTable("users").onDelete("SET NULL").nullable();
     table.timestamps(true, true);
   });
+  await knex.schema.createTableIfNotExists("likes", (table: Knex.TableBuilder) => {
+    table.increments("id").primary();
+    table.integer("user_id").references("id").inTable("users").onDelete("CASCADE").index();
+    table.integer("chapio_id").references("id").inTable("michapio").onDelete("CASCADE").index();
+    table.boolean("status").defaultTo(false);
+    table.timestamps(true, true);
+  });
+  await knex.schema.createTableIfNotExists("favourites", (table: Knex.TableBuilder) => {
+    table.increments("id").primary();
+    table.integer("user_id").references("id").inTable("users").onDelete("CASCADE").index();
+    table.integer("chapio_id").references("id").inTable("michapio").onDelete("CASCADE").index();
+    table.boolean("status").defaultTo(false);
+    table.timestamps(true, true);
+  });
 }
 
 /**
@@ -28,6 +42,8 @@ export async function up(knex: Knex): Promise<void> {
  * @returns { Promise<void> }
  */
 export async function down(knex: Knex): Promise<any> {
-  await knex.schema.dropTableIfExists("users");
+  await knex.schema.dropTableIfExists("favourites");
+  await knex.schema.dropTableIfExists("likes");
   await knex.schema.dropTableIfExists("michapio");
+  await knex.schema.dropTableIfExists("users");
 }
