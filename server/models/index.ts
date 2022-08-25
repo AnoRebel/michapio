@@ -34,6 +34,7 @@ interface ILike {
   created_at?: String;
   updated_at?: String;
 }
+
 interface IFavourite {
   id: Number;
   status: Boolean;

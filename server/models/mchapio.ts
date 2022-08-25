@@ -39,7 +39,7 @@ class Mchapio extends BaseModel {
         description: { type: "string", minLength: 0, maxLength: 1024 },
         deleted: { type: "boolean", default: false },
         user_id: { type: "integer" },
-        user: { type: IUser },
+        user: { type: "IUser" },
       },
     };
   }
