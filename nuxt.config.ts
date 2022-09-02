@@ -81,7 +81,7 @@ export default defineNuxtConfig({
     },
     transpile: ["@headlessui/vue", "@heroicons/vue"],
   },
-  css: ["animate.css/animate.min.css", "@/assets/main.scss"],
+  css: ["animate.css/animate.min.css", "v3-infinite-loading/lib/style.css", "@/assets/main.scss"],
   // image: {
   //   dir: "assets/images", // "static" // default
   // },

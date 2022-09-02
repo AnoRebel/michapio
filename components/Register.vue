@@ -15,7 +15,7 @@
         placeholder="Username"
         required
       />
-      <RefreshIcon
+      <ArrowPathIcon
         v-if="nameMeta.pending"
         class="h-5 w-5 text-slate-800 absolute right-0 inset-y-2.5 items-center animate-spin"
       />
@@ -40,7 +40,7 @@
         placeholder="Email Address"
         required
       />
-      <RefreshIcon
+      <ArrowPathIcon
         v-if="emailMeta.pending"
         class="h-5 w-5 text-slate-800 absolute right-0 inset-y-2.5 items-center animate-spin"
       />
@@ -70,7 +70,7 @@
         class="h-5 w-5 text-slate-800 absolute right-[-5.5rem] inset-y-2.5 items-center cursor-pointer animate__animated animate__fadeIn animate__faster"
         @click="isPass = !isPass"
       />
-      <EyeOffIcon
+      <EyeSlashIcon
         v-else
         class="h-5 w-5 text-slate-800 absolute right-1 inset-y-2.5 items-center cursor-pointer animate__animated animate__fadeIn animate__faster"
         @click="isPass = !isPass"
@@ -139,11 +139,11 @@ import {
   UserIcon,
   LockClosedIcon,
   EyeIcon,
-  EyeOffIcon,
-  RefreshIcon,
+  EyeSlashIcon,
+  ArrowPathIcon,
   CheckIcon,
-} from "@heroicons/vue/outline";
-import { AtSymbolIcon } from "@heroicons/vue/solid";
+} from "@heroicons/vue/24/outline";
+import { AtSymbolIcon } from "@heroicons/vue/24/solid";
 import { useField, useForm } from "vee-validate";
 import { string } from "yup";
 import { storeToRefs } from "pinia";

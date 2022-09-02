@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChatAltIcon, PlusSmIcon } from "@heroicons/vue/solid";
+import { ChatBubbleLeftEllipsisIcon, PlusSmallIcon } from "@heroicons/vue/24/solid";
 const whoToFollow = [
   {
     name: "Leonard Krasner",
@@ -57,7 +57,10 @@ const trendingPosts = [
                       type="button"
                       class="inline-flex items-center px-3 py-0.5 rounded-full bg-rose-50 text-sm font-medium text-rose-700 hover:bg-rose-100"
                     >
-                      <PlusSmIcon class="-ml-1 mr-0.5 h-5 w-5 text-rose-400" aria-hidden="true" />
+                      <PlusSmallIcon
+                        class="-ml-1 mr-0.5 h-5 w-5 text-rose-400"
+                        aria-hidden="true"
+                      />
                       <span> Follow </span>
                     </button>
                   </div>
@@ -97,7 +100,7 @@ const trendingPosts = [
                           type="button"
                           class="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
                         >
-                          <ChatAltIcon class="h-5 w-5" aria-hidden="true" />
+                          <ChatBubbleLeftEllipsisIcon class="h-5 w-5" aria-hidden="true" />
                           <span class="font-medium text-gray-900">{{ post.comments }}</span>
                         </button>
                       </span>

@@ -55,7 +55,7 @@
                 :href="`mailto:${person.email}`"
                 class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
               >
-                <MailIcon class="w-5 h-5 text-gray-400" aria-hidden="true" />
+                <EnvelopeIcon class="w-5 h-5 text-gray-400" aria-hidden="true" />
                 <span class="ml-3">Email</span>
               </a>
             </div>
@@ -76,7 +76,7 @@
 </template>
 
 <script setup lang="ts">
-import { MailIcon, PhoneIcon } from "@heroicons/vue/solid";
+import { EnvelopeIcon, PhoneIcon } from "@heroicons/vue/24/solid";
 
 const props = defineProps({
   data: {

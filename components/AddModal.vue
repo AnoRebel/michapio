@@ -78,7 +78,7 @@
                 </label>
                 <label name="original" class="relative w-full">
                   <span class="sr-only">Instead Of:</span>
-                  <AnnotationIcon
+                  <ChatBubbleBottomCenterTextIcon
                     class="h-5 w-5 text-slate-800 absolute inset-y-2.5 items-center"
                   />
                   <input
@@ -160,7 +160,7 @@ import {
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
-import { UserIcon, HashtagIcon, AnnotationIcon } from "@heroicons/vue/outline";
+import { UserIcon, HashtagIcon, ChatBubbleBottomCenterTextIcon } from "@heroicons/vue/24/outline";
 import { useField, useForm } from "vee-validate";
 import { string } from "yup";
 import { storeToRefs } from "pinia";

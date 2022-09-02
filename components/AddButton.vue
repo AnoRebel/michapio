@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PlusIcon } from "@heroicons/vue/solid";
+import { PlusIcon } from "@heroicons/vue/24/solid";
 import { storeToRefs } from "pinia";
 import { useModals } from "@/stores/modals";
 

@@ -15,7 +15,7 @@
             class="bg-white rounded-md p-2 inline-flex items-center justify-center text-slate-400 hover:text-slate-500 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
           >
             <span class="sr-only">Open menu</span>
-            <MenuIcon class="h-6 w-6" aria-hidden="true" />
+            <Bars3Icon class="h-6 w-6" aria-hidden="true" />
           </PopoverButton>
         </div>
         <PopoverGroup as="nav" class="hidden md:flex space-x-10">
@@ -40,7 +40,7 @@
             target="_blank"
             class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 transition transform active:scale-90 hover:bg-indigo-700"
           >
-            <span>Github</span> <ExternalLinkIcon class="h-5 w-5 mx-1" />
+            <span>Github</span> <ArrowTopRightOnSquareIcon class="h-5 w-5 mx-1" />
           </NuxtLink>
         </div>
       </div>
@@ -72,7 +72,7 @@
                   class="bg-white rounded-md p-2 inline-flex items-center justify-center text-slate-400 hover:text-slate-500 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                 >
                   <span class="sr-only">Close menu</span>
-                  <XIcon class="h-6 w-6" aria-hidden="true" />
+                  <XMarkIcon class="h-6 w-6" aria-hidden="true" />
                 </PopoverButton>
               </div>
             </div>
@@ -94,7 +94,7 @@
                   target="_blank"
                   class="-m-3 p-3 flex items-center rounded-md hover:bg-slate-50"
                 >
-                  <ExternalLinkIcon
+                  <ArrowTopRightOnSquareIcon
                     class="flex-shrink-0 h-6 w-6 text-indigo-600"
                     aria-hidden="true"
                   />
@@ -131,8 +131,8 @@
 
 <script setup lang="ts">
 import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from "@headlessui/vue";
-import { MenuIcon, XIcon, PlusCircleIcon } from "@heroicons/vue/outline";
-import { ExternalLinkIcon } from "@heroicons/vue/solid";
+import { Bars3Icon, XMarkIcon, PlusCircleIcon } from "@heroicons/vue/24/outline";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/vue/24/solid";
 
 import { storeToRefs } from "pinia";
 import { useModals } from "@/stores/modals";

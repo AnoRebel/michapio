@@ -36,7 +36,7 @@
                   @click="open = false"
                 >
                   <span class="sr-only">Close</span>
-                  <XIcon class="h-6 w-6" aria-hidden="true" />
+                  <XMarkIcon class="h-6 w-6" aria-hidden="true" />
                 </button>
               </div>
               <div class="sm:flex sm:items-start">
@@ -84,7 +84,7 @@
 
 <script setup>
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from "@headlessui/vue";
-import { ExclamationIcon, XIcon } from "@heroicons/vue/outline";
+import { ExclamationIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 
 const open = ref(true);
 </script>

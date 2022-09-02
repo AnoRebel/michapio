@@ -15,7 +15,7 @@
         placeholder="Email Address"
         required
       />
-      <RefreshIcon
+      <ArrowPathIcon
         v-if="emailMeta.pending"
         class="h-5 w-5 text-slate-800 absolute right-0 inset-y-2.5 items-center animate-spin"
       />
@@ -83,8 +83,8 @@
 </template>
 
 <script setup lang="ts">
-import { RefreshIcon, CheckIcon } from "@heroicons/vue/outline";
-import { AtSymbolIcon } from "@heroicons/vue/solid";
+import { ArrowPathIcon, CheckIcon } from "@heroicons/vue/24/outline";
+import { AtSymbolIcon } from "@heroicons/vue/24/solid";
 import { useField, useForm } from "vee-validate";
 import { string } from "yup";
 import { storeToRefs } from "pinia";
