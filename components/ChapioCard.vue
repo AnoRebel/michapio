@@ -1,104 +1,117 @@
 <template>
   <!-- TODO: Filter NSFW content -->
-  <div class="w-full">
-    <div class="my-3 flex h-[4rem] min-h-[5rem] w-96 flex-row rounded-md bg-purple-900">
-      <div class="group h-full w-1/5 pr-1 transition duration-300 ease-in-out hover:p-0.5">
-        <div class="h-full w-full rounded-l-md bg-black/70 group-hover:rounded-full"></div>
+  <article :aria-labelledby="'chapio-title-' + chapio.id">
+    <div>
+      <div class="flex space-x-3">
+        <div class="flex-shrink-0">
+          <img class="h-10 w-10 rounded-full" :src="chapio.author.imageUrl" alt="" />
+        </div>
+        <div class="min-w-0 flex-1">
+          <p class="text-sm font-medium text-gray-900">
+            <NuxtLink :to="chapio.author.href" class="hover:underline">
+              {{ chapio.author.name }}
+            </NuxtLink>
+          </p>
+          <p class="text-sm text-gray-500">
+            <NuxtLink :to="chapio.href" class="hover:underline">
+              <time :datetime="chapio.datetime">{{ chapio.date }}</time>
+            </NuxtLink>
+          </p>
+        </div>
+        <div class="flex-shrink-0 self-center flex">
+          <Menu as="div" class="relative inline-block text-left">
+            <div>
+              <MenuButton
+                class="-m-2 p-2 rounded-full flex items-center text-gray-400 hover:text-gray-600"
+              >
+                <span class="sr-only">Open options</span>
+                <EllipsisVerticalIcon class="h-5 w-5" aria-hidden="true" />
+              </MenuButton>
+            </div>
+
+            <transition
+              enter-active-class="transition ease-out duration-100"
+              enter-from-class="transform opacity-0 scale-95"
+              enter-to-class="transform opacity-100 scale-100"
+              leave-active-class="transition ease-in duration-75"
+              leave-from-class="transform opacity-100 scale-100"
+              leave-to-class="transform opacity-0 scale-95"
+            >
+              <MenuItems
+                class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+              >
+                <div class="py-1">
+                  <MenuItem v-slot="{ active }">
+                    <NuxtLink
+                      to="#"
+                      :class="[
+                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                        'flex px-4 py-2 text-sm',
+                      ]"
+                    >
+                      <StarIcon class="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+                      <span>Add to favorites</span>
+                    </NuxtLink>
+                  </MenuItem>
+                  <MenuItem v-slot="{ active }">
+                    <NuxtLink
+                      to="#"
+                      :class="[
+                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                        'flex px-4 py-2 text-sm',
+                      ]"
+                    >
+                      <CodeBracketIcon class="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+                      <span>Embed</span>
+                    </NuxtLink>
+                  </MenuItem>
+                </div>
+              </MenuItems>
+            </transition>
+          </Menu>
+        </div>
       </div>
-      <div
-        class="flex h-full w-3/5 flex-grow flex-col text-sm hover:cursor-pointer"
-        @click="showModal"
-      >
-        <div>Chapio</div>
-        <div>Original</div>
+      <h2 :id="'chapio-title-' + chapio.id" class="mt-4 text-base font-medium text-gray-900">
+        {{ chapio.title }}
+      </h2>
+    </div>
+    <div class="mt-2 text-sm text-gray-700 space-y-4" v-html="chapio.body" />
+    <div class="mt-6 flex justify-between space-x-8">
+      <div class="flex space-x-6">
+        <span class="inline-flex items-center text-sm">
+          <button type="button" class="inline-flex space-x-2 text-gray-400 hover:text-gray-500">
+            <HandThumbUpIcon class="h-5 w-5" aria-hidden="true" />
+            <span class="font-medium text-gray-900">{{ chapio.likes }}</span>
+            <span class="sr-only">likes</span>
+          </button>
+        </span>
       </div>
-      <div class="group h-full w-1/5 transition duration-300 ease-in-out hover:scale-100">
-        <button
-          class="h-1/2 w-full rounded-tr-md bg-gradient-to-r from-transparent via-red-500 to-red-600 hover:bg-red-600 active:scale-90 group-hover:shadow-sm"
-        >
-          X
-        </button>
-        <button
-          class="h-1/2 w-full rounded-br-md bg-gradient-to-r from-transparent via-green-600 to-green-600 hover:bg-green-600 active:scale-90 group-hover:shadow-sm"
-        >
-          T
-        </button>
+      <div class="flex text-sm">
+        <span class="inline-flex items-center text-sm">
+          <button type="button" class="inline-flex space-x-2 text-gray-400 hover:text-gray-500">
+            <ShareIcon class="h-5 w-5" aria-hidden="true" />
+            <span class="font-medium text-gray-900">Share</span>
+          </button>
+        </span>
       </div>
     </div>
-    <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      <li
-        v-for="person in people"
-        :key="person.email"
-        class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200"
-      >
-        <div class="w-full flex items-center justify-between p-6 space-x-6">
-          <div class="flex-1 truncate">
-            <div class="flex items-center space-x-3">
-              <h3 class="text-gray-900 text-sm font-medium truncate">{{ person.name }}</h3>
-              <span
-                class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full"
-                >{{ person.role }}</span
-              >
-            </div>
-            <p class="mt-1 text-gray-500 text-sm truncate">{{ person.title }}</p>
-          </div>
-          <img
-            class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0"
-            :src="person.imageUrl"
-            alt=""
-          />
-        </div>
-        <div>
-          <div class="-mt-px flex divide-x divide-gray-200">
-            <div class="w-0 flex-1 flex">
-              <a
-                :href="`mailto:${person.email}`"
-                class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
-              >
-                <EnvelopeIcon class="w-5 h-5 text-gray-400" aria-hidden="true" />
-                <span class="ml-3">Email</span>
-              </a>
-            </div>
-            <div class="-ml-px w-0 flex-1 flex">
-              <a
-                :href="`tel:${person.telephone}`"
-                class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
-              >
-                <PhoneIcon class="w-5 h-5 text-gray-400" aria-hidden="true" />
-                <span class="ml-3">Call</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
+  </article>
 </template>
 
 <script setup lang="ts">
-import { EnvelopeIcon, PhoneIcon } from "@heroicons/vue/24/solid";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import {
+  CodeBracketIcon,
+  EllipsisVerticalIcon,
+  ShareIcon,
+  StarIcon,
+  HandThumbUpIcon,
+} from "@heroicons/vue/24/solid";
 
-const props = defineProps({
-  data: {
+defineProps({
+  chapio: {
     type: Object,
     required: true,
   },
 });
-
-const people = [
-  {
-    name: "Jane Cooper",
-    title: "Regional Paradigm Technician",
-    role: "Admin",
-    email: "janecooper@example.com",
-    telephone: "+1-202-555-0170",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-  },
-  // More people...
-];
-
-const showModal = () => {
-  console.log(props);
-};
 </script>
