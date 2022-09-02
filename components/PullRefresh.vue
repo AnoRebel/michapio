@@ -1,14 +1,14 @@
 <template>
-  <div class="lb-pull-refresh" ref="root">
+  <div class="pull-refresh" ref="root">
     <div
-      class="lb-pull-refresh__track"
+      class="pull-refresh__track"
       :style="trackStyle"
       @touchstart="onTouchStart"
       @touchmove="onTouchMove"
       @touchend="onTouchEnd"
       @touchcancel="onTouchend"
     >
-      <div :style="getHeadStyle" class="lb-pull-refresh__head">
+      <div :style="getHeadStyle" class="pull-refresh__head">
         <div v-if="TEXT_STATUS.includes(status)" class="pull-text">{{ getStatusText() }}</div>
         <div v-if="status === 'loading'" class="pull-text-loading">{{ loadingText }}</div>
       </div>
@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-// import { ref, watch, reactive, nextTick, computed, defineComponent, toRefs } from 'vue';
 const DEFAULT_HEAD_HEIGHT = 50;
 
 const getScrollTop = el => {
@@ -39,19 +38,19 @@ const props = defineProps({
   disabled: Boolean,
   successText: {
     type: String,
-    default: "刷新成功",
+    default: "Refresh successful",
   },
   pullingText: {
     type: String,
-    default: "下拉即可刷新...",
+    default: "Pull down to refresh...",
   },
   loosingText: {
     type: String,
-    default: "释放即可刷新...",
+    default: "Release to refresh...",
   },
   loadingText: {
     type: String,
-    default: "加载中...",
+    default: "Loading...",
   },
   pullDistance: [Number, String],
   modelValue: {
@@ -223,32 +222,32 @@ const { status, distance, duration } = toRefs(state);
 
 <style lang="scss">
 :root {
-  --lb-pull-refresh-head-height: 50px;
-  --lb-pull-refresh-head-font-size: 14px;
-  --lb-pull-refresh-head-text-color: #969696;
-  --lb-pull-refresh-loading-icon-size: 16px;
+  --pull-refresh-head-height: 50px;
+  --pull-refresh-head-font-size: 14px;
+  --pull-refresh-head-text-color: #969696;
+  --pull-refresh-loading-icon-size: 16px;
 }
 
-.lb-pull-refresh {
+.pull-refresh {
   overflow: hidden;
   user-select: none;
   height: 100%;
 }
-.lb-pull-refresh__track {
+.pull-refresh__track {
   position: relative;
   height: 100%;
   transition-property: transform;
 }
 
-.lb-pull-refresh__head {
+.pull-refresh__head {
   position: absolute;
   left: 0;
   width: 100%;
-  height: var(--lb-pull-refresh-head-height);
+  height: var(--pull-refresh-head-height);
   overflow: hidden;
-  color: var(--lb-pull-refresh-head-text-color);
-  font-size: var(--lb-pull-refresh-head-font-size);
-  line-height: var(--lb-pull-refresh-head-height);
+  color: var(--pull-refresh-head-text-color);
+  font-size: var(--pull-refresh-head-font-size);
+  line-height: var(--pull-refresh-head-height);
   text-align: center;
   transform: translateY(-100%);
 }
