@@ -53,18 +53,6 @@
                       <span>Add to favorites</span>
                     </NuxtLink>
                   </MenuItem>
-                  <MenuItem v-slot="{ active }">
-                    <NuxtLink
-                      to="#"
-                      :class="[
-                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                        'flex px-4 py-2 text-sm',
-                      ]"
-                    >
-                      <CodeBracketIcon class="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
-                      <span>Embed</span>
-                    </NuxtLink>
-                  </MenuItem>
                 </div>
               </MenuItems>
             </transition>
@@ -92,6 +80,10 @@
             <ShareIcon class="h-5 w-5" aria-hidden="true" />
             <span class="font-medium text-gray-900">Share</span>
           </button>
+          <button type="button" class="inline-flex space-x-2 text-gray-400 hover:text-gray-500">
+            <StarIcon class="h-5 w-5" aria-hidden="true" />
+            <span class="font-medium">Add to favorites</span>
+          </button>
         </span>
       </div>
     </div>
@@ -101,7 +93,6 @@
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import {
-  CodeBracketIcon,
   EllipsisVerticalIcon,
   ShareIcon,
   StarIcon,

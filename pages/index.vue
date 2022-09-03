@@ -29,7 +29,6 @@ const chapios = [
     title: "What would you have done differently if you ran Jurassic Park?",
     body: `
       <p>Jurassic Park was an incredible idea and a magnificent feat of engineering, but poor protocols and a disregard for human safety killed what could have otherwise been one of the best businesses of our generation.</p>
-      <p>Ultimately, I think that if you wanted to run the park successfully and keep visitors safe, the most important thing to prioritize would be&hellip;</p>
     `,
   },
   {
@@ -49,7 +48,6 @@ const chapios = [
     title: "What would you have done differently if you ran Jurassic Park?",
     body: `
       <p>Jurassic Park was an incredible idea and a magnificent feat of engineering, but poor protocols and a disregard for human safety killed what could have otherwise been one of the best businesses of our generation.</p>
-      <p>Ultimately, I think that if you wanted to run the park successfully and keep visitors safe, the most important thing to prioritize would be&hellip;</p>
     `,
   },
   {
@@ -69,7 +67,6 @@ const chapios = [
     title: "What would you have done differently if you ran Jurassic Park?",
     body: `
       <p>Jurassic Park was an incredible idea and a magnificent feat of engineering, but poor protocols and a disregard for human safety killed what could have otherwise been one of the best businesses of our generation.</p>
-      <p>Ultimately, I think that if you wanted to run the park successfully and keep visitors safe, the most important thing to prioritize would be&hellip;</p>
     `,
   },
   {
@@ -89,7 +86,6 @@ const chapios = [
     title: "What would you have done differently if you ran Jurassic Park?",
     body: `
       <p>Jurassic Park was an incredible idea and a magnificent feat of engineering, but poor protocols and a disregard for human safety killed what could have otherwise been one of the best businesses of our generation.</p>
-      <p>Ultimately, I think that if you wanted to run the park successfully and keep visitors safe, the most important thing to prioritize would be&hellip;</p>
     `,
   },
 ];
@@ -121,11 +117,11 @@ const { pending, data: users, error } = useLazyAsyncData("users", () => $fetch("
 <template>
   <div>
     <NuxtLayout name="main">
-      <div class="px-4 sm:px-0">
+      <div class="sticky top-4 px-4 z-10 sm:px-0">
         <div class="sm:hidden">
-          <label for="question-tabs" class="sr-only">Select a tab</label>
+          <label for="chapio-tabs" class="sr-only">Select a tab</label>
           <select
-            id="question-tabs"
+            id="chapio-tabs"
             class="block w-full rounded-md border-gray-300 text-base font-medium text-gray-900 shadow-sm focus:border-rose-500 focus:ring-rose-500"
           >
             <option v-for="tab in tabs" :key="tab.name" :selected="tab.current">
@@ -163,7 +159,7 @@ const { pending, data: users, error } = useLazyAsyncData("users", () => $fetch("
         </div>
       </div>
       <div class="mt-4">
-        <h1 class="sr-only">Recent michapio</h1>
+        <h1 class="sr-only">Recent Michapio</h1>
         <PullRefresh v-model="loading" @refresh="onRefresh">
           <ul role="list" class="space-y-4">
             <li
