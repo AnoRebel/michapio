@@ -76,13 +76,21 @@
       </div>
       <div class="flex text-sm">
         <span class="inline-flex items-center text-sm">
-          <button type="button" class="inline-flex space-x-2 text-gray-400 hover:text-gray-500">
+          <button
+            type="button"
+            class="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+            @click="toggleLike"
+          >
             <ShareIcon class="h-5 w-5" aria-hidden="true" />
             <span class="font-medium text-gray-900">Share</span>
           </button>
-          <button type="button" class="inline-flex space-x-2 text-gray-400 hover:text-gray-500">
+          <button
+            type="button"
+            class="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+            @click="toggleFavourite"
+          >
             <StarIcon class="h-5 w-5" aria-hidden="true" />
-            <span class="font-medium">Add to favorites</span>
+            <span class="font-medium text-gray-900">Add to favorites</span>
           </button>
         </span>
       </div>
@@ -105,4 +113,38 @@ defineProps({
     required: true,
   },
 });
+
+const toggleFavourite = event => {
+  event.target.querySelector(".favourite_icon").classList.toggle("animate-favourite");
+};
+
+const toggleLike = event => {
+  event.target.querySelector(".like_icon").classList.toggle("animate-like");
+};
 </script>
+
+<style lang="scss">
+.animate-like {
+  /* 
+    background-position: 0 0;
+    transition: background-position 1s steps(28);
+    transition-duration: 0s;
+  */
+  transition-duration: 1s;
+  background-position: -2800px 0;
+}
+@keyframes favouriteAnimation {
+  0% {
+    transform: scale(30);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.animate-favourite {
+  animation-name: favouriteAnimation;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-duration: 0.65s;
+}
+</style>
