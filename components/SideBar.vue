@@ -28,14 +28,14 @@ const trendingPosts = [
 <template>
   <div class="h-full w-full flex flex-col">
     <div class="sticky top-4 space-y-4">
-      <section aria-labelledby="who-to-follow-heading">
-        <div class="bg-white rounded-lg shadow">
+      <section class="h-1/2" aria-labelledby="who-to-follow-heading">
+        <div class="bg-slate-50 rounded-lg shadow">
           <div class="p-6">
-            <h2 id="who-to-follow-heading" class="text-base font-medium text-gray-900">
+            <h2 id="who-to-follow-heading" class="text-base font-medium text-slate-900">
               Who to follow
             </h2>
             <div class="mt-6 flow-root">
-              <ul role="list" class="-my-4 divide-y divide-gray-200">
+              <ul role="list" class="-my-4 divide-y divide-slate-200">
                 <li
                   v-for="user in whoToFollow"
                   :key="user.handle"
@@ -45,10 +45,10 @@ const trendingPosts = [
                     <img class="h-8 w-8 rounded-full" :src="user.imageUrl" alt="" />
                   </div>
                   <div class="min-w-0 flex-1">
-                    <p class="text-sm font-medium text-gray-900">
+                    <p class="text-sm font-medium text-slate-900">
                       <a :href="user.href">{{ user.name }}</a>
                     </p>
-                    <p class="text-sm text-gray-500">
+                    <p class="text-sm text-slate-500">
                       <a :href="user.href">{{ "@" + user.handle }}</a>
                     </p>
                   </div>
@@ -70,7 +70,7 @@ const trendingPosts = [
             <div class="mt-6">
               <a
                 href="#"
-                class="w-full block text-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                class="w-full block text-center px-4 py-2 border border-slate-300 shadow-sm text-sm font-medium rounded-md text-slate-700 bg-slate-50 hover:bg-slate-100"
               >
                 View all
               </a>
@@ -78,12 +78,12 @@ const trendingPosts = [
           </div>
         </div>
       </section>
-      <section aria-labelledby="trending-heading">
-        <div class="bg-white rounded-lg shadow">
+      <section class="h-1/2" aria-labelledby="trending-heading">
+        <div class="bg-slate-50 rounded-lg shadow">
           <div class="p-6">
-            <h2 id="trending-heading" class="text-base font-medium text-gray-900">Trending</h2>
+            <h2 id="trending-heading" class="text-base font-medium text-slate-900">Trending</h2>
             <div class="mt-6 flow-root">
-              <ul role="list" class="-my-4 divide-y divide-gray-200">
+              <ul role="list" class="-my-4 divide-y divide-slate-200">
                 <li v-for="post in trendingPosts" :key="post.id" class="flex py-4 space-x-3">
                   <div class="flex-shrink-0">
                     <img
@@ -93,15 +93,15 @@ const trendingPosts = [
                     />
                   </div>
                   <div class="min-w-0 flex-1">
-                    <p class="text-sm text-gray-800">{{ post.body }}</p>
+                    <p class="text-sm text-slate-800">{{ post.body }}</p>
                     <div class="mt-2 flex">
                       <span class="inline-flex items-center text-sm">
                         <button
                           type="button"
-                          class="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+                          class="inline-flex space-x-2 text-slate-400 hover:text-slate-500"
                         >
                           <ChatBubbleLeftEllipsisIcon class="h-5 w-5" aria-hidden="true" />
-                          <span class="font-medium text-gray-900">{{ post.comments }}</span>
+                          <span class="font-medium text-slate-900">{{ post.comments }}</span>
                         </button>
                       </span>
                     </div>
@@ -112,7 +112,7 @@ const trendingPosts = [
             <div class="mt-6">
               <a
                 href="#"
-                class="w-full block text-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                class="w-full block text-center px-4 py-2 border border-slate-300 shadow-sm text-sm font-medium rounded-md text-slate-700 bg-slate-50 hover:bg-slate-100"
               >
                 View all
               </a>

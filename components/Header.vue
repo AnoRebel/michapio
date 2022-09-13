@@ -12,7 +12,7 @@
         </div>
         <div class="-mr-2 -my-2 md:hidden">
           <PopoverButton
-            class="bg-white rounded-md p-2 inline-flex items-center justify-center text-slate-400 hover:text-slate-500 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+            class="bg-slate-50 rounded-md p-2 inline-flex items-center justify-center text-slate-400 hover:text-slate-500 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
           >
             <span class="sr-only">Open menu</span>
             <Bars3Icon class="h-6 w-6" aria-hidden="true" />
@@ -38,7 +38,7 @@
           <NuxtLink
             to="https://github.com/AnoRebel/michapio"
             target="_blank"
-            class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 transition transform active:scale-90 hover:bg-indigo-700"
+            class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-slate-50 bg-indigo-600 transition transform active:scale-90 hover:bg-indigo-700"
           >
             <span>Github</span> <ArrowTopRightOnSquareIcon class="h-5 w-5 mx-1" />
           </NuxtLink>
@@ -59,7 +59,7 @@
         class="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
       >
         <div
-          class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-slate-50"
+          class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-slate-50 divide-y-2 divide-slate-100"
         >
           <div class="pt-5 pb-6 px-5">
             <div class="flex items-center justify-between">
@@ -69,7 +69,7 @@
               </div>
               <div class="-mr-2">
                 <PopoverButton
-                  class="bg-white rounded-md p-2 inline-flex items-center justify-center text-slate-400 hover:text-slate-500 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                  class="bg-slate-50 rounded-md p-2 inline-flex items-center justify-center text-slate-400 hover:text-slate-500 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                 >
                   <span class="sr-only">Close menu</span>
                   <XMarkIcon class="h-6 w-6" aria-hidden="true" />
@@ -106,7 +106,7 @@
           <div class="py-6 px-5 space-y-6">
             <div>
               <NuxtLink
-                class="w-full flex items-center justify-center cursor-pointer px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                class="w-full flex items-center justify-center cursor-pointer px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-slate-50 bg-indigo-600 hover:bg-indigo-700"
                 @click="setAuthState(true, 'register')"
               >
                 Sign Up

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import InfiniteLoading from "v3-infinite-loading";
 
 definePageMeta({
@@ -117,12 +118,13 @@ const { pending, data: users, error } = useLazyAsyncData("users", () => $fetch("
 <template>
   <div>
     <NuxtLayout name="main">
+      <NuxtLoadingIndicator />
       <div class="sticky top-4 px-4 z-10 sm:px-0">
         <div class="sm:hidden">
           <label for="chapio-tabs" class="sr-only">Select a tab</label>
           <select
             id="chapio-tabs"
-            class="block w-full rounded-md border-gray-300 text-base font-medium text-gray-900 shadow-sm focus:border-rose-500 focus:ring-rose-500"
+            class="block w-full rounded-md border-slate-300 text-base font-medium text-slate-900 shadow-sm focus:border-rose-500 focus:ring-rose-500"
           >
             <option v-for="tab in tabs" :key="tab.name" :selected="tab.current">
               {{ tab.name }}
@@ -131,7 +133,7 @@ const { pending, data: users, error } = useLazyAsyncData("users", () => $fetch("
         </div>
         <div class="hidden sm:block">
           <nav
-            class="relative z-0 rounded-lg shadow flex divide-x divide-gray-200"
+            class="relative z-0 rounded-lg shadow flex divide-x divide-slate-200"
             aria-label="Tabs"
           >
             <NuxtLink
@@ -140,10 +142,10 @@ const { pending, data: users, error } = useLazyAsyncData("users", () => $fetch("
               :to="tab.href"
               :aria-current="tab.current ? 'page' : undefined"
               :class="[
-                tab.current ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700',
+                tab.current ? 'text-slate-900' : 'text-slate-500 hover:text-slate-700',
                 tabIdx === 0 ? 'rounded-l-lg' : '',
                 tabIdx === tabs.length - 1 ? 'rounded-r-lg' : '',
-                'group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10',
+                'group relative min-w-0 flex-1 overflow-hidden bg-slate-50 py-4 px-6 text-sm font-medium text-center hover:bg-slate-100 focus:z-10',
               ]"
             >
               <span>{{ tab.name }}</span>
@@ -158,6 +160,42 @@ const { pending, data: users, error } = useLazyAsyncData("users", () => $fetch("
           </nav>
         </div>
       </div>
+      <!-- Start -->
+      <div class="w-full max-w-md sticky top-4 z-10 px-4 py-16 sm:px-0">
+        <TabGroup>
+          <TabList class="w-full flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+            <Tab v-for="(tab, tabIx) in tabs" as="template" :key="tabIx" v-slot="{ selected }">
+              <button
+                :class="[
+                  'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700',
+                  'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+                  selected
+                    ? 'bg-white shadow'
+                    : 'text-blue-100 hover:bg-white/[0.12] hover:text-white',
+                ]"
+              >
+                {{ tab.name }}
+              </button>
+            </Tab>
+          </TabList>
+
+          <TabPanels class="mt-2">
+            <TabPanel
+              v-for="(chaps, idx) in tabs"
+              :key="idx"
+              :class="[
+                'rounded-xl bg-white p-3',
+                'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+              ]"
+            >
+              <div class="text-slate-800">
+                {{ chaps.name }}
+              </div>
+            </TabPanel>
+          </TabPanels>
+        </TabGroup>
+      </div>
+      <!-- End -->
       <div class="mt-4">
         <h1 class="sr-only">Recent Michapio</h1>
         <PullRefresh v-model="loading" @refresh="onRefresh">
@@ -165,7 +203,7 @@ const { pending, data: users, error } = useLazyAsyncData("users", () => $fetch("
             <li
               v-for="chapio in chapios"
               :key="chapio.id"
-              class="bg-white px-4 py-6 shadow sm:p-6 sm:rounded-lg"
+              class="bg-slate-50 px-4 py-6 shadow sm:p-6 sm:rounded-lg"
             >
               <ChapioCard :chapio="chapio" />
             </li>

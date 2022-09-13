@@ -7,22 +7,23 @@
           <img class="h-10 w-10 rounded-full" :src="chapio.author.imageUrl" alt="" />
         </div>
         <div class="min-w-0 flex-1">
-          <p class="text-sm font-medium text-gray-900">
+          <p class="text-sm font-medium text-slate-900">
             <NuxtLink :to="chapio.author.href" class="hover:underline">
               {{ chapio.author.name }}
             </NuxtLink>
           </p>
-          <p class="text-sm text-gray-500">
+          <p class="text-sm text-slate-500">
             <NuxtLink :to="chapio.href" class="hover:underline">
               <time :datetime="chapio.datetime">{{ chapio.date }}</time>
             </NuxtLink>
           </p>
         </div>
+        <!-- TODO: Remove this.. -->
         <div class="flex-shrink-0 self-center flex">
           <Menu as="div" class="relative inline-block text-left">
             <div>
               <MenuButton
-                class="-m-2 p-2 rounded-full flex items-center text-gray-400 hover:text-gray-600"
+                class="-m-2 p-2 rounded-full flex items-center text-slate-400 hover:text-slate-600"
               >
                 <span class="sr-only">Open options</span>
                 <EllipsisVerticalIcon class="h-5 w-5" aria-hidden="true" />
@@ -38,18 +39,18 @@
               leave-to-class="transform opacity-0 scale-95"
             >
               <MenuItems
-                class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-slate-50 ring-1 ring-black ring-opacity-5 focus:outline-none"
               >
                 <div class="py-1">
                   <MenuItem v-slot="{ active }">
                     <NuxtLink
                       to="#"
                       :class="[
-                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                        active ? 'bg-slate-100 text-slate-900' : 'text-slate-700',
                         'flex px-4 py-2 text-sm',
                       ]"
                     >
-                      <StarIcon class="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+                      <StarIcon class="mr-3 h-5 w-5 text-slate-400" aria-hidden="true" />
                       <span>Add to favorites</span>
                     </NuxtLink>
                   </MenuItem>
@@ -59,38 +60,38 @@
           </Menu>
         </div>
       </div>
-      <h2 :id="'chapio-title-' + chapio.id" class="mt-4 text-base font-medium text-gray-900">
+      <h2 :id="'chapio-title-' + chapio.id" class="mt-4 text-base font-medium text-slate-900">
         {{ chapio.title }}
       </h2>
     </div>
-    <div class="mt-2 text-sm text-gray-700 space-y-4" v-html="chapio.body" />
+    <div class="mt-2 text-sm text-slate-700 space-y-4" v-html="chapio.body" />
     <div class="mt-6 flex justify-between space-x-8">
       <div class="flex space-x-6">
         <span class="inline-flex items-center text-sm">
-          <button type="button" class="inline-flex space-x-2 text-gray-400 hover:text-gray-500">
+          <button type="button" class="inline-flex space-x-2 text-slate-400 hover:text-slate-500">
             <HandThumbUpIcon class="h-5 w-5" aria-hidden="true" />
-            <span class="font-medium text-gray-900">{{ chapio.likes }}</span>
+            <span class="font-medium text-slate-900">{{ chapio.likes }}</span>
             <span class="sr-only">likes</span>
           </button>
         </span>
       </div>
       <div class="flex text-sm">
-        <span class="inline-flex items-center text-sm">
+        <span class="inline-flex items-center space-x-5 text-sm">
           <button
             type="button"
-            class="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+            class="inline-flex space-x-2 text-slate-400 hover:text-slate-500"
             @click="toggleLike"
           >
             <ShareIcon class="h-5 w-5" aria-hidden="true" />
-            <span class="font-medium text-gray-900">Share</span>
+            <span class="font-medium text-slate-900">Share</span>
           </button>
           <button
             type="button"
-            class="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+            class="inline-flex space-x-2 text-slate-400 hover:text-slate-500"
             @click="toggleFavourite"
           >
             <StarIcon class="h-5 w-5" aria-hidden="true" />
-            <span class="font-medium text-gray-900">Add to favorites</span>
+            <span class="font-medium text-slate-900">Favorite</span>
           </button>
         </span>
       </div>
