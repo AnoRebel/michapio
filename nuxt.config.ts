@@ -1,6 +1,5 @@
 import fs from "fs";
 import { fileURLToPath } from "url";
-import { defineNuxtConfig } from "nuxt";
 
 const locales = fs.readdirSync("locales").map(file => {
   return { code: file.replace(".json", ""), file };
