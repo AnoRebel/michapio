@@ -130,174 +130,18 @@ const { pending, data: users, error } = useLazyAsyncData("users", () => $fetch("
   <div>
     <NuxtLayout name="main">
       <NuxtLoadingIndicator />
-      <div class="sticky top-4 px-4 z-10 sm:px-0">
-        <div class="sm:hidden">
-          <label for="chapio-tabs" class="sr-only">Select a tab</label>
-          <select
-            id="chapio-tabs"
-            class="block w-full rounded-md border-slate-300 text-base font-medium text-slate-900 shadow-sm focus:border-rose-500 focus:ring-rose-500"
-          >
-            <option v-for="tab in tabs" :key="tab.name" :selected="tab.current">
-              {{ tab.name }}
-            </option>
-          </select>
-        </div>
-
-        <!-- Start -->
-        <div class="hidden fixed top-16 w-56 text-right">
-          <Menu as="div" class="relative inline-block text-left">
-            <div>
-              <MenuButton
-                class="inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-              >
-                Options
-                <ChevronDownIcon
-                  class="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
-                  aria-hidden="true"
-                />
-              </MenuButton>
-            </div>
-
-            <transition
-              enter-active-class="transition duration-100 ease-out"
-              enter-from-class="transform scale-95 opacity-0"
-              enter-to-class="transform scale-100 opacity-100"
-              leave-active-class="transition duration-75 ease-in"
-              leave-from-class="transform scale-100 opacity-100"
-              leave-to-class="transform scale-95 opacity-0"
-            >
-              <MenuItems
-                class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-              >
-                <div class="px-1 py-1">
-                  <MenuItem v-slot="{ active }">
-                    <button
-                      :class="[
-                        active ? 'bg-violet-500 text-white' : 'text-gray-900',
-                        'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                      ]"
-                    >
-                      <EditIcon
-                        :active="active"
-                        class="mr-2 h-5 w-5 text-violet-400"
-                        aria-hidden="true"
-                      />
-                      Edit
-                    </button>
-                  </MenuItem>
-                  <MenuItem v-slot="{ active }">
-                    <button
-                      :class="[
-                        active ? 'bg-violet-500 text-white' : 'text-gray-900',
-                        'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                      ]"
-                    >
-                      <DuplicateIcon
-                        :active="active"
-                        class="mr-2 h-5 w-5 text-violet-400"
-                        aria-hidden="true"
-                      />
-                      Duplicate
-                    </button>
-                  </MenuItem>
-                </div>
-                <div class="px-1 py-1">
-                  <MenuItem v-slot="{ active }">
-                    <button
-                      :class="[
-                        active ? 'bg-violet-500 text-white' : 'text-gray-900',
-                        'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                      ]"
-                    >
-                      <ArchiveIcon
-                        :active="active"
-                        class="mr-2 h-5 w-5 text-violet-400"
-                        aria-hidden="true"
-                      />
-                      Archive
-                    </button>
-                  </MenuItem>
-                  <MenuItem v-slot="{ active }">
-                    <button
-                      :class="[
-                        active ? 'bg-violet-500 text-white' : 'text-gray-900',
-                        'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                      ]"
-                    >
-                      <MoveIcon
-                        :active="active"
-                        class="mr-2 h-5 w-5 text-violet-400"
-                        aria-hidden="true"
-                      />
-                      Move
-                    </button>
-                  </MenuItem>
-                </div>
-
-                <div class="px-1 py-1">
-                  <MenuItem v-slot="{ active }">
-                    <button
-                      :class="[
-                        active ? 'bg-violet-500 text-white' : 'text-gray-900',
-                        'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                      ]"
-                    >
-                      <DeleteIcon
-                        :active="active"
-                        class="mr-2 h-5 w-5 text-violet-400"
-                        aria-hidden="true"
-                      />
-                      Delete
-                    </button>
-                  </MenuItem>
-                </div>
-              </MenuItems>
-            </transition>
-          </Menu>
-        </div>
-        <!-- End -->
-
-        <div class="hidden sm:block">
-          <nav
-            class="relative z-0 rounded-lg shadow flex divide-x divide-slate-200"
-            aria-label="Tabs"
-          >
-            <NuxtLink
-              v-for="(tab, tabIdx) in tabs"
-              :key="tab.name"
-              :to="tab.href"
-              :aria-current="tab.current ? 'page' : undefined"
-              :class="[
-                tab.current ? 'text-slate-900' : 'text-slate-500 hover:text-slate-700',
-                tabIdx === 0 ? 'rounded-l-lg' : '',
-                tabIdx === tabs.length - 1 ? 'rounded-r-lg' : '',
-                'group relative min-w-0 flex-1 overflow-hidden bg-slate-50 py-4 px-6 text-sm font-medium text-center hover:bg-slate-100 focus:z-10',
-              ]"
-            >
-              <span>{{ tab.name }}</span>
-              <span
-                aria-hidden="true"
-                :class="[
-                  tab.current ? 'bg-rose-500' : 'bg-transparent',
-                  'absolute inset-x-0 bottom-0 h-0.5',
-                ]"
-              />
-            </NuxtLink>
-          </nav>
-        </div>
-      </div>
       <!-- Start -->
-      <div class="w-full max-w-md sticky top-4 z-10 px-4 py-16 sm:px-0">
+      <div class="w-full px-4 sm:px-0">
         <TabGroup>
-          <TabList class="w-full flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+          <TabList class="w-full sticky top-4 z-10 flex space-x-1 rounded-xl bg-slate-50 p-1">
             <Tab v-for="(tab, tabIx) in tabs" as="template" :key="tabIx" v-slot="{ selected }">
               <button
                 :class="[
-                  'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700',
-                  'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+                  'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
+                  'focus:outline-none',
                   selected
-                    ? 'bg-white shadow'
-                    : 'text-blue-100 hover:bg-white/[0.12] hover:text-white',
+                    ? 'bg-slate-800 text-slate-50 shadow'
+                    : 'text-slate-900 hover:bg-slate-50/[0.12] hover:text-slate-700',
                 ]"
               >
                 {{ tab.name }}
@@ -309,34 +153,28 @@ const { pending, data: users, error } = useLazyAsyncData("users", () => $fetch("
             <TabPanel
               v-for="(chaps, idx) in tabs"
               :key="idx"
-              :class="[
-                'rounded-xl bg-white p-3',
-                'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
-              ]"
+              class="rounded-xl bg-slate-800 p-3 focus:outline-none"
             >
-              <div class="text-slate-800">
-                {{ chaps.name }}
+              <div class="mt-4">
+                <h1 class="sr-only">{{ chaps.name }}</h1>
+                <PullRefresh v-model="loading" @refresh="onRefresh">
+                  <ul role="list" class="space-y-4">
+                    <li
+                      v-for="chapio in chapios"
+                      :key="chapio.id"
+                      class="bg-slate-50 px-4 py-6 shadow sm:p-6 sm:rounded-lg"
+                    >
+                      <ChapioCard :chapio="chapio" />
+                    </li>
+                    <InfiniteLoading class="loader" @infinite="load" />
+                  </ul>
+                </PullRefresh>
               </div>
             </TabPanel>
           </TabPanels>
         </TabGroup>
       </div>
       <!-- End -->
-      <div class="mt-4">
-        <h1 class="sr-only">Recent Michapio</h1>
-        <PullRefresh v-model="loading" @refresh="onRefresh">
-          <ul role="list" class="space-y-4">
-            <li
-              v-for="chapio in chapios"
-              :key="chapio.id"
-              class="bg-slate-50 px-4 py-6 shadow sm:p-6 sm:rounded-lg"
-            >
-              <ChapioCard :chapio="chapio" />
-            </li>
-            <InfiniteLoading class="loader" @infinite="load" />
-          </ul>
-        </PullRefresh>
-      </div>
       <template #aside>
         <SideBar />
       </template>
