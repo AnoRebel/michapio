@@ -1,16 +1,5 @@
 <script setup lang="ts">
-import {
-  Menu,
-  MenuButton,
-  MenuItems,
-  MenuItem,
-  TabGroup,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
-} from "@headlessui/vue";
-import { ChevronDownIcon } from "@heroicons/vue/20/solid";
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import InfiniteLoading from "v3-infinite-loading";
 
 definePageMeta({
