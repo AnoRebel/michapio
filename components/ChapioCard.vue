@@ -1,3 +1,56 @@
+<script setup lang="ts">
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import {
+  EllipsisVerticalIcon,
+  ShareIcon,
+  StarIcon,
+  HandThumbUpIcon,
+} from "@heroicons/vue/24/solid";
+
+defineProps({
+  chapio: {
+    type: Object,
+    required: true,
+  },
+});
+
+const toggleFavourite = event => {
+  if (event.target?.classList?.contains("favourite_icon")) {
+    event.target.classList.toggle("animate-favourite");
+  }
+  if (event.target.nextSibling?.classList?.contains("favourite_icon")) {
+    event.target.nextSibling.classList.toggle("animate-favourite");
+  }
+  if (event.target.previousSibling?.classList?.contains("favourite_icon")) {
+    event.target.previousSibling.classList.toggle("animate-favourite");
+  }
+  if (event.target.querySelector(".favourite_icon")?.classList?.contains("favourite_icon")) {
+    event.target.querySelector(".favourite_icon").classList.toggle("animate-favourite");
+  }
+  if (event.target.parentElement?.classList?.contains("favourite_icon")) {
+    event.target.parentElement.classList.toggle("animate-favourite");
+  }
+};
+
+const toggleLike = event => {
+  if (event.target?.classList?.contains("like_icon")) {
+    event.target.classList.toggle("animate-like");
+  }
+  if (event.target.nextSibling?.classList?.contains("like_icon")) {
+    event.target.nextSibling.classList.toggle("animate-like");
+  }
+  if (event.target.previousSibling?.classList?.contains("like_icon")) {
+    event.target.previousSibling.classList.toggle("animate-like");
+  }
+  if (event.target.querySelector(".like_icon")?.classList?.contains("like_icon")) {
+    event.target.querySelector(".like_icon").classList.toggle("animate-like");
+  }
+  if (event.target.parentElement?.classList?.contains("like_icon")) {
+    event.target.parentElement.classList.toggle("animate-like");
+  }
+};
+</script>
+
 <template>
   <!-- TODO: Filter NSFW content -->
   <article :aria-labelledby="'chapio-title-' + chapio.id">
@@ -68,30 +121,30 @@
     <div class="mt-6 flex justify-between space-x-8">
       <div class="flex space-x-6">
         <span class="inline-flex items-center text-sm">
-          <button type="button" class="inline-flex space-x-2 text-slate-400 hover:text-slate-500">
-            <HandThumbUpIcon class="h-5 w-5" aria-hidden="true" />
-            <span class="font-medium text-slate-900">{{ chapio.likes }}</span>
+          <button
+            type="button"
+            class="inline-flex space-x-2 text-slate-400 hover:text-slate-500"
+            @click.self="toggleLike"
+          >
+            <HandThumbUpIcon class="like_icon h-5 w-5" aria-hidden="true" @click="toggleLike" />
+            <span class="font-medium text-slate-900" @click="toggleLike">{{ chapio.likes }}</span>
             <span class="sr-only">likes</span>
           </button>
         </span>
       </div>
       <div class="flex text-sm">
         <span class="inline-flex items-center space-x-5 text-sm">
-          <button
-            type="button"
-            class="inline-flex space-x-2 text-slate-400 hover:text-slate-500"
-            @click="toggleLike"
-          >
+          <button type="button" class="inline-flex space-x-2 text-slate-400 hover:text-slate-500">
             <ShareIcon class="h-5 w-5" aria-hidden="true" />
             <span class="font-medium text-slate-900">Share</span>
           </button>
           <button
             type="button"
             class="inline-flex space-x-2 text-slate-400 hover:text-slate-500"
-            @click="toggleFavourite"
+            @click.self="toggleFavourite"
           >
-            <StarIcon class="h-5 w-5" aria-hidden="true" />
-            <span class="font-medium text-slate-900">Favorite</span>
+            <StarIcon class="favourite_icon h-5 w-5" aria-hidden="true" @click="toggleFavourite" />
+            <span class="font-medium text-slate-900" @click="toggleFavourite">Favorite</span>
           </button>
         </span>
       </div>
@@ -99,53 +152,58 @@
   </article>
 </template>
 
-<script setup lang="ts">
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import {
-  EllipsisVerticalIcon,
-  ShareIcon,
-  StarIcon,
-  HandThumbUpIcon,
-} from "@heroicons/vue/24/solid";
-
-defineProps({
-  chapio: {
-    type: Object,
-    required: true,
-  },
-});
-
-const toggleFavourite = event => {
-  event.target.querySelector(".favourite_icon").classList.toggle("animate-favourite");
-};
-
-const toggleLike = event => {
-  event.target.querySelector(".like_icon").classList.toggle("animate-like");
-};
-</script>
-
 <style lang="scss">
 .animate-like {
-  /* 
-    background-position: 0 0;
-    transition: background-position 1s steps(28);
-    transition-duration: 0s;
-  */
-  transition-duration: 1s;
-  background-position: -2800px 0;
+  animation-name: favouriteAnimation;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-duration: 0.65s;
+  @apply text-cyan-800;
 }
-@keyframes favouriteAnimation {
-  0% {
-    transform: scale(30);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
+
 .animate-favourite {
   animation-name: favouriteAnimation;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-duration: 0.65s;
+  @apply text-cyan-800;
+}
+
+@keyframes favouriteAnimation {
+  0% {
+    transform: scale(10);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes topBubbles {
+  0% {
+    background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%, 40% 90%, 55% 90%,
+      70% 90%;
+  }
+  50% {
+    background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%, 50% 50%, 65% 20%,
+      90% 30%;
+  }
+  100% {
+    background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%, 50% 40%, 65% 10%,
+      90% 20%;
+    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+}
+
+@keyframes bottomBubbles {
+  0% {
+    background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
+  }
+  50% {
+    background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;
+  }
+  100% {
+    background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
+    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
 }
 </style>

@@ -1,3 +1,33 @@
+<script setup lang="ts">
+import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from "@headlessui/vue";
+import { Bars3Icon, XMarkIcon, PlusCircleIcon } from "@heroicons/vue/24/outline";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/vue/24/solid";
+
+import { storeToRefs } from "pinia";
+import { useModals } from "@/stores/modals";
+const titleRef = ref(null);
+onMounted(() => {
+  const typer = useTyping(titleRef.value, { loop: true, typingSpeed: 150, deletingSpeed: 100 });
+  typer
+    .typeString("Mipachio", 100)
+    .pauseFor(150)
+    .deleteChars(6, 50)
+    .typeString("chapio")
+    .pauseFor(500)
+    .deleteChars(8)
+    .typeString("Tongue of Slip", 100)
+    .pauseFor(150)
+    .deleteChars(14, 70)
+    .typeString("Slip of Tongue")
+    .pauseFor(500)
+    .deleteChars(14, 70)
+    .start();
+});
+
+const { setAuthState } = useModals();
+const { isActiveModal } = storeToRefs(useModals());
+</script>
+
 <template>
   <Popover class="relative top-0 z-30 w-full px-2 bg-transparent sm:px-4">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
@@ -20,15 +50,15 @@
         </div>
         <PopoverGroup as="nav" class="hidden md:flex space-x-10">
           <NuxtLink
-            class="text-base font-medium text-slate-300 cursor-pointer rounded-md hover:text-slate-100"
-            :class="{ 'active bg-slate-700 px-4 py-1.5 shadow-sm': isActiveModal('add') }"
+            class="text-base font-medium text-slate-300 px-4 py-1.5 cursor-pointer rounded-md hover:text-slate-100"
+            :class="{ 'active bg-slate-700 shadow-sm': isActiveModal('add') }"
             @click="setAuthState(true, 'add')"
           >
             Add
           </NuxtLink>
           <NuxtLink
-            class="text-base font-medium text-slate-300 cursor-pointer rounded-md hover:text-slate-100"
-            :class="{ 'active bg-slate-700 px-4 py-1.5 shadow-sm': isActiveModal('auth') }"
+            class="text-base font-medium text-slate-300 px-4 py-1.5 cursor-pointer rounded-md hover:text-slate-100"
+            :class="{ 'active bg-slate-700 shadow-sm': isActiveModal('auth') }"
             @click="setAuthState(true, 'login')"
           >
             Sign In
@@ -38,7 +68,7 @@
           <NuxtLink
             to="https://github.com/AnoRebel/michapio"
             target="_blank"
-            class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-slate-50 bg-indigo-600 transition transform active:scale-90 hover:bg-indigo-700"
+            class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow text-base font-medium bg-slate-900 transition transform active:scale-90 hover:text-slate-100"
           >
             <span>Github</span> <ArrowTopRightOnSquareIcon class="h-5 w-5 mx-1" />
           </NuxtLink>
@@ -128,36 +158,6 @@
     </transition>
   </Popover>
 </template>
-
-<script setup lang="ts">
-import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from "@headlessui/vue";
-import { Bars3Icon, XMarkIcon, PlusCircleIcon } from "@heroicons/vue/24/outline";
-import { ArrowTopRightOnSquareIcon } from "@heroicons/vue/24/solid";
-
-import { storeToRefs } from "pinia";
-import { useModals } from "@/stores/modals";
-const titleRef = ref(null);
-onMounted(() => {
-  const typer = useTyping(titleRef.value, { loop: true, typingSpeed: 150, deletingSpeed: 100 });
-  typer
-    .typeString("Mipachio", 100)
-    .pauseFor(150)
-    .deleteChars(6, 50)
-    .typeString("chapio")
-    .pauseFor(500)
-    .deleteChars(8)
-    .typeString("Tongue of Slip", 100)
-    .pauseFor(150)
-    .deleteChars(14, 70)
-    .typeString("Slip of Tongue")
-    .pauseFor(500)
-    .deleteChars(14, 70)
-    .start();
-});
-
-const { setAuthState } = useModals();
-const { isActiveModal } = storeToRefs(useModals());
-</script>
 
 <style lang="scss">
 .typing {
