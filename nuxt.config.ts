@@ -52,6 +52,7 @@ export default defineNuxtConfig({
   },
   buildModules: ["@pinia/nuxt"],
   modules: [
+    "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
     "@pinia/nuxt",
     "@nuxt/image-edge",
@@ -86,6 +87,9 @@ export default defineNuxtConfig({
   // image: {
   //   dir: "assets/images", // "static" // default
   // },
+  tailwindcss: {
+    cssPath: "~/assets/main.scss",
+  },
   vueuse: {
     ssrHandlers: true,
   },
