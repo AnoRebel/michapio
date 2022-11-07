@@ -37,6 +37,8 @@ export default defineNuxtConfig({
         { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       ],
     },
+    pageTransition: { name: "page", mode: "out-in" },
+    layoutTransition: { name: "layout", mode: "out-in" },
   },
   router: {
     options: {
@@ -110,6 +112,7 @@ export default defineNuxtConfig({
   // runtimeConfig: {},
   typescript: {
     shim: false,
+    strict: false,
     tsConfig: {
       compilerOptions: {
         types: ["@vueuse/nuxt", "@nuxtjs/i18n", "@pinia/nuxt", "@intlify/nuxt3"],
