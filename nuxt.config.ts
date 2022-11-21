@@ -50,29 +50,24 @@ export default defineNuxtConfig({
       include: ["@headlessui/vue", "@heroicons/vue/solid", "@heroicons/vue/outline", "vue"],
     },
   },
-  buildModules: ["@pinia/nuxt"],
   modules: [
+    "nuxt-typed-router",
+    "@nuxtjs/robots",
     "@nuxtjs/tailwindcss",
+    "nuxt-headlessui",
     "@nuxtjs/color-mode",
     "@pinia/nuxt",
+    "@formkit/nuxt",
     "@nuxt/image-edge",
     "nuxt-lodash",
-    [
-      "@nuxtjs/i18n",
-      {
-        locales,
-        defaultLocale: "en",
-        langDir: "locales", // set the `locales` directory at source directory of your Nuxt application
-        vueI18n: {
-          locale: process.env.NUXT_PUBLIC_APP_LOCALE || "en",
-          fallbackLocale: process.env.NUXT_PUBLIC_APP_FALLBACK_LOCALE || "en",
-        },
-      },
-    ],
+    "@nuxtjs/i18n",
     "@vueuse/nuxt",
-    "@nuxtjs/eslint-module",
+    // "@nuxtjs/eslint-module",
+    "@nuxtjs/supabase",
+    "nuxt-security",
   ],
   build: {
+    extractCSS: true,
     postcss: {
       postcssOptions: {
         plugins: {
@@ -81,12 +76,23 @@ export default defineNuxtConfig({
         },
       },
     },
-    transpile: ["@headlessui/vue", "@heroicons/vue"],
+    transpile: ["@heroicons/vue"],
   },
   css: ["animate.css/animate.min.css", "v3-infinite-loading/lib/style.css", "@/assets/main.scss"],
+  telemetry: false,
   // image: {
   //   dir: "assets/images", // "static" // default
   // },
+  i18n: {
+    lazy: true,
+    locales,
+    defaultLocale: "en",
+    langDir: "locales", // set the `locales` directory at source directory of your Nuxt application
+    vueI18n: {
+      locale: process.env.NUXT_PUBLIC_APP_LOCALE || "en",
+      fallbackLocale: process.env.NUXT_PUBLIC_APP_FALLBACK_LOCALE || "en",
+    },
+  },
   tailwindcss: {
     cssPath: "~/assets/main.scss",
   },
@@ -96,11 +102,11 @@ export default defineNuxtConfig({
   colorMode: {
     classSuffix: "",
   },
-  publicRuntimeconfig: {
-    BASE_URL: process.env.NUXT_PUBLIC_BASE_URL,
-    BASE_API_URL: process.env.NUXT_PUBLIC_BASE_API_URL,
-  },
-  privateRuntimeConfig: {
+  runtimeConfig: {
+    public: {
+      BASE_URL: process.env.NUXT_PUBLIC_BASE_URL,
+      BASE_API_URL: process.env.NUXT_PUBLIC_BASE_API_URL,
+    },
     DATABASE_NAME: process.env.NUXT_DATABASE_NAME,
     DATABASE_USER: process.env.NUXT_DATABASE_USER,
     DATABASE_PASS: process.env.NUXT_DATABASE_PASS,
@@ -113,7 +119,6 @@ export default defineNuxtConfig({
     server: fileURLToPath(new URL("./server", import.meta.url)),
     models: fileURLToPath(new URL("./server/models", import.meta.url)),
   },
-  // runtimeConfig: {},
   typescript: {
     shim: false,
     strict: false,
