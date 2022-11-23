@@ -2,7 +2,7 @@ import { User } from "models";
 import { errorHandler } from "server/utils";
 
 export default defineEventHandler(async event => {
-  const { field, value } = useQuery(event);
+  const { field, value } = getQuery(event);
   try {
     switch (field) {
       case "username": {

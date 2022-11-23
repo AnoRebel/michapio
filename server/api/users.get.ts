@@ -2,7 +2,7 @@ import { User } from "models";
 import { errorHandler } from "server/utils";
 
 export default defineEventHandler(async event => {
-  const { michapio } = useQuery(event);
+  const { michapio } = getQuery(event);
   try {
     let users: User[];
     if (michapio) {

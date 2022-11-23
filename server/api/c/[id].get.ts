@@ -2,7 +2,7 @@ import { Mchapio } from "models";
 import { errorHandler } from "server/utils";
 
 export default defineEventHandler(async event => {
-  const { id } = useQuery(event);
+  const { id } = getQuery(event);
   try {
     const mchapio = await Mchapio.query().findById(id);
     // TODO: Check if soft-deleted and ask to renew

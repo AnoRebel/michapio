@@ -2,8 +2,8 @@ import { Mchapio } from "models";
 import { errorHandler } from "server/utils";
 
 export default defineEventHandler(async event => {
-  const body = await useBody(event);
-  const { id } = useQuery(event);
+  const body = await readBody(event);
+  const { id } = getQuery(event);
   console.log(`Id: ${id} , Body: ${body}`);
   try {
     const exists = await Mchapio.query().findById(id);

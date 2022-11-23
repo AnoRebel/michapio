@@ -2,7 +2,7 @@ import { Mchapio } from "models";
 import { errorHandler } from "server/utils";
 
 export default defineEventHandler(async event => {
-  const { deleted, recent, views } = useQuery(event);
+  const { deleted, recent, views } = getQuery(event);
   try {
     let michapio: Mchapio[];
     if (views) {

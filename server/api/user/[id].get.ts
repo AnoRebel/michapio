@@ -2,7 +2,7 @@ import { User } from "models";
 import { errorHandler } from "server/utils";
 
 export default defineEventHandler(async event => {
-  const { id } = useQuery(event);
+  const { id } = getQuery(event);
   try {
     const user = await User.query().findById(id);
     if (!user) {

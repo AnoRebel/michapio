@@ -2,7 +2,7 @@ import { User } from "@/server/models";
 import { errorHandler } from "server/utils";
 
 export default defineEventHandler(async event => {
-  const { id } = useQuery(event);
+  const { id } = getQuery(event);
   try {
     const exists = await User.query().findById(id);
     if (!exists) {
