@@ -30,7 +30,10 @@ $pinia.use(piniaDebounce);
 </script>
 
 <template>
-  <div id="app" class="min-h-screen min-w-screen relative">
+  <div id="app" class="min-w-screen relative min-h-screen">
+    <ClientOnly>
+      <vue-progress-bar></vue-progress-bar>
+    </ClientOnly>
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
