@@ -26,51 +26,60 @@ onMounted(() => {
 
 const { setAuthState } = useModals();
 const { isActiveModal } = storeToRefs(useModals());
+const { isLoggedIn, logout } = useAuth();
 </script>
 
 <template>
-  <Popover class="relative top-0 z-30 w-full px-2 bg-transparent sm:px-4">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+  <Popover class="relative top-0 z-30 w-full bg-transparent px-2 sm:px-4">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div
-        class="flex justify-between items-center border-b-2 border-slate-100 py-4 md:justify-start md:space-x-10"
+        class="flex items-center justify-between border-b-2 border-slate-100 py-4 md:justify-start md:space-x-10"
       >
-        <div class="flex justify-start lg:w-0 flex-1">
+        <div class="flex flex-1 justify-start lg:w-0">
           <NuxtLink class="cursor-pointer">
             <span class="sr-only">Home</span>
-            <span ref="titleRef" class="w-auto typing"></span>
+            <span ref="titleRef" class="typing w-auto"></span>
           </NuxtLink>
         </div>
-        <div class="-mr-2 -my-2 md:hidden">
+        <div class="-my-2 -mr-2 md:hidden">
           <PopoverButton
-            class="bg-slate-50 rounded-md p-2 inline-flex items-center justify-center text-slate-400 hover:text-slate-500 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+            class="inline-flex items-center justify-center rounded-md bg-slate-50 p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
           >
             <span class="sr-only">Open menu</span>
             <Bars3Icon class="h-6 w-6" aria-hidden="true" />
           </PopoverButton>
         </div>
-        <PopoverGroup as="nav" class="hidden md:flex space-x-10">
+        <PopoverGroup as="nav" class="hidden space-x-10 md:flex">
           <NuxtLink
-            class="text-base font-medium text-slate-300 px-4 py-1.5 cursor-pointer rounded-md hover:text-slate-100"
+            class="cursor-pointer rounded-md px-4 py-1.5 text-base font-medium text-slate-300 hover:text-slate-100"
             :class="{ 'active bg-slate-700 shadow-sm': isActiveModal('add') }"
             @click="setAuthState(true, 'add')"
           >
             Add
           </NuxtLink>
           <NuxtLink
-            class="text-base font-medium text-slate-300 px-4 py-1.5 cursor-pointer rounded-md hover:text-slate-100"
+            v-if="isLoggedIn()"
+            class="cursor-pointer rounded-md px-4 py-1.5 text-base font-medium text-slate-300 hover:text-slate-100"
+            @click="logout"
+          >
+            Sign Out
+          </NuxtLink>
+          <NuxtLink
+            v-else
+            class="cursor-pointer rounded-md px-4 py-1.5 text-base font-medium text-slate-300 hover:text-slate-100"
             :class="{ 'active bg-slate-700 shadow-sm': isActiveModal('auth') }"
             @click="setAuthState(true, 'login')"
           >
             Sign In
           </NuxtLink>
         </PopoverGroup>
-        <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+        <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
           <NuxtLink
             to="https://github.com/AnoRebel/michapio"
             target="_blank"
-            class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow text-base font-medium bg-slate-900 transition transform active:scale-90 hover:text-slate-100"
+            class="ml-8 inline-flex transform items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-slate-900 px-4 py-2 text-base font-medium shadow transition hover:text-slate-100 active:scale-90"
           >
-            <span>Github</span> <ArrowTopRightOnSquareIcon class="h-5 w-5 mx-1" />
+            <span>Github</span> <ArrowTopRightOnSquareIcon class="mx-1 h-5 w-5" />
           </NuxtLink>
         </div>
       </div>
@@ -86,12 +95,12 @@ const { isActiveModal } = storeToRefs(useModals());
     >
       <PopoverPanel
         focus
-        class="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+        class="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden"
       >
         <div
-          class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-slate-50 divide-y-2 divide-slate-100"
+          class="divide-y-2 divide-slate-100 rounded-lg bg-slate-50 shadow-lg ring-1 ring-black ring-opacity-5"
         >
-          <div class="pt-5 pb-6 px-5">
+          <div class="px-5 pt-5 pb-6">
             <div class="flex items-center justify-between">
               <div>
                 <!-- <span class="w-auto">Home</span> -->
@@ -99,7 +108,7 @@ const { isActiveModal } = storeToRefs(useModals());
               </div>
               <div class="-mr-2">
                 <PopoverButton
-                  class="bg-slate-50 rounded-md p-2 inline-flex items-center justify-center text-slate-400 hover:text-slate-500 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                  class="inline-flex items-center justify-center rounded-md bg-slate-50 p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                 >
                   <span class="sr-only">Close menu</span>
                   <XMarkIcon class="h-6 w-6" aria-hidden="true" />
@@ -109,12 +118,12 @@ const { isActiveModal } = storeToRefs(useModals());
             <div class="mt-6">
               <nav class="grid gap-y-8">
                 <NuxtLink
-                  class="-m-3 p-3 flex items-center rounded-md cursor-pointer hover:bg-slate-50"
+                  class="-m-3 flex cursor-pointer items-center rounded-md p-3 hover:bg-slate-50"
                   :class="{ active: isActiveModal('add') }"
                   @click="setAuthState(true, 'add')"
                 >
                   <PlusCircleIcon
-                    class="flex-shrink-0 h-6 w-6 text-indigo-600"
+                    class="h-6 w-6 flex-shrink-0 text-indigo-600"
                     aria-hidden="true"
                   />
                   <span class="ml-3 text-base font-medium text-slate-900">Add</span>
@@ -122,10 +131,10 @@ const { isActiveModal } = storeToRefs(useModals());
                 <NuxtLink
                   to="https://github.com/AnoRebel/michapio"
                   target="_blank"
-                  class="-m-3 p-3 flex items-center rounded-md hover:bg-slate-50"
+                  class="-m-3 flex items-center rounded-md p-3 hover:bg-slate-50"
                 >
                   <ArrowTopRightOnSquareIcon
-                    class="flex-shrink-0 h-6 w-6 text-indigo-600"
+                    class="h-6 w-6 flex-shrink-0 text-indigo-600"
                     aria-hidden="true"
                   />
                   <span class="ml-3 text-base font-medium text-slate-900">Github</span>
@@ -133,10 +142,18 @@ const { isActiveModal } = storeToRefs(useModals());
               </nav>
             </div>
           </div>
-          <div class="py-6 px-5 space-y-6">
-            <div>
+          <div class="space-y-6 py-6 px-5">
+            <div v-if="isLoggedIn()">
               <NuxtLink
-                class="w-full flex items-center justify-center cursor-pointer px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-slate-50 bg-indigo-600 hover:bg-indigo-700"
+                class="flex w-full cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-slate-50 shadow-sm hover:bg-indigo-700"
+                @click="logout"
+              >
+                Sign Out
+              </NuxtLink>
+            </div>
+            <div v-else>
+              <NuxtLink
+                class="flex w-full cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-slate-50 shadow-sm hover:bg-indigo-700"
                 @click="setAuthState(true, 'register')"
               >
                 Sign Up
@@ -145,7 +162,7 @@ const { isActiveModal } = storeToRefs(useModals());
                 Existing User?
                 {{ " " }}
                 <NuxtLink
-                  class="text-indigo-600 cursor-pointer hover:text-indigo-500"
+                  class="cursor-pointer text-indigo-600 hover:text-indigo-500"
                   @click="setAuthState(true, 'login')"
                 >
                   Sign In
@@ -164,7 +181,7 @@ const { isActiveModal } = storeToRefs(useModals());
   @apply relative flex whitespace-pre-wrap text-2xl;
   &::after {
     content: "";
-    @apply absolute right-[1rem] w-px mr-[-1.2rem] h-full border-r-2 border-slate-100;
+    @apply absolute right-[1rem] mr-[-1.2rem] h-full w-px border-r-2 border-slate-100;
     animation: blink 0.5s infinite ease;
   }
 }

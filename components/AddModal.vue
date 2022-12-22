@@ -1,8 +1,8 @@
 <template>
   <TransitionRoot as="template" :show="isOpen && isActiveModal('add')">
-    <Dialog as="div" class="fixed z-10 inset-0 overflow-y-auto" @close="setAuthState(false)">
+    <Dialog as="div" class="fixed inset-0 z-10 overflow-y-auto" @close="setAuthState(false)">
       <div
-        class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+        class="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0"
       >
         <TransitionChild
           as="template"
@@ -17,7 +17,7 @@
         </TransitionChild>
 
         <!-- This element is to trick the browser into centering the modal contents. -->
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+        <span class="hidden sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true">
           &#8203;
         </span>
         <!-- <TransitionChild -->
@@ -35,38 +35,38 @@
           leave="animate__animated animate__bounceOut duration-200"
         >
           <div
-            class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6"
+            class="inline-block transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"
           >
             <div>
-              <DialogTitle as="h3" class="text-lg leading-6 font-medium text-slate-900">
+              <DialogTitle as="h3" class="text-lg font-medium leading-6 text-slate-900">
                 Add
-                <div class="h-14 rounded-t bg-slate-700 sm:h-28 mb-4"></div>
+                <div class="mb-4 h-14 rounded-t bg-slate-700 sm:h-28"></div>
               </DialogTitle>
               <form class="flex flex-col space-y-6" @submit="submit">
                 <label name="username" class="relative w-full">
                   <span class="sr-only">Who said it...</span>
-                  <UserIcon class="h-5 w-5 text-slate-800 absolute inset-y-2.5 items-center" />
+                  <UserIcon class="absolute inset-y-2.5 h-5 w-5 items-center text-slate-800" />
                   <input
                     v-model="username"
                     type="text"
                     name="username"
-                    class="bg-transparent text-slate-800 placeholder:text-sm placeholder:italic placeholder:text-slate-500 block w-full py-2 pl-9 border-0 border-b-2 border-slate-800/70 focus:ring-0 focus:border-slate-300"
+                    class="block w-full border-0 border-b-2 border-slate-800/70 bg-transparent py-2 pl-9 text-slate-800 placeholder:text-sm placeholder:italic placeholder:text-slate-500 focus:border-slate-300 focus:ring-0"
                     :class="{
                       'border-green-500/70': nameMeta.dirty && nameMeta.valid,
                       'border-red-500/70': nameMeta.dirty && !nameMeta.valid,
                     }"
                     placeholder="Who said it..."
                   />
-                  <span class="capitalize text-xs my-0.5 text-red-600">{{ nameError }}</span>
+                  <span class="my-0.5 text-xs capitalize text-red-600">{{ nameError }}</span>
                 </label>
                 <label name="chapio" class="relative w-full">
                   <span class="sr-only">Said:</span>
-                  <HashtagIcon class="h-5 w-5 text-slate-800 absolute inset-y-2.5 items-center" />
+                  <HashtagIcon class="absolute inset-y-2.5 h-5 w-5 items-center text-slate-800" />
                   <input
                     v-model="chapio"
                     type="text"
                     name="chapio"
-                    class="bg-transparent text-slate-800 placeholder:text-sm placeholder:italic placeholder:text-slate-500 block w-full py-2 pl-9 border-0 border-b-2 border-slate-800/70 focus:ring-0 focus:border-slate-300"
+                    class="block w-full border-0 border-b-2 border-slate-800/70 bg-transparent py-2 pl-9 text-slate-800 placeholder:text-sm placeholder:italic placeholder:text-slate-500 focus:border-slate-300 focus:ring-0"
                     :class="{
                       'border-green-500/70': chapioMeta.dirty && chapioMeta.valid,
                       'border-red-500/70': chapioMeta.dirty && !chapioMeta.valid,
@@ -74,18 +74,18 @@
                     placeholder="What was said..."
                     required
                   />
-                  <span class="capitalize text-xs my-0.5 text-red-600">{{ chapioError }}</span>
+                  <span class="my-0.5 text-xs capitalize text-red-600">{{ chapioError }}</span>
                 </label>
                 <label name="original" class="relative w-full">
                   <span class="sr-only">Instead Of:</span>
                   <ChatBubbleBottomCenterTextIcon
-                    class="h-5 w-5 text-slate-800 absolute inset-y-2.5 items-center"
+                    class="absolute inset-y-2.5 h-5 w-5 items-center text-slate-800"
                   />
                   <input
                     v-model="original"
                     type="text"
                     name="original"
-                    class="bg-transparent text-slate-800 placeholder:text-sm placeholder:italic placeholder:text-slate-500 block w-full py-2 pl-9 border-0 border-b-2 border-slate-800/70 focus:ring-0 focus:border-slate-300"
+                    class="block w-full border-0 border-b-2 border-slate-800/70 bg-transparent py-2 pl-9 text-slate-800 placeholder:text-sm placeholder:italic placeholder:text-slate-500 focus:border-slate-300 focus:ring-0"
                     :class="{
                       'border-green-500/70': origMeta.dirty && origMeta.valid,
                       'border-red-500/70': origMeta.dirty && !origMeta.valid,
@@ -93,7 +93,7 @@
                     placeholder="What was to be said..."
                     required
                   />
-                  <span class="capitalize text-xs my-0.5 text-red-600">
+                  <span class="my-0.5 text-xs capitalize text-red-600">
                     {{ origError }}
                   </span>
                 </label>
@@ -104,24 +104,24 @@
                     name="description"
                     cols="3"
                     rows="3"
-                    class="bg-transparent text-slate-800 placeholder:text-sm placeholder:italic placeholder:text-slate-500 block w-full p-2 border-0 border-b-2 border-slate-800/70 focus:ring-0 focus:border-slate-300"
+                    class="block w-full border-0 border-b-2 border-slate-800/70 bg-transparent p-2 text-slate-800 placeholder:text-sm placeholder:italic placeholder:text-slate-500 focus:border-slate-300 focus:ring-0"
                     :class="{
                       'border-green-500/70': descMeta.dirty && descMeta.valid,
                       'border-red-500/70': descMeta.dirty && !descMeta.valid,
                     }"
                     placeholder="What lead to this one..."
                   ></textarea>
-                  <span class="capitalize text-xs my-0.5 text-red-600">{{ descError }}</span>
+                  <span class="my-0.5 text-xs capitalize text-red-600">{{ descError }}</span>
                 </label>
                 <div class="my-2">
                   <button
                     type="submit"
-                    class="inline-flex items-center float-right rounded bg-indigo-800 text-slate-100 py-2 px-5 shadow active:scale-90 hover:bg-indigo-700"
+                    class="float-right inline-flex items-center rounded bg-indigo-800 py-2 px-5 text-slate-100 shadow hover:bg-indigo-700 active:scale-90"
                     :disabled="isSubmitting"
                   >
                     <svg
                       v-if="isSubmitting"
-                      class="animate-spin -ml-1 mr-3 h-4 w-4 text-white"
+                      class="-ml-1 mr-3 h-4 w-4 animate-spin text-white"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"

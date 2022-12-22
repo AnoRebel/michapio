@@ -6,6 +6,7 @@ import {
   StarIcon,
   HandThumbUpIcon,
 } from "@heroicons/vue/24/solid";
+import { useModals } from "@/stores/modals";
 
 defineProps({
   chapio: {
@@ -13,6 +14,17 @@ defineProps({
     required: true,
   },
 });
+
+const { isLoggedIn } = useAuth();
+const { setAuthState } = useModals();
+
+const checkAndAdd = () => {
+  if (isLoggedIn()) {
+    // Add to favourites
+  } else {
+    setAuthState(true, "register");
+  }
+};
 
 const toggleFavourite = event => {
   if (event.target?.classList?.contains("favourite_icon")) {
@@ -57,7 +69,14 @@ const toggleLike = event => {
     <div>
       <div class="flex space-x-3">
         <div class="flex-shrink-0">
-          <img class="h-10 w-10 rounded-full" :src="chapio.author.imageUrl" alt="" />
+          <nuxt-img
+            provider="dicebear"
+            class="h-10 w-10 rounded-full"
+            src="ano.svg"
+            :alt="chapio.author.name"
+            crossorigin="anonymous"
+            loading="lazy"
+          />
         </div>
         <div class="min-w-0 flex-1">
           <p class="text-sm font-medium text-slate-900">
@@ -72,11 +91,11 @@ const toggleLike = event => {
           </p>
         </div>
         <!-- TODO: Remove this.. -->
-        <div class="flex-shrink-0 self-center flex">
+        <div class="flex flex-shrink-0 self-center">
           <Menu as="div" class="relative inline-block text-left">
             <div>
               <MenuButton
-                class="-m-2 p-2 rounded-full flex items-center text-slate-400 hover:text-slate-600"
+                class="-m-2 flex items-center rounded-full p-2 text-slate-400 hover:text-slate-600"
               >
                 <span class="sr-only">Open options</span>
                 <EllipsisVerticalIcon class="h-5 w-5" aria-hidden="true" />
@@ -92,7 +111,7 @@ const toggleLike = event => {
               leave-to-class="transform opacity-0 scale-95"
             >
               <MenuItems
-                class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-slate-50 ring-1 ring-black ring-opacity-5 focus:outline-none"
+                class="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-slate-50 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
               >
                 <div class="py-1">
                   <MenuItem v-slot="{ active }">
@@ -102,6 +121,7 @@ const toggleLike = event => {
                         active ? 'bg-slate-100 text-slate-900' : 'text-slate-700',
                         'flex px-4 py-2 text-sm',
                       ]"
+                      @click="checkAndAdd"
                     >
                       <StarIcon class="mr-3 h-5 w-5 text-slate-400" aria-hidden="true" />
                       <span>Add to favorites</span>
@@ -117,7 +137,7 @@ const toggleLike = event => {
         {{ chapio.title }}
       </h2>
     </div>
-    <div class="mt-2 text-sm text-slate-700 space-y-4" v-html="chapio.body" />
+    <div class="mt-2 space-y-4 text-sm text-slate-700" v-html="chapio.body" />
     <div class="mt-6 flex justify-between space-x-8">
       <div class="flex space-x-6">
         <span class="inline-flex items-center text-sm">
@@ -139,6 +159,7 @@ const toggleLike = event => {
             <span class="font-medium text-slate-900">Share</span>
           </button>
           <button
+            v-if="isLoggedIn()"
             type="button"
             class="inline-flex space-x-2 text-slate-400 hover:text-slate-500"
             @click.self="toggleFavourite"

@@ -7,6 +7,7 @@ module.exports = {
     "./pages/**/*.vue",
     "./plugins/**/*.{js,ts}",
     "./app.vue",
+    "node_modules/tailvue/dist/tailvue.es.js",
   ],
   theme: {
     extend: {},

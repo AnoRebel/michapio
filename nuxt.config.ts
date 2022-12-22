@@ -56,8 +56,8 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "nuxt-headlessui",
     "@nuxtjs/color-mode",
+    "@tailvue/nuxt",
     "@pinia/nuxt",
-    "@formkit/nuxt",
     "@nuxt/image-edge",
     "nuxt-lodash",
     "@nuxtjs/i18n",
@@ -99,8 +99,22 @@ export default defineNuxtConfig({
   vueuse: {
     ssrHandlers: true,
   },
+  image: {
+    domains: ["dicebear.com", "avatar.dicebear.com"],
+    providers: {
+      dicebear: {
+        name: "dicebear", // optional value to overrider provider name
+        provider: "~/providers/dicebear", // Path to custom provider
+        options: {
+          // ... provider options
+        },
+      },
+    },
+  },
   colorMode: {
     classSuffix: "",
+    preference: "system", // default value of $colorMode.preference
+    fallback: "dark",
   },
   runtimeConfig: {
     public: {

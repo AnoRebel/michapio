@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import InfiniteLoading from "v3-infinite-loading";
+import { useToast } from "tailvue";
+import type { RealtimeChannel } from "@supabase/supabase-js";
 
 definePageMeta({
   layout: false,
@@ -12,7 +14,7 @@ const tabs = [
   { name: "Recent", href: "#", current: false },
   { name: "Most Viewed", href: "#", current: false },
 ];
-const chapios = [
+const chapios = ref([
   {
     id: "81614",
     likes: "29",
@@ -89,19 +91,62 @@ const chapios = [
       <p>Jurassic Park was an incredible idea and a magnificent feat of engineering, but poor protocols and a disregard for human safety killed what could have otherwise been one of the best businesses of our generation.</p>
     `,
   },
-];
+]);
 
 const loading = ref(false);
+const client = useSupabaseClient();
+let realtimeChannel: RealtimeChannel;
+const $toast = useToast();
+const { $notify } = useNuxtApp();
+
 const onRefresh = () => {
   console.log("Refreshing...");
-  setTimeout(() => {
-    console.log("Refreshed...");
-    loading.value = false;
-  }, 1000);
+  // $toast.show({ message: "Refreshing michapio...", timeout: 2.5 });
+  $notify(
+    {
+      group: "messages",
+      type: "info",
+      title: "Michapio",
+      text: "Refreshing michapio...",
+    },
+    2500
+  );
+  try {
+    refreshCollaborators();
+  } catch (error) {
+    $notify(
+      {
+        group: "errors",
+        title: "Refresh Error",
+        text: error,
+      },
+      3500
+    );
+  }
+  $notify(
+    {
+      group: "messages",
+      type: "info",
+      title: "Michapio",
+      text: "Refreshed michapio...",
+    },
+    2500
+  );
+  console.log("Refreshed...");
+  loading.value = false;
 };
 
 const load = async $state => {
   console.log("Loading...");
+  $notify(
+    {
+      group: "messages",
+      type: "info",
+      title: "Michapio",
+      text: "Loading more michapio...",
+    },
+    2500
+  );
   try {
     $state.loaded();
     $state.complete();
@@ -111,8 +156,35 @@ const load = async $state => {
 };
 
 // const { pending, data: users, refresh, error } = useLazyFetch("/api/users", { pick: ['name', 'description'] });
-const { pending, data: users, error } = useLazyAsyncData("users", () => $fetch("/api/users"));
+// const { pending, data: users, error } = useLazyAsyncData("users", () => $fetch("/api/users"));
 // const refresh = () => refreshNuxtData("users");
+
+// Fetch collaborators and get the refresh method provided by useAsyncData
+const { data: michapio, refresh: refreshCollaborators } = await useAsyncData(
+  "michapio",
+  async () => {
+    const { data } = await client.from("michapio").select("*");
+    return data;
+  }
+);
+
+// Once page is mounted, listen to changes on the `collaborators` table and refresh collaborators when receiving event
+onMounted(() => {
+  // Real time listener for new workouts
+  realtimeChannel = client
+    .channel("public:michapio")
+    .on("postgres_changes", { event: "*", schema: "public", table: "michapio" }, () =>
+      refreshCollaborators()
+    );
+  realtimeChannel.subscribe();
+});
+
+// const { list, containerProps, wrapperProps } = useVirtualList(chapios, { itemHeight: 250 });
+
+// Don't forget to unsubscribe when user left the page
+onUnmounted(() => {
+  client.removeChannel(realtimeChannel);
+});
 </script>
 
 <template>
@@ -122,8 +194,8 @@ const { pending, data: users, error } = useLazyAsyncData("users", () => $fetch("
       <!-- Start -->
       <div class="w-full px-4 sm:px-0">
         <TabGroup>
-          <TabList class="w-full sticky top-4 z-10 flex space-x-1 rounded-xl bg-slate-50 p-1">
-            <Tab v-for="(tab, tabIx) in tabs" as="template" :key="tabIx" v-slot="{ selected }">
+          <TabList class="sticky top-4 z-10 flex w-full space-x-1 rounded-xl bg-slate-50 p-1">
+            <Tab v-for="(tab, tabIx) in tabs" :key="tabIx" v-slot="{ selected }" as="template">
               <button
                 :class="[
                   'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
@@ -151,7 +223,7 @@ const { pending, data: users, error } = useLazyAsyncData("users", () => $fetch("
                     <li
                       v-for="chapio in chapios"
                       :key="chapio.id"
-                      class="bg-slate-50 px-4 py-6 shadow sm:p-6 sm:rounded-lg"
+                      class="bg-slate-50 px-4 py-6 shadow sm:rounded-lg sm:p-6"
                     >
                       <ChapioCard :chapio="chapio" />
                     </li>

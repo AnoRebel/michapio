@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { ChatBubbleLeftEllipsisIcon, PlusSmallIcon } from "@heroicons/vue/24/solid";
+import type { RealtimeChannel } from "@supabase/supabase-js";
+import type { Database } from "~/types";
+
 const whoToFollow = [
   {
     name: "Leonard Krasner",
@@ -21,18 +24,45 @@ const trendingPosts = [
     comments: 291,
   },
 ];
+
+const client = useSupabaseClient<Database>();
+let trendingChannel: RealtimeChannel;
+
+const { data: trending, refresh: refreshTrending } = await useAsyncData("trending", async () => {
+  const { data } = await client
+    .from("michapio")
+    .select("*")
+    .order("likes", { ascending: false })
+    .limit(6);
+  return data;
+});
+// Once page is mounted, listen to changes on the `collaborators` table and refresh collaborators when receiving event
+onMounted(() => {
+  // Real time listener for new workouts
+  trendingChannel = client
+    .channel("public:trending")
+    .on("postgres_changes", { event: "*", schema: "public", table: "michapio" }, () =>
+      refreshTrending()
+    );
+  trendingChannel.subscribe();
+});
+
+// Don't forget to unsubscribe when user left the page
+onUnmounted(() => {
+  client.removeChannel(trendingChannel);
+});
 </script>
 
 <template>
-  <div class="h-full w-full flex flex-col">
+  <div class="flex h-full w-full flex-col">
     <div class="sticky top-4 space-y-6">
       <section class="h-1/2" aria-labelledby="trending-heading">
-        <div class="bg-slate-50 rounded-lg shadow">
+        <div class="rounded-lg bg-slate-50 shadow">
           <div class="p-6">
             <h2 id="trending-heading" class="text-base font-medium text-slate-900">Trending</h2>
             <div class="mt-6 flow-root">
               <ul role="list" class="-my-4 divide-y divide-slate-200">
-                <li v-for="post in trendingPosts" :key="post.id" class="flex py-4 space-x-3">
+                <li v-for="post in trendingPosts" :key="post.id" class="flex space-x-3 py-4">
                   <div class="flex-shrink-0">
                     <img
                       class="h-8 w-8 rounded-full"
@@ -60,7 +90,7 @@ const trendingPosts = [
             <div class="mt-6">
               <a
                 href="#"
-                class="w-full block text-center px-4 py-2 border border-slate-300 shadow-sm text-sm font-medium rounded-md text-slate-700 bg-slate-50 hover:bg-slate-100"
+                class="block w-full rounded-md border border-slate-300 bg-slate-50 px-4 py-2 text-center text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-100"
               >
                 View all
               </a>
@@ -69,7 +99,7 @@ const trendingPosts = [
         </div>
       </section>
       <section class="h-1/2" aria-labelledby="who-to-follow-heading">
-        <div class="bg-slate-50 rounded-lg shadow">
+        <div class="rounded-lg bg-slate-50 shadow">
           <div class="p-6">
             <h2 id="who-to-follow-heading" class="text-base font-medium text-slate-900">
               Who to follow
@@ -79,7 +109,7 @@ const trendingPosts = [
                 <li
                   v-for="user in whoToFollow"
                   :key="user.handle"
-                  class="flex items-center py-4 space-x-3"
+                  class="flex items-center space-x-3 py-4"
                 >
                   <div class="flex-shrink-0">
                     <img class="h-8 w-8 rounded-full" :src="user.imageUrl" alt="" />
@@ -95,7 +125,7 @@ const trendingPosts = [
                   <div class="flex-shrink-0">
                     <button
                       type="button"
-                      class="inline-flex items-center px-3 py-0.5 rounded-full bg-rose-50 text-sm font-medium text-rose-700 hover:bg-rose-100"
+                      class="inline-flex items-center rounded-full bg-rose-50 px-3 py-0.5 text-sm font-medium text-rose-700 hover:bg-rose-100"
                     >
                       <PlusSmallIcon
                         class="-ml-1 mr-0.5 h-5 w-5 text-rose-400"
@@ -110,7 +140,7 @@ const trendingPosts = [
             <div class="mt-6">
               <a
                 href="#"
-                class="w-full block text-center px-4 py-2 border border-slate-300 shadow-sm text-sm font-medium rounded-md text-slate-700 bg-slate-50 hover:bg-slate-100"
+                class="block w-full rounded-md border border-slate-300 bg-slate-50 px-4 py-2 text-center text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-100"
               >
                 View all
               </a>

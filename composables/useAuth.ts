@@ -1,5 +1,3 @@
-const useUser = () => useState(null);
-
 const useAuth = () => {
   const client = useSupabaseAuthClient();
   /*
@@ -24,6 +22,7 @@ const useAuth = () => {
    * Check if user is logged in or not
    */
   const isLoggedIn = () => {
+    const user = useSupabaseUser();
     return !!user.value;
   };
   /**
@@ -67,7 +66,6 @@ const useAuth = () => {
     register,
     update,
     resetEmail,
-    useUser,
   };
 };
 

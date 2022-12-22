@@ -28,34 +28,17 @@ const {
   value: name,
   meta: nameMeta,
   errorMessage: nameError,
-} = useField(
-  "name",
-  string()
-    .required()
-    .test(
-      "name-taken",
-      "Username already taken!",
-      async val => !(await checkExists("username", val))
-    )
-    .label("Username")
-);
+} = useField("name", string().min(3).required().label("Username"));
 const {
   value: email,
   meta: emailMeta,
   errorMessage: emailError,
-} = useField(
-  "email",
-  string()
-    .email()
-    .required()
-    .test("email-taken", "Email already taken!", async val => !(await checkExists("email", val)))
-    .label("Email")
-);
+} = useField("email", string().email().required().label("Email"));
 const {
   value: password,
   meta: passwordMeta,
   errorMessage: passwordError,
-} = useField("password", string().required().min(2).label("Password"));
+} = useField("password", string().required().min(3).label("Password"));
 
 const onInvalid = ({ values, errors, results }) => {
   console.log("Invalid Values: ", values); // current form values
@@ -125,7 +108,7 @@ const submit = handleSubmit((values, { resetForm }) => {
       <LockClosedIcon class="absolute inset-y-2.5 h-5 w-5 items-center text-slate-800" />
       <input
         v-model="password"
-        :type="isPass ? 'password' : 'test'"
+        :type="isPass ? 'password' : 'text'"
         name="password"
         class="block w-full border-0 border-b-2 border-slate-800/70 bg-transparent py-2 px-9 text-slate-800 placeholder:text-sm placeholder:italic placeholder:text-slate-500 focus:border-slate-300 focus:ring-0"
         :class="{
@@ -137,12 +120,12 @@ const submit = handleSubmit((values, { resetForm }) => {
       />
       <EyeIcon
         v-if="isPass"
-        class="animate__animated animate__fadeIn animate__faster absolute inset-y-2.5 right-[-5.5rem] h-5 w-5 cursor-pointer items-center text-slate-800"
+        class="animate__animated animate__fadeIn absolute inset-y-2.5 right-1 h-5 w-5 cursor-pointer items-center text-slate-800"
         @click="isPass = !isPass"
       />
       <EyeSlashIcon
         v-else
-        class="animate__animated animate__fadeIn animate__faster absolute inset-y-2.5 right-1 h-5 w-5 cursor-pointer items-center text-slate-800"
+        class="animate__animated animate__fadeIn absolute inset-y-2.5 right-1 h-5 w-5 cursor-pointer items-center text-slate-800"
         @click="isPass = !isPass"
       />
       <span class="my-0.5 text-xs text-red-600">{{ passwordError }}</span>

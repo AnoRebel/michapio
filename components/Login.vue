@@ -1,38 +1,38 @@
 <template>
-  <form class="w-full flex flex-col space-y-6 px-3" @submit="submit">
+  <form class="flex w-full flex-col space-y-6 px-3" @submit="submit">
     <label name="lname" class="relative w-full">
-      <span class="sr-only">Username</span>
-      <UserIcon class="h-5 w-5 text-slate-800 absolute inset-y-2.5 items-center" />
+      <span class="sr-only">Email</span>
+      <AtSymbolIcon class="absolute inset-y-2.5 h-5 w-5 items-center text-slate-800" />
       <input
-        v-model="username"
+        v-model="email"
         type="text"
         name="username"
-        class="bg-transparent text-slate-800 placeholder:text-sm placeholder:italic placeholder:text-slate-500 block w-full py-2 px-9 border-0 border-b-2 border-slate-800/70 focus:ring-0 focus:border-slate-300"
+        class="block w-full border-0 border-b-2 border-slate-800/70 bg-transparent py-2 px-9 text-slate-800 placeholder:text-sm placeholder:italic placeholder:text-slate-500 focus:border-slate-300 focus:ring-0"
         :class="{
-          'border-green-500/70': nameMeta.dirty && nameMeta.valid,
-          'border-red-500/70': nameMeta.dirty && !nameMeta.valid,
+          'border-green-500/70': emailMeta.dirty && emailMeta.valid,
+          'border-red-500/70': emailMeta.dirty && !emailMeta.valid,
         }"
-        placeholder="Username"
+        placeholder="Email"
         required
       />
       <ArrowPathIcon
-        v-if="nameMeta.pending"
-        class="h-5 w-5 text-slate-800 absolute right-0 inset-y-2.5 items-center animate-spin"
+        v-if="emailMeta.pending"
+        class="absolute inset-y-2.5 right-0 h-5 w-5 animate-spin items-center text-slate-800"
       />
       <CheckIcon
-        v-if="nameMeta.dirty && nameMeta.valid"
-        class="h-5 w-5 text-green-500 absolute right-0 inset-y-2.5 items-center"
+        v-if="emailMeta.dirty && emailMeta.valid"
+        class="absolute inset-y-2.5 right-0 h-5 w-5 items-center text-green-500"
       />
-      <span class="text-xs my-0.5 text-red-600">{{ nameError }}</span>
+      <span class="my-0.5 text-xs text-red-600">{{ emailError }}</span>
     </label>
     <label name="password" class="relative w-full">
       <span class="sr-only">Password</span>
-      <LockClosedIcon class="h-5 w-5 text-slate-800 absolute inset-y-2.5 items-center" />
+      <LockClosedIcon class="absolute inset-y-2.5 h-5 w-5 items-center text-slate-800" />
       <input
         v-model="password"
-        :type="isPass ? 'password' : 'test'"
+        :type="isPass ? 'password' : 'text'"
         name="password"
-        class="bg-transparent text-slate-800 placeholder:text-sm placeholder:italic placeholder:text-slate-500 block w-full py-2 px-9 border-0 border-b-2 border-slate-800/70 focus:ring-0 focus:border-slate-300"
+        class="block w-full border-0 border-b-2 border-slate-800/70 bg-transparent py-2 px-9 text-slate-800 placeholder:text-sm placeholder:italic placeholder:text-slate-500 focus:border-slate-300 focus:ring-0"
         :class="{
           'border-green-500/70': passwordMeta.dirty && passwordMeta.valid,
           'border-red-500/70': passwordMeta.dirty && !passwordMeta.valid,
@@ -42,35 +42,35 @@
       />
       <EyeIcon
         v-if="isPass"
-        class="h-5 w-5 text-slate-800 absolute right-1 inset-y-2.5 items-center cursor-pointer animate__animated animate__fadeIn"
+        class="animate__animated animate__fadeIn absolute inset-y-2.5 right-1 h-5 w-5 cursor-pointer items-center text-slate-800"
         @click="isPass = !isPass"
       />
       <EyeSlashIcon
         v-else
-        class="h-5 w-5 text-slate-800 absolute right-1 inset-y-2.5 items-center cursor-pointer animate__animated animate__fadeIn"
+        class="animate__animated animate__fadeIn absolute inset-y-2.5 right-1 h-5 w-5 cursor-pointer items-center text-slate-800"
         @click="isPass = !isPass"
       />
-      <span class="text-xs my-0.5 text-red-600">{{ passwordError }}</span>
+      <span class="my-0.5 text-xs text-red-600">{{ passwordError }}</span>
     </label>
     <div class="mt-5 sm:mt-6">
-      <div class="w-full inline-flex justify-around items-center mb-3 text-underline">
+      <div class="text-underline mb-3 inline-flex w-full items-center justify-around">
         <button
           v-if="!isActiveForm('login')"
-          class="underline animate_animated animate_slideInLeft"
+          class="animate_animated animate_slideInLeft underline"
           @click="toggleForm('login')"
         >
           Login
         </button>
         <button
           v-if="!isActiveForm('register')"
-          class="underline animate_animated animate_slideInLeft"
+          class="animate_animated animate_slideInLeft underline"
           @click="toggleForm('register')"
         >
           Register
         </button>
         <button
           v-if="!isActiveForm('forgot')"
-          class="underline animate_animated animate_slideInRight"
+          class="animate_animated animate_slideInRight underline"
           @click="toggleForm('forgot')"
         >
           Forgot Password?
@@ -78,13 +78,13 @@
       </div>
       <button
         type="submit"
-        class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white animate__animated animate__slideInBottom transform transition active:scale-90 hover:bg-indigo-700 focus:outline-none sm:text-sm"
+        class="animate__animated animate__slideInBottom inline-flex w-full transform justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none active:scale-90 sm:text-sm"
         :class="{ 'bg-indigo-500/70': isSubmitting }"
         :disabled="isSubmitting"
       >
         <svg
           v-if="isSubmitting"
-          class="animate-spin mr-3 h-5 w-5 text-white"
+          class="mr-3 h-5 w-5 animate-spin text-white"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -111,7 +111,7 @@
 
 <script setup lang="ts">
 import {
-  UserIcon,
+  AtSymbolIcon,
   LockClosedIcon,
   EyeIcon,
   EyeSlashIcon,
@@ -130,30 +130,31 @@ const isPass = ref(true);
 
 const { handleSubmit, isSubmitting } = useForm({
   initialValues: {
-    name: "",
+    email: "",
     password: "",
   },
 });
 const {
-  value: username,
-  meta: nameMeta,
-  errorMessage: nameError,
+  value: email,
+  meta: emailMeta,
+  errorMessage: emailError,
 } = useField(
-  "name",
+  "email",
   string()
+    .email()
     .required()
-    .test(
-      "name-not-registered",
-      "Username not registered!",
-      async val => await checkExists("username", val)
-    )
+    // .test(
+    //   "name-not-registered",
+    //   "Username not registered!",
+    //   async val => await checkExists("username", val)
+    // )
     .label("Username")
 );
 const {
   value: password,
   meta: passwordMeta,
   errorMessage: passwordError,
-} = useField("password", string().required().min(2).label("Password"));
+} = useField("password", string().required().min(3).label("Password"));
 
 const onInvalid = ({ values, errors, results }) => {
   console.log("Invalid Values: ", values); // current form values
@@ -164,7 +165,7 @@ const submit = handleSubmit((values, { resetForm }) => {
   submitForm("login", values);
   resetForm({
     values: {
-      name: values.name,
+      email: values.email,
       password: "",
     },
   });
