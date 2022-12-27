@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import InfiniteLoading from "v3-infinite-loading";
-import { useToast } from "tailvue";
 import type { RealtimeChannel } from "@supabase/supabase-js";
 
 definePageMeta({
@@ -96,15 +95,14 @@ const chapios = ref([
 const loading = ref(false);
 const client = useSupabaseClient();
 let realtimeChannel: RealtimeChannel;
-const $toast = useToast();
-const { $notify } = useNuxtApp();
+const { $modal } = useNuxtApp();
+const notify = useNotify();
 
 const onRefresh = () => {
   console.log("Refreshing...");
-  // $toast.show({ message: "Refreshing michapio...", timeout: 2.5 });
-  $notify(
+  notify(
     {
-      group: "messages",
+      group: "errors",
       type: "info",
       title: "Michapio",
       text: "Refreshing michapio...",
@@ -114,7 +112,7 @@ const onRefresh = () => {
   try {
     refreshCollaborators();
   } catch (error) {
-    $notify(
+    notify(
       {
         group: "errors",
         title: "Refresh Error",
@@ -123,7 +121,7 @@ const onRefresh = () => {
       3500
     );
   }
-  $notify(
+  notify(
     {
       group: "messages",
       type: "info",
@@ -138,7 +136,7 @@ const onRefresh = () => {
 
 const load = async $state => {
   console.log("Loading...");
-  $notify(
+  notify(
     {
       group: "messages",
       type: "info",
@@ -223,7 +221,7 @@ onUnmounted(() => {
                     <li
                       v-for="chapio in chapios"
                       :key="chapio.id"
-                      class="bg-slate-50 px-4 py-6 shadow sm:rounded-lg sm:p-6"
+                      class="rounded-lg bg-slate-50 px-4 py-6 shadow sm:p-6"
                     >
                       <ChapioCard :chapio="chapio" />
                     </li>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Notification, NotificationGroup } from "notiwind";
 const { $pinia } = useNuxtApp();
 
 const piniaLogger = ({ store }) => {
@@ -35,7 +34,9 @@ $pinia.use(piniaDebounce);
     </ClientOnly>
     <ClientOnly>
       <NotificationGroup group="messages" position="top">
-        <div class="pointer-events-none fixed inset-0 flex items-start justify-end p-6 px-4 py-6">
+        <div
+          class="pointer-events-none fixed inset-0 z-[100] flex items-start justify-end p-6 px-4 py-6"
+        >
           <div class="w-full max-w-sm">
             <Notification
               v-slot="{ notifications, close }"
@@ -48,7 +49,11 @@ $pinia.use(piniaDebounce);
               move="transition duration-500"
               move-delay="delay-300"
             >
-              <div v-for="notification in notifications" :key="notification.id">
+              <div
+                v-for="notification in notifications"
+                :key="notification.id"
+                class="pointer-events-auto"
+              >
                 <div
                   v-if="notification.type === 'info'"
                   class="mx-auto mt-4 flex w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-md"
@@ -70,7 +75,7 @@ $pinia.use(piniaDebounce);
                       <p class="text-sm text-gray-600">{{ notification.text }}</p>
                     </div>
                   </div>
-                  <div class="flex shrink-0 p-3">
+                  <div class="flex h-fit shrink-0 p-3">
                     <button
                       class="inline-flex rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
                       @click="close(notification.id)"
@@ -120,7 +125,7 @@ $pinia.use(piniaDebounce);
                       <p class="text-sm text-gray-600">{{ notification.text }}</p>
                     </div>
                   </div>
-                  <div class="flex shrink-0 p-3">
+                  <div class="flex h-fit shrink-0 p-3">
                     <button
                       class="inline-flex rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
                       @click="close(notification.id)"
@@ -152,8 +157,10 @@ $pinia.use(piniaDebounce);
       <NuxtPage />
     </NuxtLayout>
     <ClientOnly>
-      <NotificationGroup group="error" position="bottom">
-        <div class="pointer-events-none fixed inset-0 flex items-start justify-end p-6 px-4 py-6">
+      <NotificationGroup group="errors" position="bottom">
+        <div
+          class="pointer-events-none fixed inset-x-0 bottom-0 z-[100] flex items-start justify-end p-6 px-4 py-6"
+        >
           <div class="w-full max-w-sm">
             <Notification
               v-slot="{ notifications, close }"
@@ -169,7 +176,7 @@ $pinia.use(piniaDebounce);
               <div
                 v-for="notification in notifications"
                 :key="notification.id"
-                class="mx-auto mt-4 flex w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-md"
+                class="pointer-events-auto mx-auto mt-4 flex w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-md"
               >
                 <div class="flex w-12 shrink-0 items-center justify-center bg-red-500">
                   <svg
@@ -188,7 +195,7 @@ $pinia.use(piniaDebounce);
                     <p class="text-sm text-gray-600">{{ notification.text }}</p>
                   </div>
                 </div>
-                <div class="flex shrink-0 p-3">
+                <div class="flex h-fit shrink-0 p-3">
                   <button
                     class="inline-flex rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
                     @click="close(notification.id)"

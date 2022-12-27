@@ -2496,6 +2496,11 @@ data-uri-to-buffer@^4.0.0:
   resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-4.0.0.tgz#b5db46aea50f6176428ac05b73be39a57701a64b"
   integrity sha512-Vr3mLBA8qWmcuschSLAOogKgQ/Jwxulv3RNE4FXnYWRGujzrRWQI4m12fQqRkwX06C0KanhLr4hK+GydchZsaA==
 
+dayjs@^1.11.7:
+  version "1.11.7"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.7.tgz#4b296922642f70999544d1144a2c25730fce63e2"
+  integrity sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==
+
 db-errors@^0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/db-errors/-/db-errors-0.2.3.tgz#a6a38952e00b20e790f2695a6446b3c65497ffa2"
@@ -4935,6 +4940,11 @@ minizlib@^2.1.1:
     minipass "^3.0.0"
     yallist "^4.0.0"
 
+mitt@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/mitt/-/mitt-3.0.0.tgz#69ef9bd5c80ff6f57473e8d89326d01c414be0bd"
+  integrity sha512-7dX2/10ITVyqh4aOSVI9gdape+t9l2/8QxHrFmUXu4EEUpdlxl6RudZUPZoc+zuY2hk1j7XxVroIVIan/pD/SQ==
+
 mkdir@^0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/mkdir/-/mkdir-0.0.2.tgz#3b9da7a4e5b13004ebc636581b160e1e04776851"
@@ -5185,11 +5195,6 @@ normalize-url@^6.0.1:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-6.1.0.tgz#40d0885b535deffe3f3147bec877d05fe4c5668a"
   integrity sha512-DlL+XwOy3NxAQ8xuC0okPgK46iuVNAK01YN7RueYBqqFeGsBjV9XmCAzAdgt+667bCl5kPh9EqKKDwnaPG1I7A==
-
-notiwind@^1.2.6:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/notiwind/-/notiwind-1.2.6.tgz#9796792b4000d31f7b6591779b8f5320ab107cbd"
-  integrity sha512-muU2I95/D97PDf/4dzB/H+C8CMpz2Dn0hZQ7ak7t1uMbe7/h0Hjy5OAHsLLfOgnE7UMrrocgQfXE6q66QW8L7g==
 
 npm-run-path@^4.0.1:
   version "4.0.1"
