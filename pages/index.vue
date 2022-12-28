@@ -95,11 +95,9 @@ const chapios = ref([
 const loading = ref(false);
 const client = useSupabaseClient();
 let realtimeChannel: RealtimeChannel;
-const { $modal } = useNuxtApp();
 const notify = useNotify();
 
 const onRefresh = () => {
-  console.log("Refreshing...");
   notify(
     {
       group: "errors",
@@ -124,18 +122,16 @@ const onRefresh = () => {
   notify(
     {
       group: "messages",
-      type: "info",
+      type: "success",
       title: "Michapio",
       text: "Refreshed michapio...",
     },
     2500
   );
-  console.log("Refreshed...");
   loading.value = false;
 };
 
 const load = async $state => {
-  console.log("Loading...");
   notify(
     {
       group: "messages",

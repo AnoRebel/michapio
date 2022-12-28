@@ -56,7 +56,6 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "nuxt-headlessui",
     "@nuxtjs/color-mode",
-    "@tailvue/nuxt",
     "@pinia/nuxt",
     "@nuxt/image-edge",
     "nuxt-lodash",
