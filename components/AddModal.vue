@@ -40,7 +40,16 @@
             <div>
               <DialogTitle as="h3" class="text-lg font-medium leading-6 text-slate-900">
                 Add
-                <div class="mb-4 h-14 rounded-t bg-slate-700 sm:h-28"></div>
+                <div class="mb-4 h-14 rounded-full sm:h-28">
+                  <nuxt-img
+                    provider="dicebear"
+                    class="h-full w-full rounded-full"
+                    src="ano.svg"
+                    alt="User"
+                    crossorigin="anonymous"
+                    loading="lazy"
+                  />
+                </div>
               </DialogTitle>
               <form class="flex flex-col space-y-6" @submit="submit">
                 <label name="username" class="relative w-full">
