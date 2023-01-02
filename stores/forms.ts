@@ -11,29 +11,103 @@ export const useForms = defineStore("forms", {
       const auth = useAuth();
       const client = useSupabaseClient();
       const modals = useModals();
-      console.log(form, data);
+      const notify = useNotify();
+      console.log(form, data, auth);
       switch (form) {
         case "login":
-          await auth.login(data);
-          // const { data } = await $fetch("/api/auth/signin", { method: "POST", body: {} }).catch(error => error.data);
+          try {
+            const accept = await auth.login(data as any);
+            // const { data } = await $fetch("/api/auth/signin", { method: "POST", body: {} }).catch(error => error.data);
+            notify(
+              {
+                group: "messages",
+                title: "Register",
+                text: `${accept?.user?.user_metadata?.username} registered succefully`,
+              },
+              4000
+            );
+            modals.setAuthState(false);
+          } catch (error) {
+            notify(
+              {
+                group: "errors",
+                title: "Login",
+                text: error.message,
+              },
+              4000
+            );
+          }
           break;
         case "register":
-          await auth.register(data);
-          // const { data } = await $fetch("/api/auth/signup", { method: "POST", body: {} }).catch(error => error.data);
+          try {
+            const registered = await auth.register(data as any);
+            // const { data } = await $fetch("/api/auth/signup", { method: "POST", body: {} }).catch(error => error.data);
+            notify(
+              {
+                group: "messages",
+                title: "Register",
+                text: `${registered?.user?.user_metadata?.username} registered succefully`,
+              },
+              4000
+            );
+            modals.setAuthState(false);
+          } catch (error) {
+            notify(
+              {
+                group: "errors",
+                title: "Register",
+                text: error.message,
+              },
+              4000
+            );
+          }
           break;
         case "forgot":
-          await auth.resetEmail(data);
-          // const { data } = await $fetch("/api/auth/forgot", { method: "POST", body: {} }).catch(error => error.data);
+          try {
+            const resMail = await auth.resetEmail(data as any);
+            // const { data } = await $fetch("/api/auth/forgot", { method: "POST", body: {} }).catch(error => error.data);
+            modals.setAuthState(false);
+          } catch (error) {
+            notify(
+              {
+                group: "errors",
+                title: "Recover",
+                text: error.message,
+              },
+              4000
+            );
+          }
           break;
         case "add":
-          // const { data } = await $fetch("/api/c", { method: "POST", body: {} }).catch(error => error.data);
-          const { data, error } = await client.from("michapio").insert(data).select();
+          try {
+            // const { data: resp, error } = await client.from("michapio").insert(data).select();
+            // const { data } = await $fetch("/api/c", { method: "POST", body: {} }).catch(error => error.data);
+            modals.setAuthState(false);
+          } catch (error) {
+            notify(
+              {
+                group: "errors",
+                title: "Michapio",
+                text: error.message,
+              },
+              4000
+            );
+          }
           break;
 
         default:
+          notify(
+            {
+              group: "messages",
+              type: "info",
+              title: "Michapio",
+              text: "Fuck Off.!",
+            },
+            4000
+          );
+          modals.setAuthState(false);
           break;
       }
-      modals.setAuthState(false);
     },
     toggleForm(form: string) {
       this.active = form;

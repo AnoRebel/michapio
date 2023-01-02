@@ -16,19 +16,21 @@ import { useForms } from "@/stores/forms";
 const forms = useForms();
 const { toggleForm, submitForm } = forms;
 const { isActiveForm } = storeToRefs(forms);
+const notify = useNotify();
 const isPass = ref(true);
+const token = ref();
 const { handleSubmit, isSubmitting } = useForm({
   initialValues: {
-    name: "",
+    username: "",
     email: "",
     password: "",
   },
 });
 const {
-  value: name,
+  value: username,
   meta: nameMeta,
   errorMessage: nameError,
-} = useField("name", string().min(3).required().label("Username"));
+} = useField("username", string().min(3).required().label("Username"));
 const {
   value: email,
   meta: emailMeta,
@@ -45,21 +47,39 @@ const onInvalid = ({ values, errors, results }) => {
   console.log("Invalid Errors: ", errors); // a map of field names and their first error message
   console.log("Invalid Results: ", results); // a detailed map of field names and their validation results
 };
-const submit = handleSubmit((values, { resetForm }) => {
-  submitForm("register", values);
-  resetForm();
+const submit = handleSubmit(async (values, { resetForm }) => {
+  const verified = await $fetch("/api/verify", {
+    method: "POST",
+    body: {
+      token: token.value,
+    },
+  });
+  if (verified.success) {
+    submitForm("register", values);
+    resetForm();
+  } else {
+    notify(
+      {
+        group: "errors",
+        title: "Captcha",
+        text: "Captcha Failed!",
+      },
+      4000
+    );
+  }
+  return verified.success;
 }, onInvalid);
 </script>
 
 <template>
   <form class="flex w-full flex-col space-y-6 px-3" @submit="submit">
-    <label name="name" class="relative w-full">
+    <label name="username" class="relative w-full">
       <span class="sr-only">Username</span>
       <UserIcon class="absolute inset-y-2.5 h-5 w-5 items-center text-slate-800" />
       <input
-        v-model="name"
+        v-model="username"
         type="text"
-        name="name"
+        name="username"
         class="block w-full border-0 border-b-2 border-slate-800/70 bg-transparent py-2 px-9 text-slate-800 placeholder:text-sm placeholder:italic placeholder:text-slate-500 focus:border-slate-300 focus:ring-0"
         :class="{
           'border-green-500/70': nameMeta.dirty && nameMeta.valid,
@@ -130,6 +150,7 @@ const submit = handleSubmit((values, { resetForm }) => {
       />
       <span class="my-0.5 text-xs text-red-600">{{ passwordError }}</span>
     </label>
+    <Turnstile v-model="token" :options="{ action: 'register' }" />
     <div class="mt-5 sm:mt-6">
       <div class="text-underline mb-3 inline-flex w-full items-center justify-around">
         <button

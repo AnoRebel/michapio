@@ -61,6 +61,7 @@ export default defineNuxtConfig({
     "nuxt-lodash",
     "@nuxtjs/i18n",
     "@vueuse/nuxt",
+    "nuxt-turnstile",
     // "@nuxtjs/eslint-module",
     "@nuxtjs/supabase",
     "nuxt-security",
@@ -110,6 +111,9 @@ export default defineNuxtConfig({
       },
     },
   },
+  turnstile: {
+    siteKey: process.env.NUXT_PUBLIC_TURNSTILE_SITE_KEY || "",
+  },
   colorMode: {
     classSuffix: "",
     preference: "system", // default value of $colorMode.preference
@@ -119,6 +123,9 @@ export default defineNuxtConfig({
     public: {
       BASE_URL: process.env.NUXT_PUBLIC_BASE_URL,
       BASE_API_URL: process.env.NUXT_PUBLIC_BASE_API_URL,
+    },
+    turnstile: {
+      secretKey: process.env.NUXT_TURNSTILE_SECRET_KEY || "",
     },
     DATABASE_NAME: process.env.NUXT_DATABASE_NAME,
     DATABASE_USER: process.env.NUXT_DATABASE_USER,

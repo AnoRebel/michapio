@@ -1,3 +1,87 @@
+<script setup lang="ts">
+import {
+  AtSymbolIcon,
+  LockClosedIcon,
+  EyeIcon,
+  EyeSlashIcon,
+  ArrowPathIcon,
+  CheckIcon,
+} from "@heroicons/vue/24/outline";
+import { useField, useForm } from "vee-validate";
+import { string } from "yup";
+import { storeToRefs } from "pinia";
+import { useForms } from "@/stores/forms";
+
+const forms = useForms();
+const { toggleForm, submitForm } = forms;
+const { isActiveForm } = storeToRefs(forms);
+const notify = useNotify();
+const isPass = ref(true);
+const token = ref();
+
+const { handleSubmit, isSubmitting } = useForm({
+  initialValues: {
+    email: "",
+    password: "",
+  },
+});
+const {
+  value: email,
+  meta: emailMeta,
+  errorMessage: emailError,
+} = useField(
+  "email",
+  string()
+    .email()
+    .required()
+    // .test(
+    //   "name-not-registered",
+    //   "Username not registered!",
+    //   async val => await checkExists("username", val)
+    // )
+    .label("Email")
+);
+const {
+  value: password,
+  meta: passwordMeta,
+  errorMessage: passwordError,
+} = useField("password", string().required().min(3).label("Password"));
+
+const onInvalid = ({ values, errors, results }) => {
+  console.log("Invalid Values: ", values); // current form values
+  console.log("Invalid Errors: ", errors); // a map of field names and their first error message
+  console.log("Invalid Results: ", results); // a detailed map of field names and their validation results
+};
+const submit = handleSubmit(async (values, { resetForm }) => {
+  const verified = await $fetch("/api/verify", {
+    method: "POST",
+    body: {
+      token: token.value,
+    },
+  });
+  console.log(verified);
+  if (verified.success) {
+    submitForm("login", values);
+    resetForm({
+      values: {
+        email: values.email,
+        password: "",
+      },
+    });
+  } else {
+    notify(
+      {
+        group: "errors",
+        title: "Captcha",
+        text: "Captcha Failed!",
+      },
+      4000
+    );
+  }
+  return verified.success;
+}, onInvalid);
+</script>
+
 <template>
   <form class="flex w-full flex-col space-y-6 px-3" @submit="submit">
     <label name="lname" class="relative w-full">
@@ -52,6 +136,7 @@
       />
       <span class="my-0.5 text-xs text-red-600">{{ passwordError }}</span>
     </label>
+    <Turnstile v-model="token" :options="{ action: 'login' }" />
     <div class="mt-5 sm:mt-6">
       <div class="text-underline mb-3 inline-flex w-full items-center justify-around">
         <button
@@ -108,66 +193,3 @@
     </div>
   </form>
 </template>
-
-<script setup lang="ts">
-import {
-  AtSymbolIcon,
-  LockClosedIcon,
-  EyeIcon,
-  EyeSlashIcon,
-  ArrowPathIcon,
-  CheckIcon,
-} from "@heroicons/vue/24/outline";
-import { useField, useForm } from "vee-validate";
-import { string } from "yup";
-import { storeToRefs } from "pinia";
-import { useForms } from "@/stores/forms";
-
-const forms = useForms();
-const { toggleForm, submitForm } = forms;
-const { isActiveForm } = storeToRefs(forms);
-const isPass = ref(true);
-
-const { handleSubmit, isSubmitting } = useForm({
-  initialValues: {
-    email: "",
-    password: "",
-  },
-});
-const {
-  value: email,
-  meta: emailMeta,
-  errorMessage: emailError,
-} = useField(
-  "email",
-  string()
-    .email()
-    .required()
-    // .test(
-    //   "name-not-registered",
-    //   "Username not registered!",
-    //   async val => await checkExists("username", val)
-    // )
-    .label("Username")
-);
-const {
-  value: password,
-  meta: passwordMeta,
-  errorMessage: passwordError,
-} = useField("password", string().required().min(3).label("Password"));
-
-const onInvalid = ({ values, errors, results }) => {
-  console.log("Invalid Values: ", values); // current form values
-  console.log("Invalid Errors: ", errors); // a map of field names and their first error message
-  console.log("Invalid Results: ", results); // a detailed map of field names and their validation results
-};
-const submit = handleSubmit((values, { resetForm }) => {
-  submitForm("login", values);
-  resetForm({
-    values: {
-      email: values.email,
-      password: "",
-    },
-  });
-}, onInvalid);
-</script>
