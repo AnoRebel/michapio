@@ -17,6 +17,7 @@ defineProps({
 
 const { isLoggedIn } = useAuth();
 const { setAuthState } = useModals();
+const likeState = ref("initial");
 
 const checkAndAdd = () => {
   if (isLoggedIn()) {
@@ -44,22 +45,19 @@ const toggleFavourite = event => {
   }
 };
 
-const toggleLike = event => {
-  if (event.target?.classList?.contains("like_icon")) {
-    event.target.classList.toggle("animate-like");
-  }
-  if (event.target.nextSibling?.classList?.contains("like_icon")) {
-    event.target.nextSibling.classList.toggle("animate-like");
-  }
-  if (event.target.previousSibling?.classList?.contains("like_icon")) {
-    event.target.previousSibling.classList.toggle("animate-like");
-  }
-  if (event.target.querySelector(".like_icon")?.classList?.contains("like_icon")) {
-    event.target.querySelector(".like_icon").classList.toggle("animate-like");
-  }
-  if (event.target.parentElement?.classList?.contains("like_icon")) {
-    event.target.parentElement.classList.toggle("animate-like");
-  }
+const liked = ref(false);
+const toggleLike = () => {
+  // 1. Old number goes up
+  setTimeout(() => (likeState.value = liked.value ? "waitDown" : "goUp"), 0);
+  // setTimeout(() => (likeState.value = "goUp"), 0);
+  // 2. Incrementing the counter
+  // setTimeout(() => likes.value = likes.value + 1, 100);
+  // 3. New number waits down
+  // setTimeout(() => (likeState.value = "waitDown"), 100);
+  setTimeout(() => (likeState.value = liked.value ? "goUp" : "waitDown"), 100);
+  // 4. New number stays in the middle
+  setTimeout(() => (likeState.value = "initial"), 200);
+  liked.value = !liked.value;
 };
 </script>
 
@@ -146,8 +144,15 @@ const toggleLike = event => {
             class="inline-flex space-x-2 text-slate-400 hover:text-slate-500"
             @click.self="toggleLike"
           >
-            <HandThumbUpIcon class="like_icon h-5 w-5" aria-hidden="true" @click="toggleLike" />
-            <span class="font-medium text-slate-900" @click="toggleLike">{{ chapio.likes }}</span>
+            <HandThumbUpIcon
+              class="like_icon h-5 w-5"
+              :class="{ 'text-cyan-800': liked }"
+              aria-hidden="true"
+              @click="toggleLike"
+            />
+            <span class="font-medium text-slate-900" :class="likeState" @click="toggleLike">{{
+              chapio.likes
+            }}</span>
             <span class="sr-only">likes</span>
           </button>
         </span>
@@ -226,5 +231,23 @@ const toggleLike = event => {
     background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
     background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
   }
+}
+
+.goUp {
+  display: inline-flex;
+  opacity: 0;
+  transform: translate3d(0, -20px, 0);
+  transition: 0.1s ease-in-out;
+}
+.waitDown {
+  display: inline-flex;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+}
+.initial {
+  display: inline-flex;
+  opacity: 1;
+  transform: translate3d(0, 0px, 0);
+  transition: 0.1s ease-in-out;
 }
 </style>
