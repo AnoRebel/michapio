@@ -59,7 +59,9 @@ onUnmounted(() => {
       <section class="h-1/2" aria-labelledby="trending-heading">
         <div class="rounded-lg bg-slate-50 shadow">
           <div class="p-6">
-            <h2 id="trending-heading" class="text-base font-medium text-slate-900">Trending</h2>
+            <h2 id="trending-heading" class="text-base font-medium text-slate-900">
+              Trending (Hall of Fame 😏)
+            </h2>
             <div class="mt-6 flow-root">
               <ul role="list" class="-my-4 divide-y divide-slate-200">
                 <li v-for="post in trendingPosts" :key="post.id" class="flex space-x-3 py-4">

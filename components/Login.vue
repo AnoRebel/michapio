@@ -73,7 +73,7 @@ const submit = handleSubmit(async (values, { resetForm }) => {
       {
         group: "errors",
         title: "Captcha",
-        text: "Captcha Failed!",
+        text: "Captcha Failed! 🤔",
       },
       4000
     );

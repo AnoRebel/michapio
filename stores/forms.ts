@@ -21,8 +21,9 @@ export const useForms = defineStore("forms", {
             notify(
               {
                 group: "messages",
-                title: "Register",
-                text: `${accept?.user?.user_metadata?.username} registered succefully`,
+                type: "success",
+                title: "Login",
+                text: `${accept?.user?.user_metadata?.username} logged in.`,
               },
               4000
             );
@@ -45,8 +46,9 @@ export const useForms = defineStore("forms", {
             notify(
               {
                 group: "messages",
+                type: "success",
                 title: "Register",
-                text: `${registered?.user?.user_metadata?.username} registered succefully`,
+                text: `${registered?.user?.user_metadata?.username} registered succefully.`,
               },
               4000
             );
@@ -101,7 +103,7 @@ export const useForms = defineStore("forms", {
               group: "messages",
               type: "info",
               title: "Michapio",
-              text: "Fuck Off.!",
+              text: "Fuck Off.! 👿",
             },
             4000
           );

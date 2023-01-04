@@ -100,7 +100,7 @@ const notify = useNotify();
 const onRefresh = () => {
   notify(
     {
-      group: "errors",
+      group: "messages",
       type: "info",
       title: "Michapio",
       text: "Refreshing michapio...",

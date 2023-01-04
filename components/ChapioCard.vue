@@ -8,7 +8,7 @@ import {
 } from "@heroicons/vue/24/solid";
 import { useModals } from "@/stores/modals";
 
-defineProps({
+const props = defineProps({
   chapio: {
     type: Object,
     required: true,
@@ -18,6 +18,7 @@ defineProps({
 const { isLoggedIn } = useAuth();
 const { setAuthState } = useModals();
 const likeState = ref("initial");
+const likes = ref(parseInt(props.chapio.likes || 0));
 
 const checkAndAdd = () => {
   if (isLoggedIn()) {
@@ -51,7 +52,10 @@ const toggleLike = () => {
   setTimeout(() => (likeState.value = liked.value ? "waitDown" : "goUp"), 0);
   // setTimeout(() => (likeState.value = "goUp"), 0);
   // 2. Incrementing the counter
-  // setTimeout(() => likes.value = likes.value + 1, 100);
+  setTimeout(
+    () => (liked.value ? (likes.value = likes.value + 1) : (likes.value = likes.value - 1)),
+    100
+  );
   // 3. New number waits down
   // setTimeout(() => (likeState.value = "waitDown"), 100);
   setTimeout(() => (likeState.value = liked.value ? "goUp" : "waitDown"), 100);
@@ -150,9 +154,9 @@ const toggleLike = () => {
               aria-hidden="true"
               @click="toggleLike"
             />
-            <span class="font-medium text-slate-900" :class="likeState" @click="toggleLike">{{
-              chapio.likes
-            }}</span>
+            <span class="font-medium text-slate-900" :class="likeState" @click="toggleLike">
+              {{ likes }}
+            </span>
             <span class="sr-only">likes</span>
           </button>
         </span>
