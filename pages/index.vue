@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import InfiniteLoading from "v3-infinite-loading";
 import type { RealtimeChannel } from "@supabase/supabase-js";
 
@@ -7,12 +6,6 @@ definePageMeta({
   layout: false,
 });
 
-// TODO: Add `Favourites`
-const tabs = [
-  { name: "All", href: "#", current: true },
-  { name: "Recent", href: "#", current: false },
-  { name: "Most Viewed", href: "#", current: false },
-];
 const chapios = ref([
   {
     id: "81614",
@@ -139,7 +132,7 @@ const load = async $state => {
       title: "Michapio",
       text: "Loading more michapio...",
     },
-    2500
+    4000
   );
   try {
     $state.loaded();
@@ -187,47 +180,20 @@ onUnmounted(() => {
       <NuxtLoadingIndicator />
       <!-- Start -->
       <div class="w-full px-4 sm:px-0">
-        <TabGroup>
-          <TabList class="sticky top-4 z-10 flex w-full space-x-1 rounded-xl bg-slate-50 p-1">
-            <Tab v-for="(tab, tabIx) in tabs" :key="tabIx" v-slot="{ selected }" as="template">
-              <button
-                :class="[
-                  'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
-                  'focus:outline-none',
-                  selected
-                    ? 'bg-slate-800 text-slate-50 shadow'
-                    : 'text-slate-900 hover:bg-slate-50/[0.12] hover:text-slate-700',
-                ]"
+        <div class="rounded-xl bg-slate-800 px-3 focus:outline-none">
+          <PullRefresh v-model="loading" @refresh="onRefresh">
+            <ul role="list" class="space-y-4">
+              <li
+                v-for="chapio in chapios"
+                :key="chapio.id"
+                class="rounded-lg bg-slate-50 px-4 py-6 shadow sm:p-6"
               >
-                {{ tab.name }}
-              </button>
-            </Tab>
-          </TabList>
-
-          <TabPanels class="mt-2">
-            <TabPanel
-              v-for="(chaps, idx) in tabs"
-              :key="idx"
-              class="rounded-xl bg-slate-800 p-3 focus:outline-none"
-            >
-              <div class="mt-4">
-                <h1 class="sr-only">{{ chaps.name }}</h1>
-                <PullRefresh v-model="loading" @refresh="onRefresh">
-                  <ul role="list" class="space-y-4">
-                    <li
-                      v-for="chapio in chapios"
-                      :key="chapio.id"
-                      class="rounded-lg bg-slate-50 px-4 py-6 shadow sm:p-6"
-                    >
-                      <ChapioCard :chapio="chapio" />
-                    </li>
-                    <InfiniteLoading class="loader" @infinite="load" />
-                  </ul>
-                </PullRefresh>
-              </div>
-            </TabPanel>
-          </TabPanels>
-        </TabGroup>
+                <ChapioCard :chapio="chapio" />
+              </li>
+              <InfiniteLoading class="loader" @infinite="load" />
+            </ul>
+          </PullRefresh>
+        </div>
       </div>
       <!-- End -->
       <template #aside>

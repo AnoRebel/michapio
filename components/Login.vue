@@ -1,12 +1,4 @@
 <script setup lang="ts">
-import {
-  AtSymbolIcon,
-  LockClosedIcon,
-  EyeIcon,
-  EyeSlashIcon,
-  ArrowPathIcon,
-  CheckIcon,
-} from "@heroicons/vue/24/outline";
 import { useField, useForm } from "vee-validate";
 import { string } from "yup";
 import { storeToRefs } from "pinia";
@@ -86,7 +78,10 @@ const submit = handleSubmit(async (values, { resetForm }) => {
   <form class="flex w-full flex-col space-y-6 px-3" @submit="submit">
     <label name="lname" class="relative w-full">
       <span class="sr-only">Email</span>
-      <AtSymbolIcon class="absolute inset-y-2.5 h-5 w-5 items-center text-slate-800" />
+      <Icon
+        name="heroicons:at-symbol"
+        class="absolute inset-y-2.5 left-0 h-5 w-5 items-center text-slate-800"
+      />
       <input
         v-model="email"
         type="text"
@@ -99,19 +94,24 @@ const submit = handleSubmit(async (values, { resetForm }) => {
         placeholder="Email"
         required
       />
-      <ArrowPathIcon
+      <Icon
         v-if="emailMeta.pending"
+        name="heroicons:arrow-path"
         class="absolute inset-y-2.5 right-0 h-5 w-5 animate-spin items-center text-slate-800"
       />
-      <CheckIcon
+      <Icon
         v-if="emailMeta.dirty && emailMeta.valid"
+        name="heroicons:check"
         class="absolute inset-y-2.5 right-0 h-5 w-5 items-center text-green-500"
       />
       <span class="my-0.5 text-xs text-red-600">{{ emailError }}</span>
     </label>
     <label name="password" class="relative w-full">
       <span class="sr-only">Password</span>
-      <LockClosedIcon class="absolute inset-y-2.5 h-5 w-5 items-center text-slate-800" />
+      <Icon
+        name="heroicons:lock-closed"
+        class="absolute inset-y-2.5 left-0 h-5 w-5 items-center text-slate-800"
+      />
       <input
         v-model="password"
         :type="isPass ? 'password' : 'text'"
@@ -124,13 +124,15 @@ const submit = handleSubmit(async (values, { resetForm }) => {
         placeholder="Password"
         required
       />
-      <EyeIcon
+      <Icon
         v-if="isPass"
+        name="heroicons:eye"
         class="animate__animated animate__fadeIn absolute inset-y-2.5 right-1 h-5 w-5 cursor-pointer items-center text-slate-800"
         @click="isPass = !isPass"
       />
-      <EyeSlashIcon
+      <Icon
         v-else
+        name="heroicons:eye-slash"
         class="animate__animated animate__fadeIn absolute inset-y-2.5 right-1 h-5 w-5 cursor-pointer items-center text-slate-800"
         @click="isPass = !isPass"
       />
@@ -141,6 +143,7 @@ const submit = handleSubmit(async (values, { resetForm }) => {
       <div class="text-underline mb-3 inline-flex w-full items-center justify-around">
         <button
           v-if="!isActiveForm('login')"
+          type="button"
           class="animate_animated animate_slideInLeft underline"
           @click="toggleForm('login')"
         >
@@ -148,6 +151,7 @@ const submit = handleSubmit(async (values, { resetForm }) => {
         </button>
         <button
           v-if="!isActiveForm('register')"
+          type="button"
           class="animate_animated animate_slideInLeft underline"
           @click="toggleForm('register')"
         >
@@ -155,6 +159,7 @@ const submit = handleSubmit(async (values, { resetForm }) => {
         </button>
         <button
           v-if="!isActiveForm('forgot')"
+          type="button"
           class="animate_animated animate_slideInRight underline"
           @click="toggleForm('forgot')"
         >

@@ -47,13 +47,14 @@ export default defineNuxtConfig({
   },
   vite: {
     optimizeDeps: {
-      include: ["@headlessui/vue", "@heroicons/vue/solid", "@heroicons/vue/outline", "vue"],
+      include: ["@headlessui/vue", "vue"],
     },
   },
   modules: [
     "nuxt-typed-router",
     "@nuxtjs/robots",
     "@nuxtjs/tailwindcss",
+    "nuxt-icon",
     "nuxt-headlessui",
     "@nuxtjs/color-mode",
     "@pinia/nuxt",

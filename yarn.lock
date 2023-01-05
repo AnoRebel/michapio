@@ -443,11 +443,6 @@
   resolved "https://registry.yarnpkg.com/@headlessui/vue/-/vue-1.7.7.tgz#db7f2ffde01b9d1f6e9adce53c5de73d73399c08"
   integrity sha512-dkdNhJkxyT9rXW5fHx/MkKaM3U13P3duYuwoGTRmDGjE7xAsvcWOSJRJpw1AmCQTvjZF44bh2wSlySLaHW+WuQ==
 
-"@heroicons/vue@^2.0.13":
-  version "2.0.13"
-  resolved "https://registry.yarnpkg.com/@heroicons/vue/-/vue-2.0.13.tgz#974c52abf8dab70e7d2a3a93d7fdadff4a0e9ec2"
-  integrity sha512-vVCVF02+rNKXEmanVNnmktJlxCbOn0qVFP1gfZPn4bcBIwPX3h9AVHGCkwly+IWDEME8w5oooG0KRd2hhSe/HQ==
-
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.8.tgz#03595ac2075a4dc0f191cc2131de14fbd7d410b9"
@@ -472,7 +467,7 @@
   resolved "https://registry.yarnpkg.com/@iconify/types/-/types-2.0.0.tgz#ab0e9ea681d6c8a1214f30cd741fe3a20cc57f57"
   integrity sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==
 
-"@iconify/vue@^4.0.2":
+"@iconify/vue@^4.0.1":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@iconify/vue/-/vue-4.0.2.tgz#1df557cc82a454cb2d1eb69ded1fb48b6363ef87"
   integrity sha512-LRp+mYh8N0bcX4lustHtI5o1aEoio9HN3/19uIzVOvI78qopKBjzsDK5hkEZYDSc6+LKG8hfLxTxpW8CejXGZg==
@@ -1463,14 +1458,14 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.2.45.tgz#a3fffa7489eafff38d984e23d0236e230c818bc2"
   integrity sha512-Ewzq5Yhimg7pSztDV+RH1UDKBzmtqieXQlpTVm2AwraoRL/Rks96mvd8Vgi7Lj+h+TH8dv7mXD3FRZR3TUvbSg==
 
-"@vueuse/core@9.9.0", "@vueuse/core@^9.8.2":
-  version "9.9.0"
-  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-9.9.0.tgz#ad6849cd03ba7ee396ef93fa01d4f2e5b11a4942"
-  integrity sha512-JdDb7TrE0imZnwBhMF4+0PCJqGD3AxzH8S2sfk54P0rqvklK+EAtAR/mPb1HwV/JPujQFQJhghQ190Yq03YpVw==
+"@vueuse/core@9.10.0", "@vueuse/core@^9.10.0":
+  version "9.10.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-9.10.0.tgz#2ef6e55ca773c5b2db1e3f13b8292af96dd32214"
+  integrity sha512-CxMewME07qeuzuT/AOIQGv0EhhDoojniqU6pC3F8m5VC76L47UT18DcX88kWlP3I7d3qMJ4u/PD8iSRsy3bmNA==
   dependencies:
     "@types/web-bluetooth" "^0.0.16"
-    "@vueuse/metadata" "9.9.0"
-    "@vueuse/shared" "9.9.0"
+    "@vueuse/metadata" "9.10.0"
+    "@vueuse/shared" "9.10.0"
     vue-demi "*"
 
 "@vueuse/head@^1.0.15":
@@ -1483,26 +1478,26 @@
     "@unhead/ssr" "^1.0.9"
     "@unhead/vue" "^1.0.9"
 
-"@vueuse/metadata@9.9.0":
-  version "9.9.0"
-  resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-9.9.0.tgz#d3f3f40dcedb6a045e7940a1fba78828a70d9b7e"
-  integrity sha512-pgxsUJv/d7IjKpLeB6TthggEsaBwM3ffc5jPrr5TmxAm/fup0mGR5VTzrdA/PSx85tpb+CIvP92D+55qBNc8ag==
+"@vueuse/metadata@9.10.0":
+  version "9.10.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-9.10.0.tgz#1a5eb94ca755bd8e666505f47da7d88969cffdc7"
+  integrity sha512-G5VZhgTCapzU9rv0Iq2HBrVOSGzOKb+OE668NxhXNcTjUjwYxULkEhAw70FtRLMZc+hxcFAzDZlKYA0xcwNMuw==
 
-"@vueuse/nuxt@^9.8.2":
-  version "9.9.0"
-  resolved "https://registry.yarnpkg.com/@vueuse/nuxt/-/nuxt-9.9.0.tgz#00c00010e6c2912efd1e0cb7e62168c053968f88"
-  integrity sha512-bhvHsy3vM38WWRhFgyjbDP/tfn0AMP7z1KeaWt5+ysxGHZ1EHMsY4lcFbpcFlQ6K9TKMcYvzzcBSzYxlWanMnQ==
+"@vueuse/nuxt@^9.10.0":
+  version "9.10.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/nuxt/-/nuxt-9.10.0.tgz#bcd44131a6c5ad9436490a2eeb827147b4fbb59d"
+  integrity sha512-Re63RiUzsEbYGGrES+2YY3Elqblu0XVIVogBJydLBgK4sINDbfnqX0MHDpBuV8MC2SZ/3ojQPMOaJdYIIidJeg==
   dependencies:
     "@nuxt/kit" "^3.0.0"
-    "@vueuse/core" "9.9.0"
-    "@vueuse/metadata" "9.9.0"
+    "@vueuse/core" "9.10.0"
+    "@vueuse/metadata" "9.10.0"
     local-pkg "^0.4.2"
     vue-demi "*"
 
-"@vueuse/shared@9.9.0":
-  version "9.9.0"
-  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-9.9.0.tgz#3f02e6a86d9c789c3dd73308bd3adea958860086"
-  integrity sha512-+D0XFwHG0T+uaIbCSlROBwm1wzs71B7n3KyDOxnvfEMMHDOzl09rYKwaE2AENmYwYPXfHPbSBRDD2gBVHbvTcg==
+"@vueuse/shared@9.10.0":
+  version "9.10.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-9.10.0.tgz#49874a0f9955d28689b3133de660367c63dbc030"
+  integrity sha512-vakHJ2ZRklAzqmcVBL38RS7BxdBA4+5poG9NsSyqJxrt9kz0zX3P5CXMy0Hm6LFbZXUgvKdqAS3pUH1zX/5qTQ==
   dependencies:
     vue-demi "*"
 
@@ -1703,10 +1698,10 @@ arg@^5.0.2:
   resolved "https://registry.yarnpkg.com/arg/-/arg-5.0.2.tgz#c81433cc427c92c4dcf4865142dbca6f15acd59c"
   integrity sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==
 
-argon2@^0.30.2:
-  version "0.30.2"
-  resolved "https://registry.yarnpkg.com/argon2/-/argon2-0.30.2.tgz#b308a039d6d0cda5a3c47cbddd12685f033c33fa"
-  integrity sha512-RBbXTUsrJUQH259/72CCJxQa0hV961pV4PyZ7R1czGkArSsQP4DToCS2axmNfHywXaBNEMPWMW6rM82EArulYA==
+argon2@^0.30.3:
+  version "0.30.3"
+  resolved "https://registry.yarnpkg.com/argon2/-/argon2-0.30.3.tgz#795ca57acad76fc67dd5695732662a03018b84ed"
+  integrity sha512-DoH/kv8c9127ueJSBxAVJXinW9+EuPA3EMUxoV2sAY1qDE5H9BjTyVF/aD2XyHqbqUWabgBkIfcP3ZZuGhbJdg==
   dependencies:
     "@mapbox/node-pre-gyp" "^1.0.10"
     "@phc/format" "^1.0.0"
@@ -5184,6 +5179,14 @@ nuxt-headlessui@^1.0.4:
     "@nuxt/kit" "^3.0.0"
     pathe "^1.0.0"
 
+nuxt-icon@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/nuxt-icon/-/nuxt-icon-0.1.8.tgz#9df26856bf5ff05685989f95bbbe52fe5ee7887a"
+  integrity sha512-oPFlLOZCy80MN+hf49+mBkOIHWVF3sOqZREQZw3qD0N6wGlR15QeRQtKQC8qGeQcc+xvpLQm0GvrdJ8FxFOPYg==
+  dependencies:
+    "@iconify/vue" "^4.0.1"
+    "@nuxt/kit" "^3.0.0"
+
 nuxt-lodash@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/nuxt-lodash/-/nuxt-lodash-2.4.1.tgz#be34a5dd8fa3ae16a20b3b9c7e4ef75386ff9030"
@@ -5193,10 +5196,10 @@ nuxt-lodash@^2.4.1:
     "@types/lodash-es" "^4.17.6"
     lodash-es "^4.17.21"
 
-nuxt-security@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/nuxt-security/-/nuxt-security-0.9.0.tgz#163852120b578d3b83ec679c1061e774cc0260c6"
-  integrity sha512-t9u6MKKEQYdPt/Pm+cJBbKgTMggoRe92Jyt0NGMamhOm/Zh03gwQ+/uJ9CefEe+wNTRNm5iPCfvFt617Q0l2lg==
+nuxt-security@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/nuxt-security/-/nuxt-security-0.10.0.tgz#3913492685a63fcc9ebd09c192d68e6917392ad9"
+  integrity sha512-+wAnVnDcuOxzMsCd8fCmMCFULUmdzWICNEiggq/+F8fDmc5bs1v5JjbIttGIeV6FLL2Kpz3HfKuYfzCRBgRdQA==
   dependencies:
     "@nozomuikuta/h3-cors" "^0.1.5"
     "@nuxt/kit" "^3.0.0"

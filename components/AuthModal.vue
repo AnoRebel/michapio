@@ -1,8 +1,8 @@
 <template>
   <TransitionRoot as="template" :show="isOpen && isActiveModal('auth')">
-    <Dialog as="div" class="fixed z-10 inset-0 overflow-y-auto" @close="setAuthState(false)">
+    <Dialog as="div" class="fixed inset-0 z-10 overflow-y-auto" @close="setAuthState(false)">
       <div
-        class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+        class="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0"
       >
         <TransitionChild
           as="template"
@@ -17,7 +17,7 @@
         </TransitionChild>
 
         <!-- This element is to trick the browser into centering the modal contents. -->
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+        <span class="hidden sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true">
           &#8203;
         </span>
         <!-- <TransitionChild -->
@@ -35,13 +35,13 @@
           leave="animate__animated animate__bounceOut duration-200"
         >
           <div
-            class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6"
+            class="inline-block transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"
           >
             <div>
               <div class="mt-3 text-center sm:mt-5">
                 <DialogTitle
                   as="div"
-                  class="text-2xl leading-6 font-medium text-slate-900 my-3 animate__animated animate__slideInTop"
+                  class="animate__animated animate__slideInTop my-3 text-2xl font-medium leading-6 text-slate-900"
                 >
                   <span v-if="isActiveForm('login')">Login / Sign Up</span>
                   <span v-if="isActiveForm('forgot')">Forgot Passord?</span>
@@ -49,19 +49,19 @@
                 </DialogTitle>
                 <div
                   v-if="isActiveForm('login')"
-                  class="my-5 animate__animated animate__fadeIn animate__faster"
+                  class="animate__animated animate__fadeIn animate__faster my-5"
                 >
                   <Login />
                 </div>
                 <div
                   v-if="isActiveForm('register')"
-                  class="mt-2 animate__animated animate__fadeIn animate__faster"
+                  class="animate__animated animate__fadeIn animate__faster mt-2"
                 >
                   <Register />
                 </div>
                 <div
                   v-if="isActiveForm('forgot')"
-                  class="mt-2 animate__animated animate__fadeIn animate__faster"
+                  class="animate__animated animate__fadeIn animate__faster mt-2"
                 >
                   <Forgot />
                 </div>

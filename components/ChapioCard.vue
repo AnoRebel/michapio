@@ -1,11 +1,5 @@
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import {
-  EllipsisVerticalIcon,
-  ShareIcon,
-  StarIcon,
-  HandThumbUpIcon,
-} from "@heroicons/vue/24/solid";
 import { useModals } from "@/stores/modals";
 
 const props = defineProps({
@@ -100,7 +94,7 @@ const toggleLike = () => {
                 class="-m-2 flex items-center rounded-full p-2 text-slate-400 hover:text-slate-600"
               >
                 <span class="sr-only">Open options</span>
-                <EllipsisVerticalIcon class="h-5 w-5" aria-hidden="true" />
+                <Icon name="heroicons:ellipsis-vertical-solid" class="h-5 w-5" aria-hidden="true" />
               </MenuButton>
             </div>
 
@@ -125,7 +119,11 @@ const toggleLike = () => {
                       ]"
                       @click="checkAndAdd"
                     >
-                      <StarIcon class="mr-3 h-5 w-5 text-slate-400" aria-hidden="true" />
+                      <Icon
+                        name="heroicons:star-solid"
+                        class="mr-3 h-5 w-5 text-slate-400"
+                        aria-hidden="true"
+                      />
                       <span>Add to favorites</span>
                     </NuxtLink>
                   </MenuItem>
@@ -148,7 +146,8 @@ const toggleLike = () => {
             class="inline-flex space-x-2 text-slate-400 hover:text-slate-500"
             @click.self="toggleLike"
           >
-            <HandThumbUpIcon
+            <Icon
+              name="heroicons:hand-thumb-up-solid"
               class="like_icon h-5 w-5"
               :class="{ 'text-cyan-800': liked }"
               aria-hidden="true"
@@ -164,7 +163,7 @@ const toggleLike = () => {
       <div class="flex text-sm">
         <span class="inline-flex items-center space-x-5 text-sm">
           <button type="button" class="inline-flex space-x-2 text-slate-400 hover:text-slate-500">
-            <ShareIcon class="h-5 w-5" aria-hidden="true" />
+            <Icon name="heroicons:share-solid" class="h-5 w-5" aria-hidden="true" />
             <span class="font-medium text-slate-900">Share</span>
           </button>
           <button
@@ -173,7 +172,12 @@ const toggleLike = () => {
             class="inline-flex space-x-2 text-slate-400 hover:text-slate-500"
             @click.self="toggleFavourite"
           >
-            <StarIcon class="favourite_icon h-5 w-5" aria-hidden="true" @click="toggleFavourite" />
+            <Icon
+              name="heroicons:star-solid"
+              class="favourite_icon h-5 w-5"
+              aria-hidden="true"
+              @click="toggleFavourite"
+            />
             <span class="font-medium text-slate-900" @click="toggleFavourite">Favorite</span>
           </button>
         </span>

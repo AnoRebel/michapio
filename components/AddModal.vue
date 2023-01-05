@@ -1,3 +1,60 @@
+<script setup lang="ts">
+import {
+  Dialog,
+  DialogOverlay,
+  DialogTitle,
+  TransitionChild,
+  TransitionRoot,
+} from "@headlessui/vue";
+import { useField, useForm } from "vee-validate";
+import { string } from "yup";
+import { storeToRefs } from "pinia";
+
+import { useForms } from "@/stores/forms";
+import { useModals } from "@/stores/modals";
+
+const forms = useForms();
+const modals = useModals();
+const { submitForm } = forms;
+const { setAuthState } = modals;
+const { isActiveModal, isOpen } = storeToRefs(modals);
+
+const { handleSubmit, isSubmitting } = useForm({
+  initialValues: {
+    username: "Anonymous",
+    chapio: "",
+    original: "",
+    description: "",
+  },
+});
+const { value: username, meta: nameMeta, errorMessage: nameError } = useField("username", string());
+const {
+  value: chapio,
+  meta: chapioMeta,
+  errorMessage: chapioError,
+} = useField("chapio", string().required());
+const {
+  value: original,
+  meta: origMeta,
+  errorMessage: origError,
+} = useField("original", string().required());
+const {
+  value: description,
+  meta: descMeta,
+  errorMessage: descError,
+} = useField("description", string());
+
+const onInvalid = ({ values, errors, results }) => {
+  console.log("Invalid Values: ", values); // current form values
+  console.log("Invalid Errors: ", errors); // a map of field names and their first error message
+  console.log("Invalid Results: ", results); // a detailed map of field names and their validation results
+};
+const submit = handleSubmit((values, { resetForm }) => {
+  submitForm("add", values);
+  resetForm();
+}, onInvalid);
+</script>
+
 <template>
   <TransitionRoot as="template" :show="isOpen && isActiveModal('add')">
     <Dialog as="div" class="fixed inset-0 z-10 overflow-y-auto" @close="setAuthState(false)">
@@ -54,7 +111,10 @@
               <form class="flex flex-col space-y-6" @submit="submit">
                 <label name="username" class="relative w-full">
                   <span class="sr-only">Who said it...</span>
-                  <UserIcon class="absolute inset-y-2.5 h-5 w-5 items-center text-slate-800" />
+                  <Icon
+                    name="heroicons:user"
+                    class="absolute inset-y-2.5 left-0 h-5 w-5 items-center text-slate-800"
+                  />
                   <input
                     v-model="username"
                     type="text"
@@ -70,7 +130,10 @@
                 </label>
                 <label name="chapio" class="relative w-full">
                   <span class="sr-only">Said:</span>
-                  <HashtagIcon class="absolute inset-y-2.5 h-5 w-5 items-center text-slate-800" />
+                  <Icon
+                    name="heroicons:hashtag"
+                    class="absolute inset-y-2.5 left-0 h-5 w-5 items-center text-slate-800"
+                  />
                   <input
                     v-model="chapio"
                     type="text"
@@ -87,8 +150,9 @@
                 </label>
                 <label name="original" class="relative w-full">
                   <span class="sr-only">Instead Of:</span>
-                  <ChatBubbleBottomCenterTextIcon
-                    class="absolute inset-y-2.5 h-5 w-5 items-center text-slate-800"
+                  <Icon
+                    name="heroicons:chat-bubble-bottom-center-text"
+                    class="absolute inset-y-2.5 left-0 h-5 w-5 items-center text-slate-800"
                   />
                   <input
                     v-model="original"
@@ -160,61 +224,3 @@
     </Dialog>
   </TransitionRoot>
 </template>
-
-<script setup lang="ts">
-import {
-  Dialog,
-  DialogOverlay,
-  DialogTitle,
-  TransitionChild,
-  TransitionRoot,
-} from "@headlessui/vue";
-import { UserIcon, HashtagIcon, ChatBubbleBottomCenterTextIcon } from "@heroicons/vue/24/outline";
-import { useField, useForm } from "vee-validate";
-import { string } from "yup";
-import { storeToRefs } from "pinia";
-
-import { useForms } from "@/stores/forms";
-import { useModals } from "@/stores/modals";
-
-const forms = useForms();
-const modals = useModals();
-const { submitForm } = forms;
-const { setAuthState } = modals;
-const { isActiveModal, isOpen } = storeToRefs(modals);
-
-const { handleSubmit, isSubmitting } = useForm({
-  initialValues: {
-    username: "Anonymous",
-    chapio: "",
-    original: "",
-    description: "",
-  },
-});
-const { value: username, meta: nameMeta, errorMessage: nameError } = useField("username", string());
-const {
-  value: chapio,
-  meta: chapioMeta,
-  errorMessage: chapioError,
-} = useField("chapio", string().required());
-const {
-  value: original,
-  meta: origMeta,
-  errorMessage: origError,
-} = useField("original", string().required());
-const {
-  value: description,
-  meta: descMeta,
-  errorMessage: descError,
-} = useField("description", string());
-
-const onInvalid = ({ values, errors, results }) => {
-  console.log("Invalid Values: ", values); // current form values
-  console.log("Invalid Errors: ", errors); // a map of field names and their first error message
-  console.log("Invalid Results: ", results); // a detailed map of field names and their validation results
-};
-const submit = handleSubmit((values, { resetForm }) => {
-  submitForm("add", values);
-  resetForm();
-}, onInvalid);
-</script>

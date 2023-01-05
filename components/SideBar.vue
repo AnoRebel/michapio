@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { ChatBubbleLeftEllipsisIcon, PlusSmallIcon } from "@heroicons/vue/24/solid";
 import type { RealtimeChannel } from "@supabase/supabase-js";
-import type { Database } from "~/types";
 
 const whoToFollow = [
   {
@@ -25,7 +23,7 @@ const trendingPosts = [
   },
 ];
 
-const client = useSupabaseClient<Database>();
+const client = useSupabaseClient();
 let trendingChannel: RealtimeChannel;
 
 const { data: trending, refresh: refreshTrending } = await useAsyncData("trending", async () => {
@@ -80,7 +78,11 @@ onUnmounted(() => {
                           type="button"
                           class="inline-flex space-x-2 text-slate-400 hover:text-slate-500"
                         >
-                          <ChatBubbleLeftEllipsisIcon class="h-5 w-5" aria-hidden="true" />
+                          <Icon
+                            name="heroicons:chat-bubble-left-ellipsis-solid"
+                            class="h-5 w-5"
+                            aria-hidden="true"
+                          />
                           <span class="font-medium text-slate-900">{{ post.comments }}</span>
                         </button>
                       </span>
@@ -103,9 +105,7 @@ onUnmounted(() => {
       <section class="h-1/2" aria-labelledby="who-to-follow-heading">
         <div class="rounded-lg bg-slate-50 shadow">
           <div class="p-6">
-            <h2 id="who-to-follow-heading" class="text-base font-medium text-slate-900">
-              Who to follow
-            </h2>
+            <h2 id="who-to-follow-heading" class="text-base font-medium text-slate-900">Recent</h2>
             <div class="mt-6 flow-root">
               <ul role="list" class="-my-4 divide-y divide-slate-200">
                 <li
@@ -129,7 +129,8 @@ onUnmounted(() => {
                       type="button"
                       class="inline-flex items-center rounded-full bg-rose-50 px-3 py-0.5 text-sm font-medium text-rose-700 hover:bg-rose-100"
                     >
-                      <PlusSmallIcon
+                      <Icon
+                        name="heroicons:plus-small-solid"
                         class="-ml-1 mr-0.5 h-5 w-5 text-rose-400"
                         aria-hidden="true"
                       />
