@@ -23,6 +23,8 @@ const trendingPosts = [
   },
 ];
 
+const router = useRouter();
+// router.replace({ hash: "#1234" });
 const client = useSupabaseClient();
 let trendingChannel: RealtimeChannel;
 

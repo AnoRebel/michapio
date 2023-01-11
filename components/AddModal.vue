@@ -57,7 +57,7 @@ const submit = handleSubmit((values, { resetForm }) => {
 
 <template>
   <TransitionRoot as="template" :show="isOpen && isActiveModal('add')">
-    <Dialog as="div" class="fixed inset-0 z-10 overflow-y-auto" @close="setAuthState(false)">
+    <Dialog as="div" class="fixed inset-0 z-[70] overflow-y-auto" @close="setAuthState(false)">
       <div
         class="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0"
       >

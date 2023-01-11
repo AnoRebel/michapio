@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import {
   Dialog,
@@ -9,6 +10,7 @@ import {
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
+import { useModals } from "@/stores/modals";
 
 defineProps({
   open: {
@@ -19,6 +21,8 @@ defineProps({
 defineEmits(["close"]);
 
 const user = useSupabaseUser();
+const { setAuthState } = useModals();
+const logged = ref(false);
 const tabs = [
   { name: "Likes", href: "#", current: true },
   { name: "Favourites", href: "#", current: false },
@@ -38,7 +42,7 @@ const team = [
 
 <template>
   <TransitionRoot as="template" :show="open">
-    <Dialog as="div" class="relative z-[100]" @close="$emit('close')">
+    <Dialog as="div" class="relative z-[60]" @close="$emit('close')">
       <div class="fixed inset-0 bg-slate-800 bg-opacity-75 transition-opacity" />
 
       <div class="fixed inset-0 overflow-hidden">
@@ -105,14 +109,16 @@ const team = [
                               <button
                                 type="button"
                                 class="inline-flex w-full flex-shrink-0 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:flex-1"
+                                @click="setAuthState(true, 'add')"
                               >
-                                Message
+                                Add
                               </button>
                               <button
                                 type="button"
                                 class="inline-flex w-full flex-1 items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                @click="logged = true"
                               >
-                                Call
+                                Sign Out
                               </button>
                             </div>
                           </div>
@@ -237,4 +243,5 @@ const team = [
       </div>
     </Dialog>
   </TransitionRoot>
+  <LogoutModal :open="logged" @close="logged = false" />
 </template>

@@ -40,7 +40,7 @@ const signOut = async () => {
 
 <template>
   <TransitionRoot as="template" :show="open">
-    <Dialog as="div" class="relative z-10" @close="$emit('close')">
+    <Dialog as="div" class="relative z-[70]" @close="$emit('close')">
       <TransitionChild
         as="template"
         enter="ease-out duration-300"

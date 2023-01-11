@@ -1,6 +1,25 @@
+<script setup lang="ts">
+import {
+  Dialog,
+  DialogOverlay,
+  DialogTitle,
+  TransitionChild,
+  TransitionRoot,
+} from "@headlessui/vue";
+import { storeToRefs } from "pinia";
+
+import { useForms } from "@/stores/forms";
+import { useModals } from "@/stores/modals";
+
+const modals = useModals();
+const { setAuthState } = modals;
+const { isActiveModal, isOpen } = storeToRefs(modals);
+const { isActiveForm } = storeToRefs(useForms());
+</script>
+
 <template>
   <TransitionRoot as="template" :show="isOpen && isActiveModal('auth')">
-    <Dialog as="div" class="fixed inset-0 z-10 overflow-y-auto" @close="setAuthState(false)">
+    <Dialog as="div" class="fixed inset-0 z-[70] overflow-y-auto" @close="setAuthState(false)">
       <div
         class="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0"
       >
@@ -73,22 +92,3 @@
     </Dialog>
   </TransitionRoot>
 </template>
-
-<script setup lang="ts">
-import {
-  Dialog,
-  DialogOverlay,
-  DialogTitle,
-  TransitionChild,
-  TransitionRoot,
-} from "@headlessui/vue";
-import { storeToRefs } from "pinia";
-
-import { useForms } from "@/stores/forms";
-import { useModals } from "@/stores/modals";
-
-const modals = useModals();
-const { setAuthState } = modals;
-const { isActiveModal, isOpen } = storeToRefs(modals);
-const { isActiveForm } = storeToRefs(useForms());
-</script>

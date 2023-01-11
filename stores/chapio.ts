@@ -1,34 +1,27 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
 
-export const useChapio = defineStore("chapio", () => {
-  /**
-   * Current named of the user.
-   */
-  const savedName = ref("");
-  const previousNames = ref(new Set<string>());
-
-  const usedNames = computed(() => Array.from(previousNames.value));
-  const otherNames = computed(() => usedNames.value.filter(name => name !== savedName.value));
-
-  /**
-   * Changes the current name of the user and saves the one that was used
-   * before.
-   *
-   * @param name - new name to set
-   */
-  function setNewName(name: string) {
-    if (savedName.value) previousNames.value.add(savedName.value);
-
-    savedName.value = name;
-  }
-
-  return {
-    setNewName,
-    otherNames,
-    savedName,
-  };
+export const useChapio = defineStore("chapio", {
+  state: () => ({
+    open: false,
+    active: "",
+    selected: {},
+  }),
+  actions: {
+    toggleChapio(chapio: Object) {
+      this.open = false;
+      this.active = chapio.id;
+      this.selected = chapio;
+      this.open = true;
+    },
+  },
+  getters: {
+    isOpen: state => state.open,
+    activeChapio: state => state.active,
+    selectedChapio: state => state.selected,
+  },
 });
 
+// Make sure to pass the right store definition, `useModals` in this case
 if (import.meta.hot) {
   import.meta.hot.accept(acceptHMRUpdate(useChapio, import.meta.hot));
 }

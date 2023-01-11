@@ -9,60 +9,126 @@ const props = defineProps({
   },
 });
 
+const route = useRoute();
 const { isLoggedIn } = useAuth();
 const { setAuthState } = useModals();
+const notify = useNotify();
 const likeState = ref("initial");
 const likes = ref(parseInt(props.chapio.likes || 0));
 
-const checkAndAdd = () => {
-  if (isLoggedIn()) {
-    // Add to favourites
-  } else {
-    setAuthState(true, "register");
-  }
-};
-
 const toggleFavourite = event => {
-  if (event.target?.classList?.contains("favourite_icon")) {
-    event.target.classList.toggle("animate-favourite");
-  }
-  if (event.target.nextSibling?.classList?.contains("favourite_icon")) {
-    event.target.nextSibling.classList.toggle("animate-favourite");
-  }
-  if (event.target.previousSibling?.classList?.contains("favourite_icon")) {
-    event.target.previousSibling.classList.toggle("animate-favourite");
-  }
-  if (event.target.querySelector(".favourite_icon")?.classList?.contains("favourite_icon")) {
-    event.target.querySelector(".favourite_icon").classList.toggle("animate-favourite");
-  }
-  if (event.target.parentElement?.classList?.contains("favourite_icon")) {
-    event.target.parentElement.classList.toggle("animate-favourite");
+  if (isLoggedIn()) {
+    if (event.target?.classList?.contains("favourite_icon")) {
+      event.target.classList.toggle("animate-favourite");
+    }
+    if (event.target.nextSibling?.classList?.contains("favourite_icon")) {
+      event.target.nextSibling.classList.toggle("animate-favourite");
+    }
+    if (event.target.previousSibling?.classList?.contains("favourite_icon")) {
+      event.target.previousSibling.classList.toggle("animate-favourite");
+    }
+    if (event.target.querySelector(".favourite_icon")?.classList?.contains("favourite_icon")) {
+      event.target.querySelector(".favourite_icon").classList.toggle("animate-favourite");
+    }
+    if (event.target.parentElement?.classList?.contains("favourite_icon")) {
+      event.target.parentElement.classList.toggle("animate-favourite");
+    }
+  } else {
+    setAuthState(true, "login");
   }
 };
 
 const liked = ref(false);
 const toggleLike = () => {
-  // 1. Old number goes up
-  setTimeout(() => (likeState.value = liked.value ? "waitDown" : "goUp"), 0);
-  // setTimeout(() => (likeState.value = "goUp"), 0);
-  // 2. Incrementing the counter
-  setTimeout(
-    () => (liked.value ? (likes.value = likes.value + 1) : (likes.value = likes.value - 1)),
-    100
-  );
-  // 3. New number waits down
-  // setTimeout(() => (likeState.value = "waitDown"), 100);
-  setTimeout(() => (likeState.value = liked.value ? "goUp" : "waitDown"), 100);
-  // 4. New number stays in the middle
-  setTimeout(() => (likeState.value = "initial"), 200);
-  liked.value = !liked.value;
+  if (isLoggedIn()) {
+    // 1. Old number goes up
+    setTimeout(() => (likeState.value = liked.value ? "waitDown" : "goUp"), 0);
+    // setTimeout(() => (likeState.value = "goUp"), 0);
+    // 2. Incrementing the counter
+    setTimeout(
+      () => (liked.value ? (likes.value = likes.value + 1) : (likes.value = likes.value - 1)),
+      100
+    );
+    // 3. New number waits down
+    // setTimeout(() => (likeState.value = "waitDown"), 100);
+    setTimeout(() => (likeState.value = liked.value ? "goUp" : "waitDown"), 100);
+    // 4. New number stays in the middle
+    setTimeout(() => (likeState.value = "initial"), 200);
+    liked.value = !liked.value;
+  } else {
+    setAuthState(true, "login");
+  }
+};
+
+const share = async data => {
+  if (navigator.canShare && navigator.canShare(data)) {
+    navigator
+      .share(data)
+      .then(() =>
+        notify(
+          {
+            group: "messages",
+            type: "success",
+            title: "Michapio",
+            text: "Shared successfully...😏",
+          },
+          3500
+        )
+      )
+      .catch(_ =>
+        notify(
+          {
+            group: "errors",
+            title: "Michapio",
+            text: "Shared failed...😥",
+          },
+          3500
+        )
+      );
+  } else if (navigator.clipboard) {
+    // navigator.permissions.query({ name: "clipboard-write" }).then(result => {
+    //   if (result.state === "granted" || result.state === "prompt") {
+    //     /* write to the clipboard now */
+    //   }
+    // });
+    try {
+      await navigator.clipboard.writeText(data.url);
+      notify(
+        {
+          group: "messages",
+          type: "success",
+          title: "Michapio",
+          text: "Link copied to clipboard...😏",
+        },
+        3500
+      );
+    } catch (_) {
+      notify(
+        {
+          group: "errors",
+          title: "Michapio",
+          text: "Shared failed...😥",
+        },
+        3500
+      );
+    }
+  } else {
+    notify(
+      {
+        group: "errors",
+        title: "Michapio",
+        text: "Sharing not supported...😥",
+      },
+      3500
+    );
+  }
 };
 </script>
 
 <template>
   <!-- TODO: Filter NSFW content -->
-  <article :aria-labelledby="'chapio-title-' + chapio.id">
-    <div>
+  <article :aria-labelledby="'chapio-' + chapio.id">
+    <div :id="chapio.id">
       <div class="flex space-x-3">
         <div class="flex-shrink-0">
           <nuxt-img
@@ -117,7 +183,7 @@ const toggleLike = () => {
                         active ? 'bg-slate-100 text-slate-900' : 'text-slate-700',
                         'flex px-4 py-2 text-sm',
                       ]"
-                      @click="checkAndAdd"
+                      @click="toggleFavourite"
                     >
                       <Icon
                         name="heroicons:star-solid"
@@ -162,7 +228,17 @@ const toggleLike = () => {
       </div>
       <div class="flex text-sm">
         <span class="inline-flex items-center space-x-5 text-sm">
-          <button type="button" class="inline-flex space-x-2 text-slate-400 hover:text-slate-500">
+          <button
+            type="button"
+            class="inline-flex space-x-2 text-slate-400 hover:text-slate-500"
+            @click="
+              share({
+                title: chapio.title,
+                text: chapio.body,
+                url: route.fullPath + '#' + chapio.id,
+              })
+            "
+          >
             <Icon name="heroicons:share-solid" class="h-5 w-5" aria-hidden="true" />
             <span class="font-medium text-slate-900">Share</span>
           </button>

@@ -85,6 +85,7 @@ const chapios = ref([
   },
 ]);
 
+const route = useRoute();
 const loading = ref(false);
 const client = useSupabaseClient();
 let realtimeChannel: RealtimeChannel;
@@ -166,6 +167,21 @@ onMounted(() => {
   realtimeChannel.subscribe();
 });
 
+const selected = reactive({
+  chapio: {},
+  show: false,
+});
+watch(
+  route,
+  () => {
+    if (route.hash != "") {
+      selected.chapio = route.hash;
+      selected.show = true;
+    }
+  },
+  { immediate: true }
+);
+
 // const { list, containerProps, wrapperProps } = useVirtualList(chapios, { itemHeight: 250 });
 
 // Don't forget to unsubscribe when user left the page
@@ -200,5 +216,6 @@ onUnmounted(() => {
         <SideBar />
       </template>
     </NuxtLayout>
+    <ChapioModal :open="selected.show" :chapio="selected.chapio" @close="selected.show = false" />
   </div>
 </template>
