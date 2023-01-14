@@ -6,6 +6,7 @@ import { storeToRefs } from "pinia";
 import { useModals } from "@/stores/modals";
 const titleRef = ref(null);
 const open = ref(false);
+const search = ref(false);
 const profile = ref(false);
 onMounted(() => {
   const typer = useTyping(titleRef.value, { loop: true, typingSpeed: 150, deletingSpeed: 100 });
@@ -43,7 +44,14 @@ const user = useSupabaseUser();
             <span ref="titleRef" class="typing w-auto"></span>
           </NuxtLink>
         </div>
-        <div class="-my-2 -mr-2 md:hidden">
+        <div class="-my-2 -mr-2 flex items-center md:hidden">
+          <NuxtLink
+            class="mr-6 cursor-pointer rounded-lg border-slate-400 p-2 hover:border hover:shadow"
+            @click="search = true"
+          >
+            <span class="sr-only">Search michapio</span>
+            <Icon name="heroicons:magnifying-glass-solid" class="h-6 w-6" />
+          </NuxtLink>
           <PopoverButton
             class="inline-flex items-center justify-center rounded-md bg-slate-50 p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
           >
@@ -62,9 +70,9 @@ const user = useSupabaseUser();
           <NuxtLink
             v-if="isLoggedIn()"
             class="cursor-pointer rounded-md px-4 py-1.5 text-base font-medium text-slate-300 hover:text-slate-100"
-            @click="open = true"
+            @click="profile = true"
           >
-            Sign Out
+            {{ user.user_metadata.username }}
           </NuxtLink>
           <NuxtLink
             v-else
@@ -76,8 +84,12 @@ const user = useSupabaseUser();
           </NuxtLink>
         </PopoverGroup>
         <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-          <NuxtLink v-if="isLoggedIn()" class="cursor-pointer" @click="profile = true">
-            {{ user.user_metadata.username }}
+          <NuxtLink
+            class="ml-4 cursor-pointer rounded-lg border-slate-400 p-2 hover:border hover:shadow"
+            @click="search = true"
+          >
+            <span class="sr-only">Search michapio</span>
+            <Icon name="heroicons:magnifying-glass-solid" class="h-6 w-6" />
           </NuxtLink>
           <NuxtLink
             to="https://github.com/AnoRebel/michapio"
@@ -183,6 +195,7 @@ const user = useSupabaseUser();
   </Popover>
   <LogoutModal :open="open" @close="open = false" />
   <Profile :open="profile" @close="profile = false" />
+  <Search :open="search" @close="search = false" />
 </template>
 
 <style lang="scss">

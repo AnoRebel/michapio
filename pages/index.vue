@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import InfiniteLoading from "v3-infinite-loading";
 import type { RealtimeChannel } from "@supabase/supabase-js";
+import { useTypedRoute } from "@typed-router";
 
 definePageMeta({
   layout: false,
@@ -85,7 +86,7 @@ const chapios = ref([
   },
 ]);
 
-const route = useRoute();
+const route = useTypedRoute();
 const loading = ref(false);
 const client = useSupabaseClient();
 let realtimeChannel: RealtimeChannel;

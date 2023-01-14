@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import { useTypedRoute } from "@typed-router";
 import { useModals } from "@/stores/modals";
 
 const props = defineProps({
@@ -9,7 +10,7 @@ const props = defineProps({
   },
 });
 
-const route = useRoute();
+const route = useTypedRoute();
 const { isLoggedIn } = useAuth();
 const { setAuthState } = useModals();
 const notify = useNotify();

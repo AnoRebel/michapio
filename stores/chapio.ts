@@ -5,6 +5,9 @@ export const useChapio = defineStore("chapio", {
     open: false,
     active: "",
     selected: {},
+    michapio: [],
+    recent: [],
+    searched: [],
   }),
   actions: {
     toggleChapio(chapio: Object) {
@@ -21,7 +24,7 @@ export const useChapio = defineStore("chapio", {
   },
 });
 
-// Make sure to pass the right store definition, `useModals` in this case
+// Make sure to pass the right store definition, `useChapio` in this case
 if (import.meta.hot) {
   import.meta.hot.accept(acceptHMRUpdate(useChapio, import.meta.hot));
 }

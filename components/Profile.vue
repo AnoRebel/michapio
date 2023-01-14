@@ -24,8 +24,9 @@ const user = useSupabaseUser();
 const { setAuthState } = useModals();
 const logged = ref(false);
 const tabs = [
-  { name: "Likes", href: "#", current: true },
-  { name: "Favourites", href: "#", current: false },
+  // { name: "Michapio", href: "#", current: false, show: isLoggedIn() },
+  { name: "Likes", href: "#", current: true, show: true },
+  { name: "Favourites", href: "#", current: false, show: true },
 ];
 const team = [
   {
@@ -129,18 +130,19 @@ const team = [
                       <div class="border-b border-gray-200">
                         <div class="px-6">
                           <nav class="-mb-px flex space-x-6" x-descriptions="Tab component">
-                            <a
+                            <NuxtLink
                               v-for="tab in tabs"
                               :key="tab.name"
-                              :href="tab.href"
+                              :to="tab.href"
                               :class="[
                                 tab.current
                                   ? 'border-indigo-500 text-indigo-600'
                                   : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
-                                'whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium',
+                                `w-1/${tabs.length} whitespace-nowrap border-b-2 px-1 pb-4 text-center text-sm font-medium`,
                               ]"
-                              >{{ tab.name }}</a
                             >
+                              {{ tab.name }}
+                            </NuxtLink>
                           </nav>
                         </div>
                       </div>
@@ -188,7 +190,8 @@ const team = [
                                 <span
                                   class="flex h-full w-full items-center justify-center rounded-full"
                                 >
-                                  <EllipsisVerticalIcon
+                                  <Icon
+                                    name="heroicons:ellipsis-vertical-solid"
                                     class="h-5 w-5 text-gray-400 group-hover:text-gray-500"
                                     aria-hidden="true"
                                   />
