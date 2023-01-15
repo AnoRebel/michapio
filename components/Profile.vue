@@ -22,11 +22,12 @@ defineEmits(["close"]);
 
 const user = useSupabaseUser();
 const { setAuthState } = useModals();
+const { isLoggedIn } = useAuth();
 const logged = ref(false);
 const tabs = [
-  // { name: "Michapio", href: "#", current: false, show: isLoggedIn() },
-  { name: "Likes", href: "#", current: true, show: true },
-  { name: "Favourites", href: "#", current: false, show: true },
+  { name: "Michapio", href: "#", current: false, show: true },
+  { name: "Likes", href: "#", current: true, show: isLoggedIn() },
+  { name: "Favourites", href: "#", current: false, show: isLoggedIn() },
 ];
 const team = [
   {
