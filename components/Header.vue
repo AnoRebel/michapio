@@ -194,7 +194,7 @@ const user = useSupabaseUser();
     </transition>
   </Popover>
   <LogoutModal :open="open" @close="open = false" />
-  <Profile :open="profile" @close="profile = false" />
+  <Profile :user="user" :open="profile" @close="profile = false" />
   <Search :open="search" @close="search = false" />
 </template>
 

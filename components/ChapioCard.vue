@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import { useTypedRoute } from "@typed-router";
+import { useTypedRoute, useTypedRouter } from "@typed-router";
 import { useModals } from "@/stores/modals";
 
 const props = defineProps({
@@ -11,13 +11,15 @@ const props = defineProps({
 });
 
 const route = useTypedRoute();
+const router = useTypedRouter();
 const { isLoggedIn } = useAuth();
 const { setAuthState } = useModals();
 const notify = useNotify();
+const open = ref(false);
 const likeState = ref("initial");
 const likes = ref(parseInt(props.chapio.likes || 0));
 
-const toggleFavourite = event => {
+const toggleFavourite = (event: Event) => {
   if (isLoggedIn()) {
     if (event.target?.classList?.contains("favourite_icon")) {
       event.target.classList.toggle("animate-favourite");
@@ -124,6 +126,8 @@ const share = async data => {
     );
   }
 };
+
+const profile = hash => router.replace({ hash: `#${hash}` });
 </script>
 
 <template>
@@ -134,23 +138,22 @@ const share = async data => {
         <div class="flex-shrink-0">
           <nuxt-img
             provider="dicebear"
-            class="h-10 w-10 rounded-full"
+            class="h-10 w-10 cursor-pointer rounded-full"
             src="ano.svg"
             :alt="chapio.author.name"
             crossorigin="anonymous"
             loading="lazy"
+            @click="profile(chapio.id)"
           />
         </div>
         <div class="min-w-0 flex-1">
           <p class="text-sm font-medium text-slate-900">
-            <NuxtLink :to="chapio.author.href" class="hover:underline">
+            <NuxtLink class="cursor-pointer hover:underline" @click="profile(chapio.id)">
               {{ chapio.author.name }}
             </NuxtLink>
           </p>
           <p class="text-sm text-slate-500">
-            <NuxtLink :to="chapio.href" class="hover:underline">
-              <time :datetime="chapio.datetime">{{ chapio.date }}</time>
-            </NuxtLink>
+            <time :datetime="chapio.datetime">{{ chapio.date }}</time>
           </p>
         </div>
         <!-- TODO: Remove this.. -->
@@ -261,6 +264,7 @@ const share = async data => {
       </div>
     </div>
   </article>
+  <Profile :user="chapio.author" :open="open" @close="open = false" />
 </template>
 
 <style lang="scss">

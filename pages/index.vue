@@ -103,7 +103,7 @@ const onRefresh = () => {
     2500
   );
   try {
-    refreshCollaborators();
+    refreshMichapio();
   } catch (error) {
     notify(
       {
@@ -144,17 +144,19 @@ const load = async $state => {
   }
 };
 
-// const { pending, data: users, refresh, error } = useLazyFetch("/api/users", { pick: ['name', 'description'] });
-// const { pending, data: users, error } = useLazyAsyncData("users", () => $fetch("/api/users"));
-// const refresh = () => refreshNuxtData("users");
-
-// Fetch collaborators and get the refresh method provided by useAsyncData
-const { data: michapio, refresh: refreshCollaborators } = await useAsyncData(
+// Fetch michapio and get the refresh method provided by useAsyncData
+const {
+  pending,
+  data: michapio,
+  refresh: refreshMichapio,
+  error,
+} = await useAsyncData(
   "michapio",
   async () => {
     const { data } = await client.from("michapio").select("*");
     return data;
   }
+  // { pick: ['title', 'description'] },
 );
 
 // Once page is mounted, listen to changes on the `collaborators` table and refresh collaborators when receiving event
@@ -163,7 +165,7 @@ onMounted(() => {
   realtimeChannel = client
     .channel("public:michapio")
     .on("postgres_changes", { event: "*", schema: "public", table: "michapio" }, () =>
-      refreshCollaborators()
+      refreshMichapio()
     );
   realtimeChannel.subscribe();
 });

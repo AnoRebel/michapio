@@ -10,19 +10,36 @@ import {
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
+import InfiniteLoading from "v3-infinite-loading";
 import { useModals } from "@/stores/modals";
 
-defineProps({
+const props = defineProps({
   open: {
     type: Boolean,
     default: false,
   },
+  user: {
+    type: Object,
+    required: true,
+  },
 });
 defineEmits(["close"]);
 
-const user = useSupabaseUser();
+const client = useSupabaseClient();
 const { setAuthState } = useModals();
 const { isLoggedIn } = useAuth();
+const notify = useNotify();
+
+let usr;
+onBeforeMount(async () => {
+  if (isLoggedIn()) {
+    usr = useSupabaseUser();
+  } else {
+    usr = await client.from("users").select("*").eq("id", props.user.id);
+  }
+});
+
+const loading = ref(false);
 const logged = ref(false);
 const tabs = [
   { name: "Michapio", href: "#", current: false, show: true },
@@ -43,6 +60,93 @@ const team = [
   },
   // More people...
 ];
+
+// Fetch michapio and get the refresh method provided by useAsyncData
+const {
+  pending,
+  data: michapio,
+  refresh: refreshMichapio,
+  error,
+} = await useAsyncData(
+  "michapio",
+  async () => {
+    const { data } = await client.from("michapio").select("*");
+    return data;
+  }
+  // { pick: ['title', 'description'] },
+);
+
+// Fetch favourites and get the refresh method provided by useAsyncData
+// const { pending: pendingFavs, data: favourites, refresh: refreshFavourites, error: favError } = await useAsyncData(
+//   "favourites",
+//   async () => {
+//     const { data } = await client.from("michapio").select("*");
+//     return data;
+//   },
+//  // { pick: ['title', 'description'] },
+// );
+
+// Fetch likes and get the refresh method provided by useAsyncData
+// const { pending: pendingLikes, data: likes, refresh: refreshLikes, error: likesError } = await useAsyncData(
+//   "likes",
+//   async () => {
+//     const { data } = await client.from("michapio").select("*");
+//     return data;
+//   },
+//  // { pick: ['title', 'description'] },
+// );
+
+const onRefresh = () => {
+  notify(
+    {
+      group: "messages",
+      type: "info",
+      title: "Michapio",
+      text: "Refreshing michapio...",
+    },
+    2500
+  );
+  try {
+    refreshMichapio();
+  } catch (error) {
+    notify(
+      {
+        group: "errors",
+        title: "Refresh Error",
+        text: error,
+      },
+      3500
+    );
+  }
+  notify(
+    {
+      group: "messages",
+      type: "success",
+      title: "Michapio",
+      text: "Refreshed michapio...",
+    },
+    2500
+  );
+  loading.value = false;
+};
+
+const load = async $state => {
+  notify(
+    {
+      group: "messages",
+      type: "info",
+      title: "Michapio",
+      text: "Loading more michapio...",
+    },
+    4000
+  );
+  try {
+    $state.loaded();
+    $state.complete();
+  } catch (error) {
+    $state.error();
+  }
+};
 </script>
 
 <template>
@@ -150,96 +254,99 @@ const team = [
                           </nav>
                         </div>
                       </div>
-                      <ul role="list" class="flex-1 divide-y divide-gray-200 overflow-y-auto">
-                        <li v-for="person in team" :key="person.handle">
-                          <div class="group relative flex items-center py-6 px-5">
-                            <a :href="person.href" class="-m-1 block flex-1 p-1">
-                              <div
-                                class="absolute inset-0 group-hover:bg-gray-50"
-                                aria-hidden="true"
-                              />
-                              <div class="relative flex min-w-0 flex-1 items-center">
-                                <span class="relative inline-block flex-shrink-0">
-                                  <img
-                                    class="h-10 w-10 rounded-full"
-                                    :src="person.imageUrl"
-                                    alt=""
-                                  />
-                                  <span
-                                    :class="[
-                                      person.status === 'online' ? 'bg-green-400' : 'bg-gray-300',
-                                      'absolute top-0 right-0 block h-2.5 w-2.5 rounded-full ring-2 ring-white',
-                                    ]"
-                                    aria-hidden="true"
-                                  />
-                                </span>
-                                <div class="ml-4 truncate">
-                                  <p class="truncate text-sm font-medium text-gray-900">
-                                    {{ person.name }}
-                                  </p>
-                                  <p class="truncate text-sm text-gray-500">
-                                    {{ "@" + person.handle }}
-                                  </p>
-                                </div>
-                              </div>
-                            </a>
-                            <Menu
-                              as="div"
-                              class="relative ml-2 inline-block flex-shrink-0 text-left"
-                            >
-                              <MenuButton
-                                class="group relative inline-flex h-8 w-8 items-center justify-center rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                              >
-                                <span class="sr-only">Open options menu</span>
-                                <span
-                                  class="flex h-full w-full items-center justify-center rounded-full"
-                                >
-                                  <Icon
-                                    name="heroicons:ellipsis-vertical-solid"
-                                    class="h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                    aria-hidden="true"
-                                  />
-                                </span>
-                              </MenuButton>
-                              <transition
-                                enter-active-class="transition ease-out duration-100"
-                                enter-from-class="transform opacity-0 scale-95"
-                                enter-to-class="transform opacity-100 scale-100"
-                                leave-active-class="transition ease-in duration-75"
-                                leave-from-class="transform opacity-100 scale-100"
-                                leave-to-class="transform opacity-0 scale-95"
-                              >
-                                <MenuItems
-                                  class="absolute top-0 right-9 z-10 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                >
-                                  <div class="py-1">
-                                    <MenuItem v-slot="{ active }">
-                                      <a
-                                        href="#"
-                                        :class="[
-                                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                          'block px-4 py-2 text-sm',
-                                        ]"
-                                        >View profile</a
-                                      >
-                                    </MenuItem>
-                                    <MenuItem v-slot="{ active }">
-                                      <a
-                                        href="#"
-                                        :class="[
-                                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                          'block px-4 py-2 text-sm',
-                                        ]"
-                                        >Send message</a
-                                      >
-                                    </MenuItem>
+                      <PullRefresh v-model="loading" @refresh="onRefresh">
+                        <ul role="list" class="flex-1 divide-y divide-gray-200 overflow-y-auto">
+                          <li v-for="person in team" :key="person.handle">
+                            <div class="group relative flex items-center py-6 px-5">
+                              <a :href="person.href" class="-m-1 block flex-1 p-1">
+                                <div
+                                  class="absolute inset-0 group-hover:bg-gray-50"
+                                  aria-hidden="true"
+                                />
+                                <div class="relative flex min-w-0 flex-1 items-center">
+                                  <span class="relative inline-block flex-shrink-0">
+                                    <img
+                                      class="h-10 w-10 rounded-full"
+                                      :src="person.imageUrl"
+                                      alt=""
+                                    />
+                                    <span
+                                      :class="[
+                                        person.status === 'online' ? 'bg-green-400' : 'bg-gray-300',
+                                        'absolute top-0 right-0 block h-2.5 w-2.5 rounded-full ring-2 ring-white',
+                                      ]"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                  <div class="ml-4 truncate">
+                                    <p class="truncate text-sm font-medium text-gray-900">
+                                      {{ person.name }}
+                                    </p>
+                                    <p class="truncate text-sm text-gray-500">
+                                      {{ "@" + person.handle }}
+                                    </p>
                                   </div>
-                                </MenuItems>
-                              </transition>
-                            </Menu>
-                          </div>
-                        </li>
-                      </ul>
+                                </div>
+                              </a>
+                              <Menu
+                                as="div"
+                                class="relative ml-2 inline-block flex-shrink-0 text-left"
+                              >
+                                <MenuButton
+                                  class="group relative inline-flex h-8 w-8 items-center justify-center rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                >
+                                  <span class="sr-only">Open options menu</span>
+                                  <span
+                                    class="flex h-full w-full items-center justify-center rounded-full"
+                                  >
+                                    <Icon
+                                      name="heroicons:ellipsis-vertical-solid"
+                                      class="h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                </MenuButton>
+                                <transition
+                                  enter-active-class="transition ease-out duration-100"
+                                  enter-from-class="transform opacity-0 scale-95"
+                                  enter-to-class="transform opacity-100 scale-100"
+                                  leave-active-class="transition ease-in duration-75"
+                                  leave-from-class="transform opacity-100 scale-100"
+                                  leave-to-class="transform opacity-0 scale-95"
+                                >
+                                  <MenuItems
+                                    class="absolute top-0 right-9 z-10 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                  >
+                                    <div class="py-1">
+                                      <MenuItem v-slot="{ active }">
+                                        <a
+                                          href="#"
+                                          :class="[
+                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                            'block px-4 py-2 text-sm',
+                                          ]"
+                                          >View profile</a
+                                        >
+                                      </MenuItem>
+                                      <MenuItem v-slot="{ active }">
+                                        <a
+                                          href="#"
+                                          :class="[
+                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                            'block px-4 py-2 text-sm',
+                                          ]"
+                                          >Send message</a
+                                        >
+                                      </MenuItem>
+                                    </div>
+                                  </MenuItems>
+                                </transition>
+                              </Menu>
+                            </div>
+                          </li>
+                          <InfiniteLoading class="loader" @infinite="load" />
+                        </ul>
+                      </PullRefresh>
                     </div>
                   </div>
                 </div>
