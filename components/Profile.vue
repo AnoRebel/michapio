@@ -30,24 +30,15 @@ const { setAuthState } = useModals();
 const { isLoggedIn } = useAuth();
 const notify = useNotify();
 
-let usr;
-onBeforeMount(async () => {
-  if (isLoggedIn()) {
-    usr = useSupabaseUser();
-  } else {
-    usr = await client.from("users").select("*").eq("id", props.user.id);
-  }
-});
-
 const loading = ref(false);
 const logged = ref(false);
-const tabs = [
-  { name: "Michapio", href: "#", current: false, show: true },
-  { name: "Likes", href: "#", current: true, show: isLoggedIn() },
+const tabs = ref([
+  { name: "Michapio", href: "#", current: true, show: true },
+  { name: "Likes", href: "#", current: false, show: isLoggedIn() },
   { name: "Favourites", href: "#", current: false, show: isLoggedIn() },
-];
+]);
 const tabClass = computed(() =>
-  tabs.filter(tabC => tabC.show == true).length == 1 ? "w-full" : `w-1/${tabs.length}`
+  tabs.value.filter(tabC => tabC.show == true).length == 1 ? "w-full" : `w-1/${tabs.value.length}`
 );
 const team = [
   {
@@ -70,7 +61,7 @@ const {
 } = await useAsyncData(
   "michapio",
   async () => {
-    const { data } = await client.from("michapio").select("*");
+    const { data } = await client.from("michapio").select("*").eq("id", props.user.id);
     return data;
   }
   // { pick: ['title', 'description'] },
@@ -80,7 +71,7 @@ const {
 // const { pending: pendingFavs, data: favourites, refresh: refreshFavourites, error: favError } = await useAsyncData(
 //   "favourites",
 //   async () => {
-//     const { data } = await client.from("michapio").select("*");
+//     const { data } = await client.from("favourites").select("*").eq("id", props.user.id);
 //     return data;
 //   },
 //  // { pick: ['title', 'description'] },
@@ -90,7 +81,7 @@ const {
 // const { pending: pendingLikes, data: likes, refresh: refreshLikes, error: likesError } = await useAsyncData(
 //   "likes",
 //   async () => {
-//     const { data } = await client.from("michapio").select("*");
+//     const { data } = await client.from("likes").select("*").eq("id", props.user.id);
 //     return data;
 //   },
 //  // { pick: ['title', 'description'] },

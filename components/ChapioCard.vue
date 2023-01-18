@@ -143,7 +143,7 @@ const profile = hash => router.replace({ hash: `#${hash}` });
             :alt="chapio.author.name"
             crossorigin="anonymous"
             loading="lazy"
-            @click="profile(chapio.id)"
+            @click="open = true"
           />
         </div>
         <div class="min-w-0 flex-1">
