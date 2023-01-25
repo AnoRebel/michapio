@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { RealtimeChannel } from "@supabase/supabase-js";
-import { useTypedRouter } from "@typed-router";
 
 const whoToFollow = [
   {
@@ -24,7 +23,7 @@ const trendingPosts = [
   },
 ];
 
-const router = useTypedRouter();
+const router = useRouter();
 // router.replace({ hash: "#1234" });
 const client = useSupabaseClient();
 let trendingChannel: RealtimeChannel;

@@ -11,7 +11,6 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import { storeToRefs } from "pinia";
-import { useTypedRouter } from "@typed-router";
 import { useChapio } from "@/stores/chapio";
 
 defineProps({
@@ -23,7 +22,7 @@ defineProps({
 
 const emit = defineEmits(["close"]);
 
-const router = useTypedRouter();
+const router = useRouter();
 
 const items = [
   {
