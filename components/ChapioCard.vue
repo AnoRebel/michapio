@@ -11,10 +11,14 @@ const props = defineProps({
 
 const route = useRoute();
 const router = useRouter();
+const client = useSupabaseClient();
 const { isLoggedIn } = useAuth();
 const { setAuthState } = useModals();
 const notify = useNotify();
-const open = ref(false);
+const sbar = reactive({
+  user: {},
+  open: false,
+});
 const likeState = ref("initial");
 const likes = ref(parseInt(props.chapio.likes || 0));
 
@@ -126,7 +130,25 @@ const share = async data => {
   }
 };
 
-const profile = hash => router.replace({ hash: `#${hash}` });
+const modal = hash => router.replace({ hash: `#${hash}` });
+const profile = async id => {
+  try {
+    const { data: user } = await client.from("users").select("*").eq("id", id);
+    if (user) {
+      sbar.user = user;
+      sbar.open = true;
+    }
+  } catch (error) {
+    notify(
+      {
+        group: "errors",
+        title: "Michapio",
+        text: "Error getting user...😥",
+      },
+      3500
+    );
+  }
+};
 </script>
 
 <template>
@@ -142,12 +164,12 @@ const profile = hash => router.replace({ hash: `#${hash}` });
             :alt="chapio.author.name"
             crossorigin="anonymous"
             loading="lazy"
-            @click="open = true"
+            @click="profile(chapio.user_id)"
           />
         </div>
         <div class="min-w-0 flex-1">
           <p class="text-sm font-medium text-slate-900">
-            <NuxtLink class="cursor-pointer hover:underline" @click="profile(chapio.id)">
+            <NuxtLink class="cursor-pointer hover:underline" @click="modal(chapio.id)">
               {{ chapio.author.name }}
             </NuxtLink>
           </p>
@@ -263,7 +285,7 @@ const profile = hash => router.replace({ hash: `#${hash}` });
       </div>
     </div>
   </article>
-  <Profile :user="chapio.author" :open="open" @close="open = false" />
+  <Profile :user="sbar.user" :open="sbar.open" @close="sbar.open = false" />
 </template>
 
 <style lang="scss">
