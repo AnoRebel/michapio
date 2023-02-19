@@ -16,7 +16,7 @@ const { isLoggedIn } = useAuth();
 const { setAuthState } = useModals();
 const notify = useNotify();
 const sbar = reactive({
-  user: {},
+  user_id: 0,
   open: false,
 });
 const likeState = ref("initial");
@@ -131,23 +131,9 @@ const share = async data => {
 };
 
 const modal = hash => router.replace({ hash: `#${hash}` });
-const profile = async id => {
-  try {
-    const { data: user } = await client.from("users").select("*").eq("id", id);
-    if (user) {
-      sbar.user = user;
-      sbar.open = true;
-    }
-  } catch (error) {
-    notify(
-      {
-        group: "errors",
-        title: "Michapio",
-        text: "Error getting user...😥",
-      },
-      3500
-    );
-  }
+const profile = (id: number) => {
+  sbar.user_id = id;
+  sbar.open = true;
 };
 </script>
 
@@ -285,7 +271,7 @@ const profile = async id => {
       </div>
     </div>
   </article>
-  <Profile :user="sbar.user" :open="sbar.open" @close="sbar.open = false" />
+  <Profile :user-id="sbar.user_id" :open="sbar.open" @close="sbar.open = false" />
 </template>
 
 <style lang="scss">

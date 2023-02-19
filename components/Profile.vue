@@ -18,8 +18,8 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  user: {
-    type: Object,
+  userId: {
+    type: Number || String,
     required: true,
   },
 });
@@ -29,6 +29,22 @@ const client = useSupabaseClient();
 const { setAuthState } = useModals();
 const { isLoggedIn } = useAuth();
 const notify = useNotify();
+const res = reactive({
+  user: {},
+  error: {},
+  loading: false,
+});
+
+onBeforeMount(async () => {
+  // Get user from key from prop
+  const { pending, data, error } = await useAsyncData("user", async () => {
+    const { data } = await client.from("users").select("*").eq("id", props.userId);
+    return data;
+  });
+  res.user = data;
+  res.error = error;
+  res.loading = pending;
+});
 
 const loading = ref(false);
 const logged = ref(false);
@@ -61,7 +77,7 @@ const {
 } = await useAsyncData(
   "michapio",
   async () => {
-    const { data } = await client.from("michapio").select("*").eq("id", props.user.id);
+    const { data } = await client.from("michapio").select("*").eq("id", props.userId);
     return data;
   }
   // { pick: ['title', 'description'] },
@@ -184,8 +200,8 @@ const load = async $state => {
                           <nuxt-img
                             provider="dicebear"
                             class="absolute h-full w-full rounded-full object-contain"
-                            :src="`${user.user_metadata.username}.svg`"
-                            :alt="user.user_metadata.username"
+                            :src="`${res.user.user_metadata.username}.svg`"
+                            :alt="res.user.user_metadata.username"
                             crossorigin="anonymous"
                             loading="lazy"
                           />
@@ -195,7 +211,7 @@ const load = async $state => {
                             <div>
                               <div class="flex items-center">
                                 <h3 class="text-xl font-bold text-gray-900 sm:text-2xl">
-                                  {{ user.user_metadata.username }}
+                                  {{ res.user.user_metadata.username }}
                                 </h3>
                                 <span
                                   class="ml-2.5 inline-block h-2 w-2 flex-shrink-0 rounded-full bg-green-400"
