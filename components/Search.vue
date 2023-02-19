@@ -46,6 +46,7 @@ searched.value = computed(() =>
       })
 );
 
+// const debouncedQuery = refDebounced(query, 700);
 watch(query, () => {
   if (query.value === "") {
     return (searched.value = []);
@@ -64,8 +65,8 @@ watch(query, () => {
         recent.value = searched.value[0];
       }
     },
-    250,
-    { maxWait: 300 }
+    450,
+    { maxWait: 500 }
   );
 });
 
