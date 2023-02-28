@@ -16,7 +16,7 @@
     "format": "prettier . --write"
   },
   "devDependencies": {
-    "@nuxt/image-edge": "^1.0.0-27919678.2f5b64b",
+    "@nuxt/image-edge": "^1.0.0-27954023.4cee565",
     "@nuxtjs/color-mode": "^3.2.0",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@nuxtjs/eslint-module": "^3.1.0",
@@ -25,19 +25,19 @@
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.9",
-    "@types/node": "^18.14.0",
+    "@types/node": "^18.14.2",
     "@vueuse/core": "^9.13.0",
     "@vueuse/nuxt": "^9.13.0",
-    "eslint": "^8.34.0",
+    "eslint": "^8.35.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-nuxt": "^4.0.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "nuxt": "^3.2.2",
+    "nuxt": "^3.2.3",
     "nuxt-headlessui": "^1.1.1",
     "nuxt-icon": "^0.3.2",
     "nuxt-lodash": "^2.4.1",
     "nuxt-turnstile": "^0.1.1",
-    "nuxt-typed-router": "^2.3.5",
+    "nuxt-typed-router": "^3.0.1",
     "prettier": "^2.8.4",
     "prettier-plugin-tailwindcss": "0.2.3",
     "sass": "^1.58.3",
@@ -46,9 +46,9 @@
   },
   "dependencies": {
     "@aacassandra/vue3-progressbar": "^1.0.3",
-    "@nuxtjs/i18n": "^8.0.0-beta.9",
+    "@nuxtjs/i18n": "^8.0.0-beta.10",
     "@nuxtjs/robots": "^3.0.0",
-    "@pinia/nuxt": "^0.4.6",
+    "@pinia/nuxt": "^0.4.7",
     "animate.css": "^4.1.1",
     "argon2": "^0.30.3",
     "dayjs": "^1.11.7",
@@ -58,10 +58,10 @@
     "nuxt-security": "^0.10.2",
     "objection": "^3.0.1",
     "pg": "^8.9.0",
-    "pinia": "^2.0.30",
+    "pinia": "^2.0.32",
     "v3-infinite-loading": "^1.2.2",
     "vee-validate": "^4.7.4",
-    "yup": "^1.0.0"
+    "yup": "^1.0.2"
   },
   "packageManager": "yarn@3.2.2"
 }
