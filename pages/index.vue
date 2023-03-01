@@ -200,7 +200,7 @@ onUnmounted(() => {
       <div class="w-full px-4 sm:px-0">
         <div class="rounded-xl bg-slate-800 px-3 focus:outline-none">
           <PullRefresh v-model="loading" @refresh="onRefresh">
-            <ul role="list" class="space-y-4">
+            <ul v-auto-animate role="list" class="space-y-4">
               <li
                 v-for="chapio in chapios"
                 :key="chapio.id"
