@@ -62,7 +62,6 @@ export default defineNuxtConfig({
     "nuxt-lodash",
     "@nuxtjs/i18n",
     "@vueuse/nuxt",
-    "@formkit/nuxt",
     "nuxt-turnstile",
     // "@nuxtjs/eslint-module",
     "@nuxtjs/supabase",

@@ -46,9 +46,7 @@
   },
   "dependencies": {
     "@aacassandra/vue3-progressbar": "^1.0.3",
-    "@formkit/addons": "^1.0.0-beta.15",
     "@formkit/auto-animate": "^1.0.0-beta.6",
-    "@formkit/nuxt": "^1.0.0-beta.15",
     "@nuxtjs/i18n": "^8.0.0-beta.10",
     "@nuxtjs/robots": "^3.0.0",
     "@pinia/nuxt": "^0.4.7",

@@ -12,11 +12,11 @@ export const useForms = defineStore("forms", {
       const client = useSupabaseClient();
       const modals = useModals();
       const notify = useNotify();
-      console.log(form, data, auth);
       switch (form) {
         case "login":
           try {
             const accept = await auth.login(data as any);
+            // console.log(accept);
             // const { data } = await $fetch("/api/auth/signin", { method: "POST", body: {} }).catch(error => error.data);
             notify(
               {

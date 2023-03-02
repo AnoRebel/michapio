@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { useField, useForm } from "vee-validate";
 import { string } from "yup";
@@ -21,17 +22,17 @@ const {
   value: username,
   meta: nameMeta,
   errorMessage: nameError,
-} = useField("username", string().min(3).required().label("Username"));
+} = useField<string>("username", string().min(3).required().label("Username"));
 const {
   value: email,
   meta: emailMeta,
   errorMessage: emailError,
-} = useField("email", string().email().required().label("Email"));
+} = useField<string>("email", string().email().required().label("Email"));
 const {
   value: password,
   meta: passwordMeta,
   errorMessage: passwordError,
-} = useField("password", string().required().min(3).label("Password"));
+} = useField<string>("password", string().required().min(3).label("Password"));
 
 const onInvalid = ({ values, errors, results }) => {
   console.log("Invalid Values: ", values); // current form values
@@ -83,16 +84,20 @@ const submit = handleSubmit(async (values, { resetForm }) => {
         required
       />
       <Icon
-        v-if="nameMeta.pending"
+        v-show="nameMeta.pending"
+        v-auto-animate="{ duration: 100 }"
         name="heroicons:arrow-path"
         class="absolute inset-y-2.5 right-0 h-5 w-5 animate-spin items-center text-slate-800"
       />
       <Icon
-        v-if="nameMeta.dirty && nameMeta.valid"
+        v-show="nameMeta.dirty && nameMeta.valid"
+        v-auto-animate="{ duration: 100 }"
         name="heroicons:check"
         class="absolute inset-y-2.5 right-0 h-5 w-5 items-center text-green-500"
       />
-      <span class="my-0.5 text-xs text-red-600">{{ nameError }}</span>
+      <span v-auto-animate="{ duration: 100 }" class="my-0.5 text-xs text-red-600">
+        {{ nameError }}
+      </span>
     </label>
     <label name="email" class="relative w-full">
       <span class="sr-only">Email Address</span>
@@ -113,12 +118,14 @@ const submit = handleSubmit(async (values, { resetForm }) => {
         required
       />
       <Icon
-        v-if="emailMeta.pending"
+        v-show="emailMeta.pending"
+        v-auto-animate="{ duration: 100 }"
         name="heroicons:arrow-path"
         class="absolute inset-y-2.5 right-0 h-5 w-5 animate-spin items-center text-slate-800"
       />
       <Icon
-        v-if="emailMeta.dirty && emailMeta.valid"
+        v-show="emailMeta.dirty && emailMeta.valid"
+        v-auto-animate="{ duration: 100 }"
         name="heroicons:check"
         class="absolute inset-y-2.5 right-0 h-5 w-5 items-center text-green-500"
       />
@@ -143,13 +150,13 @@ const submit = handleSubmit(async (values, { resetForm }) => {
         required
       />
       <Icon
-        v-if="isPass"
+        v-show="isPass"
         name="heroicons:eye"
         class="animate__animated animate__fadeIn absolute inset-y-2.5 right-1 h-5 w-5 cursor-pointer items-center text-slate-800"
         @click="isPass = !isPass"
       />
       <Icon
-        v-else
+        v-show="!isPass"
         name="heroicons:eye-slash"
         class="animate__animated animate__fadeIn absolute inset-y-2.5 right-1 h-5 w-5 cursor-pointer items-center text-slate-800"
         @click="isPass = !isPass"

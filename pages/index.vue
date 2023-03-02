@@ -152,7 +152,7 @@ const {
 } = await useAsyncData(
   "michapio",
   async () => {
-    const { data } = await client.from("michapio").select("*");
+    const { data } = await client.from("michapio").select("*,users!michapio_user_id_foreign(*)");
     return data;
   }
   // { pick: ['title', 'description'] },
@@ -215,6 +215,7 @@ onUnmounted(() => {
       </div>
       <!-- End -->
       <template #aside>
+        {{ michapio }}
         <SideBar />
       </template>
     </NuxtLayout>

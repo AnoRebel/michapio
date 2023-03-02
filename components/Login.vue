@@ -95,12 +95,14 @@ const submit = handleSubmit(async (values, { resetForm }) => {
         required
       />
       <Icon
-        v-if="emailMeta.pending"
+        v-show="emailMeta.pending"
+        v-auto-animate="{ duration: 100 }"
         name="heroicons:arrow-path"
         class="absolute inset-y-2.5 right-0 h-5 w-5 animate-spin items-center text-slate-800"
       />
       <Icon
-        v-if="emailMeta.dirty && emailMeta.valid"
+        v-show="emailMeta.dirty && emailMeta.valid"
+        v-auto-animate="{ duration: 100 }"
         name="heroicons:check"
         class="absolute inset-y-2.5 right-0 h-5 w-5 items-center text-green-500"
       />
@@ -125,13 +127,15 @@ const submit = handleSubmit(async (values, { resetForm }) => {
         required
       />
       <Icon
-        v-if="isPass"
+        v-show="isPass"
+        v-auto-animate="{ duration: 100 }"
         name="heroicons:eye"
         class="animate__animated animate__fadeIn absolute inset-y-2.5 right-1 h-5 w-5 cursor-pointer items-center text-slate-800"
         @click="isPass = !isPass"
       />
       <Icon
-        v-else
+        v-show="!isPass"
+        v-auto-animate="{ duration: 100 }"
         name="heroicons:eye-slash"
         class="animate__animated animate__fadeIn absolute inset-y-2.5 right-1 h-5 w-5 cursor-pointer items-center text-slate-800"
         @click="isPass = !isPass"
