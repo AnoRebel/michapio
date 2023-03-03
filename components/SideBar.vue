@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { RealtimeChannel } from "@supabase/supabase-js";
+// import type { RealtimeChannel } from "@supabase/supabase-js";
 
 const whoToFollow = [
   {
@@ -23,34 +23,31 @@ const trendingPosts = [
   },
 ];
 
-const router = useRouter();
+// const router = useRouter();
 // router.replace({ hash: "#1234" });
-const client = useSupabaseClient();
-let trendingChannel: RealtimeChannel;
+// const client = useSupabaseClient();
+// let trendingChannel: RealtimeChannel;
+//
+// const { data: trending, refresh: refreshTrending } = await useAsyncData("trending", async () => {
+//   const { data } = await client
+//     .from("michapio")
+//     .select("*")
+//     .order("likes", { ascending: false })
+//     .limit(6);
+//   return data;
+// });
+// onMounted(() => {
+//   trendingChannel = client
+//     .channel("public:trending")
+//     .on("postgres_changes", { event: "*", schema: "public", table: "michapio" }, () =>
+//       refreshTrending()
+//     );
+//   trendingChannel.subscribe();
+// });
 
-const { data: trending, refresh: refreshTrending } = await useAsyncData("trending", async () => {
-  const { data } = await client
-    .from("michapio")
-    .select("*")
-    .order("likes", { ascending: false })
-    .limit(6);
-  return data;
-});
-// Once page is mounted, listen to changes on the `collaborators` table and refresh collaborators when receiving event
-onMounted(() => {
-  // Real time listener for new workouts
-  trendingChannel = client
-    .channel("public:trending")
-    .on("postgres_changes", { event: "*", schema: "public", table: "michapio" }, () =>
-      refreshTrending()
-    );
-  trendingChannel.subscribe();
-});
-
-// Don't forget to unsubscribe when user left the page
-onUnmounted(() => {
-  client.removeChannel(trendingChannel);
-});
+// onUnmounted(() => {
+//   client.removeChannel(trendingChannel);
+// });
 </script>
 
 <template>

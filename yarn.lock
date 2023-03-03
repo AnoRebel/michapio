@@ -832,7 +832,7 @@
   optionalDependencies:
     ipx "1.0.0-2"
 
-"@nuxt/kit@3.2.3", "@nuxt/kit@^3.2.2":
+"@nuxt/kit@3.2.3", "@nuxt/kit@^3.1.0", "@nuxt/kit@^3.2.2":
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-3.2.3.tgz#97d8b4a4bedda4452ea18629c73c6301a964d492"
   integrity sha512-wcsVlQLwGkh1cRhAFWHc3uYHdIxFTRNdRUzNyfqoX9DL0Fuga3K75q/PBY0xg1viA9R6F5BMPhc7KDLSWbXtWg==
@@ -1491,10 +1491,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.18.tgz#8dfb97f0da23c2293e554c5a50d61ef134d7697f"
   integrity sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==
 
-"@types/node@^18.14.2":
-  version "18.14.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.14.2.tgz#c076ed1d7b6095078ad3cf21dfeea951842778b1"
-  integrity sha512-1uEQxww3DaghA0RxqHx0O0ppVlo43pJhepY51OxuQIKHpjbnYLA7vcdwioNPzIqmC2u3I/dmylcqjlh0e7AyUA==
+"@types/node@^18.14.5":
+  version "18.14.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.14.5.tgz#4a13a6445862159303fc38586598a9396fc408b3"
+  integrity sha512-CRT4tMK/DHYhw1fcCEBwME9CSaZNclxfzVMe7GsO6ULSwsttbj70wSiX6rZdIjGblu93sTJxLdhNIT85KKI7Qw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -5736,6 +5736,14 @@ nuxt-config-schema@^0.4.4:
     pathe "^1.0.0"
     untyped "^1.2.2"
 
+nuxt-csurf@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/nuxt-csurf/-/nuxt-csurf-1.1.0.tgz#8a09cc3c44eb0b7bad3cdff62f50029fbe847246"
+  integrity sha512-7WC89nsZzceMwtZkq1qYf4Mq7Ytw86OaMG5stZ4rqNBsqhhn9VT72LCgsMlnwwLbj933xcaGXsOZ8aEKsQw9qg==
+  dependencies:
+    "@nuxt/kit" "^3.1.0"
+    defu "^6.1.1"
+
 nuxt-headlessui@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/nuxt-headlessui/-/nuxt-headlessui-1.1.1.tgz#ae0207fc4a2d8463596368bc10562937ca4fe451"
@@ -5763,17 +5771,18 @@ nuxt-lodash@^2.4.1:
     "@types/lodash-es" "^4.17.6"
     lodash-es "^4.17.21"
 
-nuxt-security@^0.10.2:
-  version "0.10.2"
-  resolved "https://registry.yarnpkg.com/nuxt-security/-/nuxt-security-0.10.2.tgz#670801eb1f60009c5a4fd0dcf42c4f6d46684969"
-  integrity sha512-5kK5wIa1vUVwTmTykocwvTRb2wg8VdlPDg+l4vMvzTaafNqXT/CpiyW/MhsokmtRuIh0P2sARAj8nX+lksJ45Q==
+nuxt-security@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/nuxt-security/-/nuxt-security-0.11.0.tgz#27c935769b771abc62d7e5b32ee91bcf8568e5a5"
+  integrity sha512-qxqfDgl/ffW0T6AmcuWJS7N6+JVXZv790B5C++OKIpe1tStkOJ4PuP7XmRvbS00DMO+tuURE6JsZ6TardnhURQ==
   dependencies:
     "@nozomuikuta/h3-cors" "^0.1.5"
-    "@nuxt/kit" "^3.0.0"
+    "@nuxt/kit" "^3.2.2"
     basic-auth "^2.0.1"
     defu "^6.1.1"
     limiter "^2.1.0"
     memory-cache "^0.2.0"
+    nuxt-csurf "^1.1.0"
     pathe "^1.0.0"
     xss "^1.0.14"
 
@@ -6636,10 +6645,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier-plugin-tailwindcss@0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-tailwindcss/-/prettier-plugin-tailwindcss-0.2.3.tgz#b68a1de10056fc84055426af132c2697bea0955c"
-  integrity sha512-s2N5Dh7Ao5KTV1mao5ZBnn8EKtUcDPJEkGViZIjI0Ij9TTI5zgTz4IHOxW33jOdjHKa8CSjM88scelUiC5TNRQ==
+prettier-plugin-tailwindcss@0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-tailwindcss/-/prettier-plugin-tailwindcss-0.2.4.tgz#ed0ca759bc948eb2bc48b419c6e57eb2adabdb0a"
+  integrity sha512-wMyugRI2yD8gqmMpZSS8kTA0gGeKozX/R+w8iWE+yiCZL09zY0SvfiHfHabNhjGhzxlQ2S2VuTxPE3T72vppCQ==
 
 prettier@2.8.4, prettier@^2.8.4:
   version "2.8.4"
