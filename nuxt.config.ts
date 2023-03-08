@@ -63,7 +63,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@vueuse/nuxt",
     "nuxt-turnstile",
-    // "@nuxtjs/eslint-module",
+    "@nuxtjs/eslint-module",
     "@nuxtjs/supabase",
     "nuxt-security",
   ],
