@@ -130,6 +130,28 @@ const share = async data => {
   }
 };
 
+// const ch = {
+//   id: 'f42cd306-5d2c-4cfa-9065-010a8881666c',
+//   chapio: 'tets',
+//   origin: 'test',
+//   views: 0,
+//   description: null,
+//   deleted: false,
+//   user_id: '0fe3b371-ddf7-4e28-b034-d11e074208e7',
+//   created_at: '2023-03-02T15:14:31.197276+00:00',
+//   updated_at: '2023-03-02T15:14:31.197276+00:00',
+//   fts: null,
+//   users: {
+//     id: '0fe3b371-ddf7-4e28-b034-d11e074208e7',
+//     username: 'AnoRebel',
+//     email: 'hacker4rebel@gmail.com',
+//     password: '$2a$10$UuBccsbg0XDnwYAaP7SISuadTd9LM7X9CWSyFlTUbptz3ajBXFwhy',
+//     deleted: false,
+//     created_at: '2023-03-02T15:12:00.886528+00:00',
+//     updated_at: '2023-03-02T15:12:00.886528+00:00'
+//   }
+// };
+
 const modal = hash => router.replace({ hash: `#${hash}` });
 const profile = (id: number) => {
   sbar.user_id = id;
@@ -139,28 +161,28 @@ const profile = (id: number) => {
 
 <template>
   <!-- TODO: Filter NSFW content -->
-  <article :aria-labelledby="'chapio-' + chapio.id">
+  <article :aria-labelledby="`chapio-${chapio.id}`">
     <div :id="chapio.id">
       <div class="flex space-x-3">
         <div class="flex-shrink-0">
           <nuxt-img
             provider="dicebear"
             class="h-10 w-10 cursor-pointer rounded-full"
-            src="ano.svg"
-            :alt="chapio.author.name"
+            :src="`${chapio.users.username}.svg`"
+            :alt="chapio.users.username"
             crossorigin="anonymous"
             loading="lazy"
-            @click="profile(chapio.user_id)"
+            @click="profile(chapio.users.id)"
           />
         </div>
         <div class="min-w-0 flex-1">
           <p class="text-sm font-medium text-slate-900">
             <NuxtLink class="cursor-pointer hover:underline" @click="modal(chapio.id)">
-              {{ chapio.author.name }}
+              {{ chapio.users.username }}
             </NuxtLink>
           </p>
           <p class="text-sm text-slate-500">
-            <time :datetime="chapio.datetime">{{ chapio.date }}</time>
+            <time :datetime="chapio.updated_at">{{ chapio.updated_at }}</time>
           </p>
         </div>
         <!-- TODO: Remove this.. -->
@@ -210,7 +232,7 @@ const profile = (id: number) => {
           </Menu>
         </div>
       </div>
-      <h2 :id="'chapio-title-' + chapio.id" class="mt-4 text-base font-medium text-slate-900">
+      <h2 :id="`chapio-title-${chapio.id}`" class="mt-4 text-base font-medium text-slate-900">
         {{ chapio.title }}
       </h2>
     </div>
@@ -271,7 +293,7 @@ const profile = (id: number) => {
       </div>
     </div>
   </article>
-  <Profile :user-id="sbar.user_id" :open="sbar.open" @close="sbar.open = false" />
+  <Profile :user-id="chapio.users.id" :open="sbar.open" @close="sbar.open = false" />
 </template>
 
 <style lang="scss">
