@@ -8,25 +8,26 @@ definePageMeta({
 
 const chapios = ref([
   {
-    id: "81614",
-    likes: "29",
-    replies: "11",
-    views: "2.7k",
-    author: {
-      name: "Dries Vincent",
-      imageUrl:
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      href: "#",
+    id: "f42cd306-5d2c-4cfa-9065-010a8881666c",
+    chapio: "tets",
+    origin: "test",
+    views: 0,
+    description: null,
+    deleted: false,
+    user_id: "0fe3b371-ddf7-4e28-b034-d11e074208e7",
+    created_at: "2023-03-02T15:14:31.197276+00:00",
+    updated_at: "2023-03-02T15:14:31.197276+00:00",
+    fts: null,
+    users: {
+      id: "0fe3b371-ddf7-4e28-b034-d11e074208e7",
+      username: "AnoRebel",
+      email: "hacker4rebel@gmail.com",
+      password: "$2a$10$UuBccsbg0XDnwYAaP7SISuadTd9LM7X9CWSyFlTUbptz3ajBXFwhy",
+      deleted: false,
+      created_at: "2023-03-02T15:12:00.886528+00:00",
+      updated_at: "2023-03-02T15:12:00.886528+00:00",
     },
-    date: "December 9 at 11:43 AM",
-    datetime: "2020-12-09T11:43:00",
-    href: "#",
-    title: "What would you have done differently if you ran Jurassic Park?",
-    body: `
-      <p>Jurassic Park was an incredible idea and a magnificent feat of engineering, but poor protocols and a disregard for human safety killed what could have otherwise been one of the best businesses of our generation.</p>
-    `,
   },
-  // ...,
 ]);
 
 const route = useRoute();
@@ -146,7 +147,7 @@ onUnmounted(() => {
           <PullRefresh v-model="loading" @refresh="onRefresh">
             <ul v-auto-animate role="list" class="space-y-4">
               <li
-                v-for="chapio in michapio"
+                v-for="chapio in chapios"
                 :key="chapio.id"
                 class="rounded-lg bg-slate-50 px-4 py-6 shadow sm:p-6"
               >

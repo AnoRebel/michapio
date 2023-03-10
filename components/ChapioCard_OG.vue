@@ -130,6 +130,28 @@ const share = async data => {
   }
 };
 
+// const ch = {
+//   id: 'f42cd306-5d2c-4cfa-9065-010a8881666c',
+//   chapio: 'tets',
+//   origin: 'test',
+//   views: 0,
+//   description: null,
+//   deleted: false,
+//   user_id: '0fe3b371-ddf7-4e28-b034-d11e074208e7',
+//   created_at: '2023-03-02T15:14:31.197276+00:00',
+//   updated_at: '2023-03-02T15:14:31.197276+00:00',
+//   fts: null,
+//   users: {
+//     id: '0fe3b371-ddf7-4e28-b034-d11e074208e7',
+//     username: 'AnoRebel',
+//     email: 'hacker4rebel@gmail.com',
+//     password: '$2a$10$UuBccsbg0XDnwYAaP7SISuadTd9LM7X9CWSyFlTUbptz3ajBXFwhy',
+//     deleted: false,
+//     created_at: '2023-03-02T15:12:00.886528+00:00',
+//     updated_at: '2023-03-02T15:12:00.886528+00:00'
+//   }
+// };
+
 const modal = hash => router.replace({ hash: `#${hash}` });
 const profile = (id: number) => {
   sbar.user_id = id;
@@ -140,38 +162,89 @@ const profile = (id: number) => {
 <template>
   <!-- TODO: Filter NSFW content -->
   <article :aria-labelledby="`chapio-${chapio.id}`">
-    <div class="shadow-neumorphic px-4 py-2">
-      <div class="mb-4 flex items-center justify-between">
-        <div class="flex items-center">
-          <img
-            class="h-10 w-10 rounded-full"
-            src="https://via.placeholder.com/50x50"
-            alt="user logo"
+    <div :id="chapio.id">
+      <div class="flex space-x-3">
+        <div class="flex-shrink-0">
+          <nuxt-img
+            provider="dicebear"
+            class="h-10 w-10 cursor-pointer rounded-full"
+            :src="`${chapio.users.username}.svg`"
+            :alt="chapio.users.username"
+            crossorigin="anonymous"
+            loading="lazy"
+            @click="profile(chapio.users.id)"
           />
-          <div class="pl-4">
-            <h2 class="text-lg font-semibold text-gray-800">{{ chapio.users.username }}</h2>
-            <p class="text-sm text-gray-600">12th July, 2021 at 8:30 AM</p>
-          </div>
+        </div>
+        <div class="min-w-0 flex-1">
+          <p class="text-sm font-medium text-slate-900">
+            <NuxtLink class="cursor-pointer hover:underline" @click="modal(chapio.id)">
+              {{ chapio.users.username }}
+            </NuxtLink>
+          </p>
+          <p class="text-sm text-slate-500">
+            <time :datetime="chapio.updated_at">{{ chapio.updated_at }}</time>
+          </p>
+        </div>
+        <!-- TODO: Remove this.. -->
+        <div class="flex flex-shrink-0 self-center">
+          <Menu as="div" class="relative inline-block text-left">
+            <div>
+              <MenuButton
+                class="-m-2 flex items-center rounded-full p-2 text-slate-400 hover:text-slate-600"
+              >
+                <span class="sr-only">Open options</span>
+                <Icon name="heroicons:ellipsis-vertical-solid" class="h-5 w-5" aria-hidden="true" />
+              </MenuButton>
+            </div>
+
+            <transition
+              enter-active-class="transition ease-out duration-100"
+              enter-from-class="transform opacity-0 scale-95"
+              enter-to-class="transform opacity-100 scale-100"
+              leave-active-class="transition ease-in duration-75"
+              leave-from-class="transform opacity-100 scale-100"
+              leave-to-class="transform opacity-0 scale-95"
+            >
+              <MenuItems
+                class="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-slate-50 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              >
+                <div class="py-1">
+                  <MenuItem v-slot="{ active }">
+                    <NuxtLink
+                      to="#"
+                      :class="[
+                        active ? 'bg-slate-100 text-slate-900' : 'text-slate-700',
+                        'flex px-4 py-2 text-sm',
+                      ]"
+                      @click="toggleFavourite"
+                    >
+                      <Icon
+                        name="heroicons:star-solid"
+                        class="mr-3 h-5 w-5 text-slate-400"
+                        aria-hidden="true"
+                      />
+                      <span>Add to favorites</span>
+                    </NuxtLink>
+                  </MenuItem>
+                </div>
+              </MenuItems>
+            </transition>
+          </Menu>
         </div>
       </div>
-      <div class="rounded-lg bg-gray-100 py-4 px-6 shadow-md">
-        <div class="flex items-center divide-y">
-          <div>
-            <span class="mb-1 font-semibold text-gray-800">They said: &nbsp;</span>
-            <span class="text-sm text-gray-700">{{ chapio.chapio }}</span>
-          </div>
-        </div>
-        <div class="mt-8 flex items-center">
-          <div>
-            <span class="mb-1 font-semibold text-gray-800">But meant: &nbsp;</span>
-            <span class="text-sm text-gray-700">{{ chapio.origin }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="mt-4 flex flex-col justify-between text-center">
-        <p class="text-sm text-gray-600">{{ chapio.description }}</p>
-        <div class="flex w-full items-center justify-between">
-          <button class="mr-2 rounded-full bg-white p-2" @click.self="toggleLike">
+      <h2 :id="`chapio-title-${chapio.id}`" class="mt-4 text-base font-medium text-slate-900">
+        {{ chapio.title }}
+      </h2>
+    </div>
+    <div class="mt-2 space-y-4 text-sm text-slate-700" v-html="chapio.body" />
+    <div class="mt-6 flex justify-between space-x-8">
+      <div class="flex space-x-6">
+        <span class="inline-flex items-center text-sm">
+          <button
+            type="button"
+            class="inline-flex space-x-2 text-slate-400 hover:text-slate-500"
+            @click.self="toggleLike"
+          >
             <Icon
               name="heroicons:hand-thumb-up-solid"
               class="like_icon h-5 w-5"
@@ -184,6 +257,10 @@ const profile = (id: number) => {
             </span>
             <span class="sr-only">likes</span>
           </button>
+        </span>
+      </div>
+      <div class="flex text-sm">
+        <span class="inline-flex items-center space-x-5 text-sm">
           <button
             type="button"
             class="inline-flex space-x-2 text-slate-400 hover:text-slate-500"
@@ -198,7 +275,12 @@ const profile = (id: number) => {
             <Icon name="heroicons:share-solid" class="h-5 w-5" aria-hidden="true" />
             <span class="font-medium text-slate-900">Share</span>
           </button>
-          <button v-if="isLoggedIn()" class="rounded-full bg-white p-2" @click="toggleFavourite">
+          <button
+            v-if="isLoggedIn()"
+            type="button"
+            class="inline-flex space-x-2 text-slate-400 hover:text-slate-500"
+            @click.self="toggleFavourite"
+          >
             <Icon
               name="heroicons:star-solid"
               class="favourite_icon h-5 w-5"
@@ -207,7 +289,7 @@ const profile = (id: number) => {
             />
             <span class="font-medium text-slate-900" @click="toggleFavourite">Favorite</span>
           </button>
-        </div>
+        </span>
       </div>
     </div>
   </article>
@@ -215,10 +297,6 @@ const profile = (id: number) => {
 </template>
 
 <style lang="scss">
-.shadow-neumorphic {
-  box-shadow: 10px 10px 15px #d9d9d9, -10px -10px 15px #ffffff;
-}
-
 .animate-like {
   animation-name: favouriteAnimation;
   animation-iteration-count: 1;
