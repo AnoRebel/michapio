@@ -140,28 +140,52 @@ const profile = (id: number) => {
 <template>
   <!-- TODO: Filter NSFW content -->
   <article :aria-labelledby="`chapio-${chapio.id}`">
-    <div class="shadow-neumorphic px-4 py-2">
+    <div class="px-4 py-2">
       <div class="mb-4 flex items-center justify-between">
         <div class="flex items-center">
-          <img
-            class="h-10 w-10 rounded-full"
-            src="https://via.placeholder.com/50x50"
-            alt="user logo"
+          <nuxt-img
+            provider="dicebear"
+            class="h-10 w-10 cursor-pointer rounded-full"
+            :src="`${chapio.users.username}.svg`"
+            :alt="chapio.users.username"
+            :title="chapio.users.username"
+            crossorigin="anonymous"
+            loading="lazy"
+            @click="profile(chapio.users.id)"
           />
           <div class="pl-4">
             <h2 class="text-lg font-semibold text-gray-800">{{ chapio.users.username }}</h2>
             <p class="text-sm text-gray-600">12th July, 2021 at 8:30 AM</p>
           </div>
         </div>
+        <button
+          type="button"
+          class="group inline-flex space-x-2 text-slate-400 hover:text-slate-500"
+          title="Share"
+          @click="
+            share({
+              title: chapio.title,
+              text: chapio.body,
+              url: route.fullPath + '#' + chapio.id,
+            })
+          "
+        >
+          <Icon
+            name="heroicons:share-solid"
+            class="h-5 w-5 text-slate-400 group-hover:text-slate-800"
+            aria-hidden="true"
+          />
+          <!-- <span class="font-medium text-slate-800">Share</span> -->
+        </button>
       </div>
-      <div class="rounded-lg bg-gray-100 py-4 px-6 shadow-md">
-        <div class="flex items-center divide-y">
+      <div class="space-y-6 rounded-lg bg-gray-100 py-4 px-6 shadow-md">
+        <div class="flex items-center">
           <div>
             <span class="mb-1 font-semibold text-gray-800">They said: &nbsp;</span>
             <span class="text-sm text-gray-700">{{ chapio.chapio }}</span>
           </div>
         </div>
-        <div class="mt-8 flex items-center">
+        <div class="flex items-center">
           <div>
             <span class="mb-1 font-semibold text-gray-800">But meant: &nbsp;</span>
             <span class="text-sm text-gray-700">{{ chapio.origin }}</span>
@@ -171,41 +195,37 @@ const profile = (id: number) => {
       <div class="mt-4 flex flex-col justify-between text-center">
         <p class="text-sm text-gray-600">{{ chapio.description }}</p>
         <div class="flex w-full items-center justify-between">
-          <button class="mr-2 rounded-full bg-white p-2" @click.self="toggleLike">
+          <button
+            class="group mr-2 inline-flex justify-center rounded-full p-2"
+            title="Like"
+            @click.self="toggleLike"
+          >
+            <span class="pr-1 font-medium text-slate-800" :class="likeState" @click="toggleLike">
+              {{ likes }}
+            </span>
             <Icon
               name="heroicons:hand-thumb-up-solid"
-              class="like_icon h-5 w-5"
+              class="like_icon h-5 w-5 text-slate-400 group-hover:text-slate-800"
               :class="{ 'text-cyan-800': liked }"
               aria-hidden="true"
               @click="toggleLike"
             />
-            <span class="font-medium text-slate-900" :class="likeState" @click="toggleLike">
-              {{ likes }}
-            </span>
             <span class="sr-only">likes</span>
           </button>
           <button
-            type="button"
-            class="inline-flex space-x-2 text-slate-400 hover:text-slate-500"
-            @click="
-              share({
-                title: chapio.title,
-                text: chapio.body,
-                url: route.fullPath + '#' + chapio.id,
-              })
-            "
+            v-if="isLoggedIn()"
+            class="group rounded-full p-2"
+            title="Favourite"
+            @click="toggleFavourite"
           >
-            <Icon name="heroicons:share-solid" class="h-5 w-5" aria-hidden="true" />
-            <span class="font-medium text-slate-900">Share</span>
-          </button>
-          <button v-if="isLoggedIn()" class="rounded-full bg-white p-2" @click="toggleFavourite">
             <Icon
               name="heroicons:star-solid"
-              class="favourite_icon h-5 w-5"
+              class="favourite_icon h-5 w-5 text-slate-400 group-hover:text-slate-800"
               aria-hidden="true"
               @click="toggleFavourite"
             />
-            <span class="font-medium text-slate-900" @click="toggleFavourite">Favorite</span>
+            <!-- <span class="font-medium text-slate-900" @click="toggleFavourite">Favorite</span> -->
+            <span class="sr-only">favourite</span>
           </button>
         </div>
       </div>

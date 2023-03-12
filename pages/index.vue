@@ -97,7 +97,9 @@ const {
 } = await useAsyncData(
   "michapio",
   async () => {
-    const { data } = await client.from("michapio").select("*,users!michapio_user_id_foreign(*)");
+    const { data } = await client
+      .from("michapio")
+      .select("*,likes:likes(count),users!michapio_user_id_foreign(*)");
     return data;
   }
   // { pick: ['title', 'description'] },
@@ -138,7 +140,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div>
+  <div class="h-full">
     <NuxtLayout name="main">
       <NuxtLoadingIndicator />
       <!-- Start -->

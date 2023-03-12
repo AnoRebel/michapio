@@ -1,9 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div
-    class="relative flex h-full w-full flex-col items-center justify-center bg-slate-800 text-slate-50"
-  >
+  <div class="relative flex min-h-screen w-full flex-col items-center bg-slate-800 text-slate-50">
     <Header />
     <AddModal />
     <AuthModal />
