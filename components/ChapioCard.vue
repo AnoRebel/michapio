@@ -20,7 +20,11 @@ const sbar = reactive({
   open: false,
 });
 const likeState = ref("initial");
-const likes = ref(parseInt(props.chapio.likes || 0));
+const likes = ref(0);
+
+onMounted(() => {
+  likes.value = parseInt(props.chapio?.likes[0]?.count || 0);
+});
 
 const toggleFavourite = (event: Event) => {
   if (isLoggedIn()) {
@@ -151,7 +155,7 @@ const profile = (id: number) => {
             :title="chapio.users.username"
             crossorigin="anonymous"
             loading="lazy"
-            @click="profile(chapio.users.id)"
+            @click="profile(chapio.user_id)"
           />
           <div class="pl-4">
             <h2 class="text-lg font-semibold text-gray-800">{{ chapio.users.username }}</h2>
@@ -175,10 +179,10 @@ const profile = (id: number) => {
             class="h-5 w-5 text-slate-400 group-hover:text-slate-800"
             aria-hidden="true"
           />
-          <!-- <span class="font-medium text-slate-800">Share</span> -->
+          <span class="sr-only">Share</span>
         </button>
       </div>
-      <div class="space-y-6 rounded-lg bg-gray-100 py-4 px-6 shadow-md">
+      <div class="space-y-6 rounded-lg bg-gray-100 py-2 px-6 shadow-md">
         <div class="flex items-center">
           <div>
             <span class="mb-1 font-semibold text-gray-800">They said: &nbsp;</span>
@@ -193,11 +197,14 @@ const profile = (id: number) => {
         </div>
       </div>
       <div class="mt-4 flex flex-col justify-between text-center">
-        <p class="text-sm text-gray-600">{{ chapio.description }}</p>
+        <p class="text-sm font-semibold text-slate-800">It was like:</p>
+        <p class="rounded-lg bg-gray-100 p-2 text-sm text-gray-600 hover:shadow-md">
+          {{ chapio.description }}
+        </p>
         <div class="flex w-full items-center justify-between">
           <button
             class="group mr-2 inline-flex justify-center rounded-full p-2"
-            title="Like"
+            :title="`${likes} likes`"
             @click.self="toggleLike"
           >
             <span class="pr-1 font-medium text-slate-800" :class="likeState" @click="toggleLike">
@@ -231,7 +238,7 @@ const profile = (id: number) => {
       </div>
     </div>
   </article>
-  <Profile :user-id="chapio.users.id" :open="sbar.open" @close="sbar.open = false" />
+  <Profile :user-id="chapio.user_id" :open="sbar.open" @close="sbar.open = false" />
 </template>
 
 <style lang="scss">

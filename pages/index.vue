@@ -12,20 +12,21 @@ const chapios = ref([
     chapio: "tets",
     origin: "test",
     views: 0,
-    description: null,
+    description: "Lorem ipsum dolor sit amet, qui labore adipisicing minim sint cillum sint consectetur cupidatat.",
     deleted: false,
     user_id: "0fe3b371-ddf7-4e28-b034-d11e074208e7",
     created_at: "2023-03-02T15:14:31.197276+00:00",
     updated_at: "2023-03-02T15:14:31.197276+00:00",
     fts: null,
+    likes: [{ count: 0 }],
     users: {
-      id: "0fe3b371-ddf7-4e28-b034-d11e074208e7",
+      // id: "0fe3b371-ddf7-4e28-b034-d11e074208e7",
       username: "AnoRebel",
       email: "hacker4rebel@gmail.com",
-      password: "$2a$10$UuBccsbg0XDnwYAaP7SISuadTd9LM7X9CWSyFlTUbptz3ajBXFwhy",
-      deleted: false,
-      created_at: "2023-03-02T15:12:00.886528+00:00",
-      updated_at: "2023-03-02T15:12:00.886528+00:00",
+      // password: "$2a$10$UuBccsbg0XDnwYAaP7SISuadTd9LM7X9CWSyFlTUbptz3ajBXFwhy",
+      // deleted: false,
+      // created_at: "2023-03-02T15:12:00.886528+00:00",
+      // updated_at: "2023-03-02T15:12:00.886528+00:00",
     },
   },
 ]);
@@ -99,7 +100,7 @@ const {
   async () => {
     const { data } = await client
       .from("michapio")
-      .select("*,likes:likes(count),users!michapio_user_id_foreign(*)");
+      .select("*,likes(count),users!michapio_user_id_foreign(username, email)");
     return data;
   }
   // { pick: ['title', 'description'] },
@@ -144,7 +145,7 @@ onUnmounted(() => {
     <NuxtLayout name="main">
       <NuxtLoadingIndicator />
       <!-- Start -->
-      <div class="w-full px-4 sm:px-0">
+      <div class="w-full h-full px-4 sm:px-0">
         <div class="rounded-xl bg-slate-800 px-3 focus:outline-none">
           <PullRefresh v-model="loading" @refresh="onRefresh">
             <ul v-auto-animate role="list" class="space-y-4">
