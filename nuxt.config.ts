@@ -143,6 +143,9 @@ export default defineNuxtConfig({
     server: fileURLToPath(new URL("./server", import.meta.url)),
     models: fileURLToPath(new URL("./server/models", import.meta.url)),
   },
+  experimental: {
+    componentIslands: true,
+  },
   typescript: {
     shim: false,
     strict: false,
