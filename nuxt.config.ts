@@ -63,20 +63,20 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@vueuse/nuxt",
     "nuxt-turnstile",
-    "@nuxtjs/eslint-module",
+    ["@nuxtjs/eslint-module", { lintOnStart: false }],
     "@nuxtjs/supabase",
     "nuxt-security",
   ],
   build: {
-    extractCSS: true,
-    postcss: {
-      postcssOptions: {
-        plugins: {
-          tailwindcss: {},
-          autoprefixer: {},
-        },
-      },
-    },
+    // extractCSS: true,
+    // postcss: {
+    //   postcssOptions: {
+    //     plugins: {
+    //       tailwindcss: {},
+    //       autoprefixer: {},
+    //     },
+    //   },
+    // },
     transpile: ["@heroicons/vue"],
   },
   css: ["animate.css/animate.min.css", "v3-infinite-loading/lib/style.css", "@/assets/main.scss"],
@@ -97,9 +97,9 @@ export default defineNuxtConfig({
   tailwindcss: {
     cssPath: "~/assets/main.scss",
   },
-  vueuse: {
-    ssrHandlers: true,
-  },
+  // vueuse: {
+  //   ssrHandlers: true,
+  // },
   image: {
     domains: ["dicebear.com", "avatar.dicebear.com"],
     providers: {
@@ -131,12 +131,6 @@ export default defineNuxtConfig({
     turnstile: {
       secretKey: process.env.NUXT_TURNSTILE_SECRET_KEY || "",
     },
-    DATABASE_NAME: process.env.NUXT_DATABASE_NAME,
-    DATABASE_USER: process.env.NUXT_DATABASE_USER,
-    DATABASE_PASS: process.env.NUXT_DATABASE_PASS,
-    DATABASE_HOST: process.env.NUXT_DATABASE_HOST,
-    DATABASE_PORT: process.env.NUXT_DATABASE_PORT,
-    DATABASE_URL: process.env.NUXT_DATABASE_URL,
     JWT_SECRET: process.env.NUXT_JWT_SECRET,
   },
   alias: {

@@ -12,7 +12,8 @@ const chapios = ref([
     chapio: "tets",
     origin: "test",
     views: 0,
-    description: "Lorem ipsum dolor sit amet, qui labore adipisicing minim sint cillum sint consectetur cupidatat.",
+    description:
+      "Lorem ipsum dolor sit amet, qui labore adipisicing minim sint cillum sint consectetur cupidatat.",
     deleted: false,
     user_id: "0fe3b371-ddf7-4e28-b034-d11e074208e7",
     created_at: "2023-03-02T15:14:31.197276+00:00",
@@ -145,7 +146,7 @@ onUnmounted(() => {
     <NuxtLayout name="main">
       <NuxtLoadingIndicator />
       <!-- Start -->
-      <div class="w-full h-full px-4 sm:px-0">
+      <div class="h-full w-full px-4 sm:px-0">
         <div class="rounded-xl bg-slate-800 px-3 focus:outline-none">
           <PullRefresh v-model="loading" @refresh="onRefresh">
             <ul v-auto-animate role="list" class="space-y-4">

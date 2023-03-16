@@ -1,21 +1,22 @@
-import { User } from "models";
+import { serverSupabaseClient } from "#supabase/server";
 import { errorHandler } from "server/utils";
 
 export default defineEventHandler(async event => {
+  const client = serverSupabaseClient(event);
   const { field, value } = getQuery(event);
   try {
     switch (field) {
       case "username": {
-        const name = await User.query().findOne(field, value);
-        if (!name) {
+        const { data } = await client.from("users").select("username").eq(field, value).single();
+        if (!data.username) {
           return false;
         }
         return true;
         // break;
       }
       case "email": {
-        const email = await User.query().findOne(field, value);
-        if (!email) {
+        const { data } = await client.from("users").select("email").eq(field, value).single();
+        if (!data.email) {
           return false;
         }
         return true;
@@ -26,6 +27,6 @@ export default defineEventHandler(async event => {
       // break;
     }
   } catch (err) {
-    errorHandler(err, event.res);
+    errorHandler(err, event.node.res);
   }
 });

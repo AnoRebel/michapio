@@ -1,26 +1,26 @@
 <template>
   <div class="h-screen w-screen bg-slate-800">
-    <div class="h-full w-full flex flex-col justify-around items-center">
-      <div class="text-center my-5 px-4">
+    <div class="flex h-full w-full flex-col items-center justify-around">
+      <div class="my-5 px-4 text-center">
         <img
           src="/images/404.svg"
-          class="animate__animated animate__fadeInDown object-cover rounded h-full w-full my-7"
+          class="animate__animated animate__fadeInDown my-7 h-full w-full rounded object-cover"
         />
         <p class="animate__animated animate__fadeInUp mt-6 mb-10 text-white">
           It seems
-          <code class="rounded font-bold border-1px p-0.5 bg-slate-300 text-slate-900">{{
+          <code class="border-1px rounded bg-slate-300 p-0.5 font-bold text-slate-900">{{
             slugs($route.params.slug)
           }}</code>
           doesn't exist; <i class="italic">yet?</i>
         </p>
         <NuxtLink
           to="/"
-          class="animate__animated animate__fadeIn m-6 px-4 py-2 rounded bg-cyan-600 text-slate-100 my-5 transition transform hover:scale-110 active:scale-95"
+          class="animate__animated animate__fadeIn m-6 my-5 transform rounded bg-cyan-600 px-4 py-2 text-slate-100 transition hover:scale-110 active:scale-95"
         >
           Home
         </NuxtLink>
       </div>
-      <div class="text-center text-slate-100 my-5">
+      <div class="my-5 text-center text-slate-100">
         <p>
           <small>&copy; Reserverd Rights</small>
         </p>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative min-h-screen min-w-screen flex justify-center items-center bg-slate-900 font-sans"
+    class="min-w-screen relative flex min-h-screen items-center justify-center bg-slate-900 font-sans"
   >
     <div class="animate__animated animate__zoomIn container mx-auto py-10 px-4">
       <h1>{{ error.message }}</h1>

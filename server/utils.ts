@@ -1,5 +1,7 @@
 import * as argon2 from "argon2";
 import obj from "objection";
+import * as jwt from "jsonwebtoken";
+import { IncomingMessage, ServerResponse } from "h3";
 const {
   ValidationError,
   NotFoundError,
@@ -11,8 +13,6 @@ const {
   CheckViolationError,
   DataError,
 } = obj;
-import * as jwt from "jsonwebtoken";
-import { IncomingMessage, ServerResponse } from "h3";
 
 const hashPass = async (pass: string): Promise<string> => {
   try {

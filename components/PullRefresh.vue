@@ -1,5 +1,5 @@
 <template>
-  <div class="pull-refresh" ref="root">
+  <div ref="root" class="pull-refresh">
     <div
       class="pull-refresh__track"
       :style="trackStyle"
@@ -77,7 +77,7 @@ let reachTop = false;
 const TEXT_STATUS = ["pulling", "loosing", "success"];
 
 const root = ref(null);
-let scrollParent = useScrollParent(root);
+const scrollParent = useScrollParent(root);
 
 const state = reactive({
   status: "normal",

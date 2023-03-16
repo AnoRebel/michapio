@@ -19,29 +19,29 @@ const open = ref(false);
 .fab {
   @apply relative;
   &-content {
-    @apply flex items-center justify-center w-10 h-10 text-xl rounded-full bg-slate-700 text-slate-200;
+    @apply flex h-10 w-10 items-center justify-center rounded-full bg-slate-700 text-xl text-slate-200;
   }
   &-item {
     @apply absolute top-[20%] left-[20%] z-[-1];
     .item {
-      @apply absolute flex items-center justify-center text-lg w-8 h-8 opacity-0 rounded-full text-slate-200;
+      @apply absolute flex h-8 w-8 items-center justify-center rounded-full text-lg text-slate-200 opacity-0;
     }
   }
   &.active {
     .fab-content {
-      @apply transition transform duration-500 ease-in-out rotate-45;
+      @apply rotate-45 transform transition duration-500 ease-in-out;
     }
   }
   &.active {
     .item {
       &:nth-child(1) {
-        @apply transform transition duration-500 ease-in-out delay-300 translate-y-[70px] bg-green-500 opacity-100;
+        @apply translate-y-[70px] transform bg-green-500 opacity-100 transition delay-300 duration-500 ease-in-out;
       }
       &:nth-child(2) {
-        @apply transform transition duration-500 ease-in-out delay-500 translate-x-[-65px] bg-yellow-500 translate-y-[35px] opacity-100;
+        @apply translate-x-[-65px] translate-y-[35px] transform bg-yellow-500 opacity-100 transition delay-500 duration-500 ease-in-out;
       }
       &:nth-child(3) {
-        @apply transform transition duration-500 ease-in-out delay-700 translate-x-[-65px] bg-purple-500 translate-y-[-35px] opacity-100;
+        @apply translate-x-[-65px] translate-y-[-35px] transform bg-purple-500 opacity-100 transition delay-700 duration-500 ease-in-out;
       }
     }
   }

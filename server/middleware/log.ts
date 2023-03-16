@@ -1,5 +1,7 @@
 export default defineEventHandler(event => {
   console.info(
-    `[${new Date().toLocaleTimeString()}] - Request: ${event.req.url}, Method: ${event.req.method}`
+    `[${new Date().toLocaleTimeString()}] - Request: ${event.node.req.url}, Method: ${
+      event.node.req.method
+    }`
   );
 });
