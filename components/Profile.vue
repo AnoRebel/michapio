@@ -11,6 +11,7 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import InfiniteLoading from "v3-infinite-loading";
+import { Database } from "@/types/supabase.d";
 import { useModals } from "@/stores/modals";
 
 const props = defineProps({
@@ -25,7 +26,7 @@ const props = defineProps({
 });
 defineEmits(["close"]);
 
-const client = useSupabaseClient();
+const client = useSupabaseClient<Database>();
 const { setAuthState } = useModals();
 const { isLoggedIn } = useAuth();
 const notify = useNotify();

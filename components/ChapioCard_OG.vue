@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import { Database } from "@/types/supabase.d";
 import { useModals } from "@/stores/modals";
 
 const props = defineProps({
@@ -11,7 +12,7 @@ const props = defineProps({
 
 const route = useRoute();
 const router = useRouter();
-const client = useSupabaseClient();
+const client = useSupabaseClient<Database>();
 const { isLoggedIn } = useAuth();
 const { setAuthState } = useModals();
 const notify = useNotify();

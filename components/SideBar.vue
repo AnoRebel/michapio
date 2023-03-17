@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// import { Database } from "@/types/supabase.d";
 // import type { RealtimeChannel } from "@supabase/supabase-js";
 
 const whoToFollow = [
@@ -25,7 +26,7 @@ const trendingPosts = [
 
 // const router = useRouter();
 // router.replace({ hash: "#1234" });
-// const client = useSupabaseClient();
+// const client = useSupabaseClient<Database>();
 // let trendingChannel: RealtimeChannel;
 //
 // const { data: trending, refresh: refreshTrending } = await useAsyncData("trending", async () => {

@@ -1,6 +1,6 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
 import { useModals } from "@/stores/modals";
-// import { useAuth } from "@/stores/auth";
+import { Database } from "@/types/supabase.d";
 
 export const useForms = defineStore("forms", {
   state: () => ({
@@ -9,7 +9,7 @@ export const useForms = defineStore("forms", {
   actions: {
     async submitForm(form: String, data: Object) {
       const auth = useAuth();
-      const client = useSupabaseClient();
+      const client = useSupabaseClient<Database>();
       const modals = useModals();
       const notify = useNotify();
       switch (form) {

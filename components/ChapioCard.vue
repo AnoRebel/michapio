@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import { Database } from "@/types/supabase.d";
 import { useModals } from "@/stores/modals";
 
 const props = defineProps({
@@ -11,7 +12,8 @@ const props = defineProps({
 
 const route = useRoute();
 const router = useRouter();
-const client = useSupabaseClient();
+const client = useSupabaseClient<Database>();
+const user = useSupabaseUser();
 const { isLoggedIn } = useAuth();
 const { setAuthState } = useModals();
 const notify = useNotify();
@@ -49,16 +51,34 @@ const toggleFavourite = (event: Event) => {
 };
 
 const liked = ref(false);
-const toggleLike = () => {
+const toggleLike = id => {
   if (isLoggedIn()) {
     // 1. Old number goes up
     setTimeout(() => (likeState.value = liked.value ? "waitDown" : "goUp"), 0);
     // setTimeout(() => (likeState.value = "goUp"), 0);
     // 2. Incrementing the counter
-    setTimeout(
-      () => (liked.value ? (likes.value = likes.value + 1) : (likes.value = likes.value - 1)),
-      100
-    );
+
+    setTimeout(() => {
+      if (liked.value) {
+        client
+          .from("likes")
+          .insert({ user_id: user.value.id, chapio_id: id, status: true }, { upsert: true })
+          .then(({ _, error }) => {
+            if (!error) {
+              likes.value = likes.value + 1;
+            }
+          });
+      } else {
+        client
+          .from("likes")
+          .insert({ user_id: user.value.id, chapio_id: id, status: false }, { upsert: true })
+          .then(({ _, error }) => {
+            if (!error) {
+              likes.value = likes.value - 1;
+            }
+          });
+      }
+    }, 100);
     // 3. New number waits down
     // setTimeout(() => (likeState.value = "waitDown"), 100);
     setTimeout(() => (likeState.value = liked.value ? "goUp" : "waitDown"), 100);
@@ -70,7 +90,7 @@ const toggleLike = () => {
   }
 };
 
-const share = async data => {
+const share = async (data: Object) => {
   if (navigator.canShare && navigator.canShare(data)) {
     navigator
       .share(data)
@@ -205,9 +225,13 @@ const profile = (id: number) => {
           <button
             class="group mr-2 inline-flex justify-center rounded-full p-2"
             :title="`${likes} likes`"
-            @click.self="toggleLike"
+            @click.self="toggleLike(chapio.id)"
           >
-            <span class="pr-1 font-medium text-slate-800" :class="likeState" @click="toggleLike">
+            <span
+              class="pr-1 font-medium text-slate-800"
+              :class="likeState"
+              @click="toggleLike(chapio.id)"
+            >
               {{ likes }}
             </span>
             <Icon
@@ -215,9 +239,9 @@ const profile = (id: number) => {
               class="like_icon h-5 w-5 text-slate-400 group-hover:text-slate-800"
               :class="{ 'text-cyan-800': liked }"
               aria-hidden="true"
-              @click="toggleLike"
+              @click="toggleLike(chapio.id)"
             />
-            <span class="sr-only">likes</span>
+            <span class="sr-only">{{ likes }} likes</span>
           </button>
           <button
             v-if="isLoggedIn()"

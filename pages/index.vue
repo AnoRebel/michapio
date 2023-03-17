@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import InfiniteLoading from "v3-infinite-loading";
 import type { RealtimeChannel } from "@supabase/supabase-js";
+import { Database } from "@/types/supabase.d";
 
 definePageMeta({
   layout: false,
@@ -34,7 +35,7 @@ const chapios = ref([
 
 const route = useRoute();
 const loading = ref(false);
-const client = useSupabaseClient();
+const client = useSupabaseClient<Database>();
 let realtimeChannel: RealtimeChannel;
 const notify = useNotify();
 
