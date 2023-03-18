@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+// import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import type { RealtimeChannel } from "@supabase/supabase-js";
 import { Database } from "@/types/supabase.d";
 import { useModals } from "@/stores/modals";
 
@@ -10,6 +11,7 @@ const props = defineProps({
   },
 });
 
+let realtimeChannel: RealtimeChannel;
 const route = useRoute();
 const router = useRouter();
 const client = useSupabaseClient<Database>();
@@ -21,15 +23,51 @@ const sbar = reactive({
   user_id: 0,
   open: false,
 });
-const likeState = ref("initial");
-const likes = ref(0);
-
-onMounted(() => {
-  likes.value = parseInt(props.chapio?.likes[0]?.count || 0);
+const faved = ref(false);
+const likes = reactive({
+  count: 0,
+  state: "initial",
+  active: false,
 });
 
-const toggleFavourite = (event: Event) => {
+// Fetch likes and get the refresh method provided by useAsyncData
+const { data: _likes, refresh: refreshLikes } = await useAsyncData("likes", async () => {
+  const { count } = await client
+    .from("likes")
+    .select("*", { count: "exact", head: true })
+    .eq("chapio_id", props.chapio.id)
+    .eq("status", true);
+  return count;
+});
+
+onMounted(() => {
+  // Real time listener for new likes
+  realtimeChannel = client
+    .channel("public:likes")
+    .on("postgres_changes", { event: "*", schema: "public", table: "likes" }, () => refreshLikes());
+  realtimeChannel.subscribe();
+  likes.count = parseInt(_likes.value || props.chapio?.likes[0]?.count || 0);
+});
+
+const toggleFavourite = async (event: Event, id: string) => {
   if (isLoggedIn()) {
+    if (faved.value) {
+      try {
+        await client
+          .from("favourites")
+          .upsert({ user_id: user.value.id, chapio_id: id, status: false });
+      } catch (error) {
+        return;
+      }
+    } else {
+      try {
+        await client
+          .from("favourites")
+          .upsert({ user_id: user.value.id, chapio_id: id, status: true });
+      } catch (error) {
+        return;
+      }
+    }
     if (event.target?.classList?.contains("favourite_icon")) {
       event.target.classList.toggle("animate-favourite");
     }
@@ -45,46 +83,36 @@ const toggleFavourite = (event: Event) => {
     if (event.target.parentElement?.classList?.contains("favourite_icon")) {
       event.target.parentElement.classList.toggle("animate-favourite");
     }
+    faved.value = !faved.value;
   } else {
     setAuthState(true, "login");
   }
 };
 
-const liked = ref(false);
-const toggleLike = id => {
+const toggleLike = async (id: string) => {
   if (isLoggedIn()) {
-    // 1. Old number goes up
-    setTimeout(() => (likeState.value = liked.value ? "waitDown" : "goUp"), 0);
-    // setTimeout(() => (likeState.value = "goUp"), 0);
-    // 2. Incrementing the counter
-
-    setTimeout(() => {
-      if (liked.value) {
-        client
-          .from("likes")
-          .insert({ user_id: user.value.id, chapio_id: id, status: true }, { upsert: true })
-          .then(({ _, error }) => {
-            if (!error) {
-              likes.value = likes.value + 1;
-            }
-          });
-      } else {
-        client
-          .from("likes")
-          .insert({ user_id: user.value.id, chapio_id: id, status: false }, { upsert: true })
-          .then(({ _, error }) => {
-            if (!error) {
-              likes.value = likes.value - 1;
-            }
-          });
+    if (likes.active) {
+      try {
+        await client.from("likes").upsert({ user_id: user.value.id, chapio_id: id, status: false });
+      } catch (error) {
+        return;
       }
-    }, 100);
+    } else {
+      try {
+        await client.from("likes").upsert({ user_id: user.value.id, chapio_id: id, status: true });
+      } catch (error) {
+        return;
+      }
+    }
+    // 1. Old number goes up
+    setTimeout(() => (likes.state = likes.active ? "waitDown" : "goUp"), 0);
+    // 2. Incrementing the counter
+    setTimeout(() => (likes.count = _likes.value), 100);
     // 3. New number waits down
-    // setTimeout(() => (likeState.value = "waitDown"), 100);
-    setTimeout(() => (likeState.value = liked.value ? "goUp" : "waitDown"), 100);
+    setTimeout(() => (likes.state = likes.active ? "goUp" : "waitDown"), 100);
     // 4. New number stays in the middle
-    setTimeout(() => (likeState.value = "initial"), 200);
-    liked.value = !liked.value;
+    setTimeout(() => (likes.state = "initial"), 200);
+    likes.active = !likes.active;
   } else {
     setAuthState(true, "login");
   }
@@ -159,6 +187,11 @@ const profile = (id: number) => {
   sbar.user_id = id;
   sbar.open = true;
 };
+
+// Don't forget to unsubscribe when user left the page
+onUnmounted(() => {
+  client.removeChannel(realtimeChannel);
+});
 </script>
 
 <template>
@@ -224,36 +257,36 @@ const profile = (id: number) => {
         <div class="flex w-full items-center justify-between">
           <button
             class="group mr-2 inline-flex justify-center rounded-full p-2"
-            :title="`${likes} likes`"
+            :title="`${likes.count} likes`"
             @click.self="toggleLike(chapio.id)"
           >
             <span
               class="pr-1 font-medium text-slate-800"
-              :class="likeState"
+              :class="likes.state"
               @click="toggleLike(chapio.id)"
             >
-              {{ likes }}
+              {{ likes.count }}
             </span>
             <Icon
               name="heroicons:hand-thumb-up-solid"
               class="like_icon h-5 w-5 text-slate-400 group-hover:text-slate-800"
-              :class="{ 'text-cyan-800': liked }"
+              :class="{ 'text-cyan-800': likes.active }"
               aria-hidden="true"
               @click="toggleLike(chapio.id)"
             />
-            <span class="sr-only">{{ likes }} likes</span>
+            <span class="sr-only">{{ likes.count }} likes</span>
           </button>
           <button
             v-if="isLoggedIn()"
             class="group rounded-full p-2"
             title="Favourite"
-            @click="toggleFavourite"
+            @click="toggleFavourite($event, chapio.id)"
           >
             <Icon
               name="heroicons:star-solid"
               class="favourite_icon h-5 w-5 text-slate-400 group-hover:text-slate-800"
               aria-hidden="true"
-              @click="toggleFavourite"
+              @click="toggleFavourite($event, chapio.id)"
             />
             <!-- <span class="font-medium text-slate-900" @click="toggleFavourite">Favorite</span> -->
             <span class="sr-only">favourite</span>

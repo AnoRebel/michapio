@@ -110,7 +110,7 @@ const {
 
 // Once page is mounted, listen to changes on the `collaborators` table and refresh collaborators when receiving event
 onMounted(() => {
-  // Real time listener for new workouts
+  // Real time listener for new michapio
   realtimeChannel = client
     .channel("public:michapio")
     .on("postgres_changes", { event: "*", schema: "public", table: "michapio" }, () =>

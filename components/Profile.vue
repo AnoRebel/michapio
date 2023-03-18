@@ -55,7 +55,7 @@ const tabs = ref([
   { name: "Favourites", href: "#", current: false, show: isLoggedIn() },
 ]);
 const tabClass = computed(() =>
-  tabs.value.filter(tabC => tabC.show == true).length == 1 ? "w-full" : `w-1/${tabs.value.length}`
+  tabs.value.filter(tabC => tabC.show === true).length == 1 ? "w-full" : `w-1/${tabs.value.length}`
 );
 const team = [
   {
