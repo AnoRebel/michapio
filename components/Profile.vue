@@ -35,11 +35,20 @@ const res = reactive({
   error: {},
   loading: false,
 });
+const info = reactive({
+  active: "",
+  data: [],
+  loading: false,
+  error: {},
+  from: 0,
+  to: 10,
+  refresh: () => {},
+});
 
 onBeforeMount(async () => {
   // Get user from key from prop
   const { pending, data, error } = await useAsyncData("user", async () => {
-    const { data } = await client.from("users").select("*").eq("id", props.userId);
+    const { data } = await client.from("users").select("*").eq("id", props.userId).single();
     return data;
   });
   res.user = data;
@@ -50,9 +59,9 @@ onBeforeMount(async () => {
 const loading = ref(false);
 const logged = ref(false);
 const tabs = computed(() => [
-  { name: "Michapio", href: "#", current: true, show: true },
-  { name: "Likes", href: "#", current: false, show: isLoggedIn() },
-  { name: "Favourites", href: "#", current: false, show: isLoggedIn() },
+  { name: "Michapio", href: "#", show: true },
+  { name: "Likes", href: "#", show: isLoggedIn() },
+  { name: "Favourites", href: "#", show: isLoggedIn() },
 ]);
 const tabClass = computed(() =>
   tabs.value.filter(tabC => tabC.show === true).length === 1 ? "w-full" : `w-1/${tabs.value.length}`
@@ -78,31 +87,15 @@ const {
 } = await useAsyncData(
   "michapio",
   async () => {
-    const { data } = await client.from("michapio").select("*").eq("id", props.userId);
+    const { data } = await client
+      .from("michapio")
+      .select("*")
+      .eq("id", props.userId)
+      .range(info.from, info.to);
     return data;
   }
   // { pick: ['title', 'description'] },
 );
-
-// Fetch favourites and get the refresh method provided by useAsyncData
-// const { pending: pendingFavs, data: favourites, refresh: refreshFavourites, error: favError } = await useAsyncData(
-//   "favourites",
-//   async () => {
-//     const { data } = await client.from("favourites").select("*").eq("id", props.user.id);
-//     return data;
-//   },
-//  // { pick: ['title', 'description'] },
-// );
-
-// Fetch likes and get the refresh method provided by useAsyncData
-// const { pending: pendingLikes, data: likes, refresh: refreshLikes, error: likesError } = await useAsyncData(
-//   "likes",
-//   async () => {
-//     const { data } = await client.from("likes").select("*").eq("id", props.user.id);
-//     return data;
-//   },
-//  // { pick: ['title', 'description'] },
-// );
 
 const onRefresh = () => {
   notify(
@@ -153,6 +146,88 @@ const load = async $state => {
     $state.complete();
   } catch (error) {
     $state.error();
+  }
+};
+
+const switchTab = async (tab: { name: string; href: string; show: boolean }) => {
+  info.active = tab.name;
+  info.from = 0;
+  info.to = 10;
+  switch (tab.name) {
+    case "Favourites": {
+      // Fetch favourites and get the refresh method provided by useAsyncData
+      const {
+        pending: _pending,
+        data: _data,
+        refresh: _refresh,
+        error: _error,
+      } = await useAsyncData(
+        "favourites",
+        async () => {
+          const { data } = await client
+            .from("favourites")
+            .select("*")
+            .eq("id", props.userId)
+            .range(info.from, info.to);
+          return data;
+        }
+        // { pick: ['title', 'description'] },
+      );
+      info.loading = _pending;
+      info.data = _data;
+      info.refresh = _refresh;
+      info.error = _error;
+      break;
+    }
+    case "Likes": {
+      // Fetch likes and get the refresh method provided by useAsyncData
+      const {
+        pending: _pending,
+        data: _data,
+        refresh: _refresh,
+        error: _error,
+      } = await useAsyncData(
+        "likes",
+        async () => {
+          const { data } = await client
+            .from("likes")
+            .select("*")
+            .eq("id", props.userId)
+            .range(info.from, info.to);
+          return data;
+        }
+        // { pick: ['title', 'description'] },
+      );
+      info.loading = _pending;
+      info.data = _data;
+      info.refresh = _refresh;
+      info.error = _error;
+      break;
+    }
+    default: {
+      // Fetch michapio and get the refresh method provided by useAsyncData
+      const {
+        pending: _pending,
+        data: _data,
+        refresh: _refresh,
+        error: _error,
+      } = await useAsyncData(
+        "michapio",
+        async () => {
+          const { data } = await client
+            .from("michapio")
+            .select("*")
+            .eq("id", props.userId)
+            .range(info.from, info.to);
+          return data;
+        }
+        // { pick: ['title', 'description'] },
+      );
+      info.loading = _pending;
+      info.data = _data;
+      info.refresh = _refresh;
+      info.error = _error;
+    }
   }
 };
 </script>
@@ -251,11 +326,12 @@ const load = async $state => {
                               :key="tab.name"
                               :to="tab.href"
                               :class="[
-                                tab.current
+                                info.active == tab.name
                                   ? 'border-indigo-500 text-indigo-600'
                                   : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
                                 `whitespace-nowrap border-b-2 px-1 pb-4 text-center text-sm font-medium ${tabClass}`,
                               ]"
+                              @click="switchTab(tab)"
                             >
                               {{ tab.name }}
                             </NuxtLink>

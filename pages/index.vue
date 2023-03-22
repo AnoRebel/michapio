@@ -37,6 +37,10 @@ const route = useRoute();
 const loading = ref(false);
 const client = useSupabaseClient<Database>();
 let realtimeChannel: RealtimeChannel;
+const count = reactive({
+  from: 0,
+  to: 10,
+});
 const notify = useNotify();
 
 const onRefresh = () => {
@@ -97,16 +101,13 @@ const {
   data: michapio,
   refresh: refreshMichapio,
   error,
-} = await useAsyncData(
-  "michapio",
-  async () => {
-    const { data } = await client
-      .from("michapio")
-      .select("*,likes(count),users!michapio_user_id_foreign(username, email)");
-    return data;
-  }
-  // { pick: ['title', 'description'] },
-);
+} = await useAsyncData("michapio", async () => {
+  const { data } = await client
+    .from("michapio")
+    .select("*,likes(count),users!michapio_user_id_foreign(username, email)")
+    .range(count.from, count.to);
+  return data;
+});
 
 // Once page is mounted, listen to changes on the `collaborators` table and refresh collaborators when receiving event
 onMounted(() => {
@@ -126,7 +127,7 @@ const selected = reactive({
 watch(
   route,
   () => {
-    if (route.hash != "") {
+    if (route.hash !== "") {
       selected.chapio = route.hash;
       selected.show = true;
     }

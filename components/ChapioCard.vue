@@ -118,7 +118,7 @@ const toggleLike = async (id: string) => {
   }
 };
 
-const share = async (data: Object) => {
+const share = async (data: { title: string; text: string; url: string }) => {
   if (navigator.canShare && navigator.canShare(data)) {
     navigator
       .share(data)
