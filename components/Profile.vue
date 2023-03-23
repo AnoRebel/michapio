@@ -40,6 +40,7 @@ const info = reactive({
   data: [],
   loading: false,
   error: {},
+  count: 0,
   from: 0,
   to: 10,
   refresh: () => {},
@@ -53,7 +54,7 @@ onBeforeMount(async () => {
   });
   res.user = data;
   res.error = error;
-  res.loading = pending.value;
+  res.loading = pending;
 });
 
 const loading = ref(false);
@@ -82,7 +83,7 @@ onMounted(async () => {
   info.active = "Michapio";
   info.from = 0;
   info.to = 10;
-  // info.data = [];
+  info.data = [];
   // Fetch michapio and get the refresh method provided by useAsyncData
   await loadData();
 });
@@ -98,6 +99,8 @@ const onRefresh = () => {
     2500
   );
   try {
+    info.from = 0;
+    info.to = 10;
     info.refresh();
   } catch (error) {
     notify(
@@ -163,7 +166,7 @@ const loadData = async (tab = "Michapio") => {
         }
         // { pick: ['title', 'description'] },
       );
-      info.loading = _pending.value;
+      info.loading = _pending;
       // info.data = _data;
       info.data.push(..._data.value);
       info.refresh = _refresh;
@@ -189,7 +192,7 @@ const loadData = async (tab = "Michapio") => {
         }
         // { pick: ['title', 'description'] },
       );
-      info.loading = _pending.value;
+      info.loading = _pending;
       info.data.push(..._data.value);
       info.refresh = _refresh;
       info.error = _error;
@@ -205,17 +208,18 @@ const loadData = async (tab = "Michapio") => {
       } = await useAsyncData(
         "michapio",
         async () => {
-          const { data } = await client
+          const { count, data } = await client
             .from("michapio")
-            .select("*")
+            .select("*", { count: "exact", head: true })
             .eq("id", props.userId)
             .range(info.from, info.to);
-          return data;
+          return { count, data };
         }
         // { pick: ['title', 'description'] },
       );
-      info.loading = _pending.value;
-      info.data.push(..._data.value);
+      info.count = _data.value.count;
+      info.loading = _pending;
+      info.data.push(..._data.value.data);
       info.refresh = _refresh;
       info.error = _error;
     }
@@ -274,8 +278,8 @@ const switchTab = async (tab: { name: string; href: string; show: boolean }) => 
                           <nuxt-img
                             provider="dicebear"
                             class="absolute h-full w-full rounded-full object-contain"
-                            :src="`${res.user.user_metadata.username}.svg`"
-                            :alt="res.user.user_metadata.username"
+                            :src="`${res.user.username}.svg`"
+                            :alt="res.user.username"
                             crossorigin="anonymous"
                             loading="lazy"
                           />
@@ -285,7 +289,7 @@ const switchTab = async (tab: { name: string; href: string; show: boolean }) => 
                             <div>
                               <div class="flex items-center">
                                 <h3 class="text-xl font-bold text-gray-900 sm:text-2xl">
-                                  {{ res.user.user_metadata.username }}
+                                  {{ res.user.username }}
                                 </h3>
                                 <span
                                   class="ml-2.5 inline-block h-2 w-2 flex-shrink-0 rounded-full bg-green-400"
@@ -293,7 +297,7 @@ const switchTab = async (tab: { name: string; href: string; show: boolean }) => 
                                   <span class="sr-only">Online</span>
                                 </span>
                               </div>
-                              <p class="text-sm text-gray-500">count</p>
+                              <p class="text-sm text-gray-500">{{ info.count }}</p>
                             </div>
                             <div class="mt-5 flex flex-wrap space-y-3 sm:space-y-0 sm:space-x-3">
                               <button

@@ -7,40 +7,43 @@ definePageMeta({
   layout: false,
 });
 
-const chapios = ref([
-  {
-    id: "f42cd306-5d2c-4cfa-9065-010a8881666c",
-    chapio: "tets",
-    origin: "test",
-    views: 0,
-    description:
-      "Lorem ipsum dolor sit amet, qui labore adipisicing minim sint cillum sint consectetur cupidatat.",
-    deleted: false,
-    user_id: "0fe3b371-ddf7-4e28-b034-d11e074208e7",
-    created_at: "2023-03-02T15:14:31.197276+00:00",
-    updated_at: "2023-03-02T15:14:31.197276+00:00",
-    fts: null,
-    likes: [{ count: 0 }],
-    users: {
-      // id: "0fe3b371-ddf7-4e28-b034-d11e074208e7",
-      username: "AnoRebel",
-      email: "hacker4rebel@gmail.com",
-      // password: "$2a$10$UuBccsbg0XDnwYAaP7SISuadTd9LM7X9CWSyFlTUbptz3ajBXFwhy",
-      // deleted: false,
-      // created_at: "2023-03-02T15:12:00.886528+00:00",
-      // updated_at: "2023-03-02T15:12:00.886528+00:00",
+const chapios = reactive({
+  data: [
+    {
+      id: "f42cd306-5d2c-4cfa-9065-010a8881666c",
+      chapio: "tets",
+      origin: "test",
+      views: 0,
+      description:
+        "Lorem ipsum dolor sit amet, qui labore adipisicing minim sint cillum sint consectetur cupidatat.",
+      deleted: false,
+      user_id: "0fe3b371-ddf7-4e28-b034-d11e074208e7",
+      created_at: "2023-03-02T15:14:31.197276+00:00",
+      updated_at: "2023-03-02T15:14:31.197276+00:00",
+      fts: null,
+      likes: [{ count: 0 }],
+      users: {
+        // id: "0fe3b371-ddf7-4e28-b034-d11e074208e7",
+        username: "AnoRebel",
+        email: "hacker4rebel@gmail.com",
+        // password: "$2a$10$UuBccsbg0XDnwYAaP7SISuadTd9LM7X9CWSyFlTUbptz3ajBXFwhy",
+        // deleted: false,
+        // created_at: "2023-03-02T15:12:00.886528+00:00",
+        // updated_at: "2023-03-02T15:12:00.886528+00:00",
+      },
     },
-  },
-]);
+  ],
+  from: 0,
+  to: 10,
+  loading: false,
+  refresh: () => {},
+  error: {},
+});
 
 const route = useRoute();
 const loading = ref(false);
 const client = useSupabaseClient<Database>();
 let realtimeChannel: RealtimeChannel;
-const count = reactive({
-  from: 0,
-  to: 10,
-});
 const notify = useNotify();
 
 const onRefresh = () => {
@@ -54,7 +57,9 @@ const onRefresh = () => {
     2500
   );
   try {
-    refreshMichapio();
+    chapios.from = 0;
+    chapios.to = 10;
+    chapios.refresh();
   } catch (error) {
     notify(
       {
@@ -88,6 +93,9 @@ const load = async $state => {
     4000
   );
   try {
+    chapios.from = chapios.to;
+    chapios.to = chapios.to + 10;
+    await loadData();
     $state.loaded();
     $state.complete();
   } catch (error) {
@@ -95,18 +103,25 @@ const load = async $state => {
   }
 };
 
-// Fetch michapio and get the refresh method provided by useAsyncData
-const {
-  pending,
-  data: michapio,
-  refresh: refreshMichapio,
-  error,
-} = await useAsyncData("michapio", async () => {
-  const { data } = await client
-    .from("michapio")
-    .select("*,likes(count),users!michapio_user_id_foreign(username, email)")
-    .range(count.from, count.to);
-  return data;
+const loadData = async () => {
+  // Fetch michapio and get the refresh method provided by useAsyncData
+  const { pending, data, refresh, error } = await useAsyncData("michapio", async () => {
+    const { data } = await client
+      .from("michapio")
+      .select("*,likes(count),users!michapio_user_id_foreign(username, email)")
+      .range(chapios.from, chapios.to);
+    return data;
+  });
+  chapios.loading = pending;
+  chapios.data.push(...data.value);
+  chapios.refresh = refresh;
+  chapios.error = error;
+};
+
+onBeforeMount(async () => {
+  // Fetch michapio and get the refresh method provided by useAsyncData
+  chapios.data = [];
+  await loadData();
 });
 
 // Once page is mounted, listen to changes on the `collaborators` table and refresh collaborators when receiving event
@@ -115,7 +130,7 @@ onMounted(() => {
   realtimeChannel = client
     .channel("public:michapio")
     .on("postgres_changes", { event: "*", schema: "public", table: "michapio" }, () =>
-      refreshMichapio()
+      chapios.refresh()
     );
   realtimeChannel.subscribe();
 });
@@ -153,7 +168,7 @@ onUnmounted(() => {
           <PullRefresh v-model="loading" @refresh="onRefresh">
             <ul v-auto-animate role="list" class="space-y-4">
               <li
-                v-for="chapio in chapios"
+                v-for="chapio in chapios.data"
                 :key="chapio.id"
                 class="rounded-lg bg-slate-50 px-4 py-6 shadow sm:p-6"
               >
@@ -166,7 +181,7 @@ onUnmounted(() => {
       </div>
       <!-- End -->
       <template #aside>
-        {{ michapio }}
+        {{ chapios.data }}
         <SideBar />
       </template>
     </NuxtLayout>

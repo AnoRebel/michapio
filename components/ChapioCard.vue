@@ -44,7 +44,11 @@ onMounted(() => {
   // Real time listener for new likes
   realtimeChannel = client
     .channel("public:likes")
-    .on("postgres_changes", { event: "*", schema: "public", table: "likes" }, () => refreshLikes());
+    .on(
+      "postgres_changes",
+      { event: "*", schema: "public", table: "likes", filter: `chapio_id=eq.${props.chapio.id}` },
+      () => refreshLikes()
+    );
   realtimeChannel.subscribe();
   likes.count = parseInt(_likes.value || props.chapio?.likes[0]?.count || 0);
 });
