@@ -18,9 +18,9 @@
 </template>
 
 <script setup lang="ts">
-const DEFAULT_HEAD_HEIGHT = 50;
+// const DEFAULT_HEAD_HEIGHT = 50;
 
-const getScrollTop = el => {
+const getScrollTop = (el: HTMLElement) => {
   const top = "scrollTop" in el ? el.scrollTop : el.pageYOffset;
   return Math.max(top, 0);
 };
@@ -52,7 +52,10 @@ const props = defineProps({
     type: String,
     default: "Loading...",
   },
-  pullDistance: [Number, String],
+  pullDistance: {
+    type: Number || String,
+    default: 50,
+  },
   modelValue: {
     type: Boolean,
     default: false,
@@ -66,7 +69,7 @@ const props = defineProps({
     default: 300,
   },
   headHeight: {
-    type: [Number, String],
+    type: Number || String,
     default: 50, // DEFAULT_HEAD_HEIGHT = 50
   },
 });

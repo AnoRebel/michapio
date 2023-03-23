@@ -53,7 +53,7 @@ onBeforeMount(async () => {
   });
   res.user = data;
   res.error = error;
-  res.loading = pending;
+  res.loading = pending.value;
 });
 
 const loading = ref(false);
@@ -78,24 +78,14 @@ const team = [
   // More people...
 ];
 
-// Fetch michapio and get the refresh method provided by useAsyncData
-const {
-  pending,
-  data: michapio,
-  refresh: refreshMichapio,
-  error,
-} = await useAsyncData(
-  "michapio",
-  async () => {
-    const { data } = await client
-      .from("michapio")
-      .select("*")
-      .eq("id", props.userId)
-      .range(info.from, info.to);
-    return data;
-  }
-  // { pick: ['title', 'description'] },
-);
+onMounted(async () => {
+  info.active = "Michapio";
+  info.from = 0;
+  info.to = 10;
+  // info.data = [];
+  // Fetch michapio and get the refresh method provided by useAsyncData
+  await loadData();
+});
 
 const onRefresh = () => {
   notify(
@@ -108,7 +98,7 @@ const onRefresh = () => {
     2500
   );
   try {
-    refreshMichapio();
+    info.refresh();
   } catch (error) {
     notify(
       {
@@ -142,6 +132,9 @@ const load = async $state => {
     4000
   );
   try {
+    info.from = info.to;
+    info.to = info.to + 10;
+    await loadData(info.active);
     $state.loaded();
     $state.complete();
   } catch (error) {
@@ -149,11 +142,8 @@ const load = async $state => {
   }
 };
 
-const switchTab = async (tab: { name: string; href: string; show: boolean }) => {
-  info.active = tab.name;
-  info.from = 0;
-  info.to = 10;
-  switch (tab.name) {
+const loadData = async (tab = "Michapio") => {
+  switch (tab) {
     case "Favourites": {
       // Fetch favourites and get the refresh method provided by useAsyncData
       const {
@@ -173,8 +163,9 @@ const switchTab = async (tab: { name: string; href: string; show: boolean }) => 
         }
         // { pick: ['title', 'description'] },
       );
-      info.loading = _pending;
-      info.data = _data;
+      info.loading = _pending.value;
+      // info.data = _data;
+      info.data.push(..._data.value);
       info.refresh = _refresh;
       info.error = _error;
       break;
@@ -198,8 +189,8 @@ const switchTab = async (tab: { name: string; href: string; show: boolean }) => 
         }
         // { pick: ['title', 'description'] },
       );
-      info.loading = _pending;
-      info.data = _data;
+      info.loading = _pending.value;
+      info.data.push(..._data.value);
       info.refresh = _refresh;
       info.error = _error;
       break;
@@ -223,12 +214,19 @@ const switchTab = async (tab: { name: string; href: string; show: boolean }) => 
         }
         // { pick: ['title', 'description'] },
       );
-      info.loading = _pending;
-      info.data = _data;
+      info.loading = _pending.value;
+      info.data.push(..._data.value);
       info.refresh = _refresh;
       info.error = _error;
     }
   }
+};
+
+const switchTab = async (tab: { name: string; href: string; show: boolean }) => {
+  info.active = tab.name;
+  info.from = 0;
+  info.to = 10;
+  await loadData(tab.name);
 };
 </script>
 
