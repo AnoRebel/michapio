@@ -158,9 +158,14 @@ const loadData = async (tab = "Michapio") => {
         "favourites",
         async () => {
           const { data } = await client
-            .from("favourites")
-            .select("*")
-            .eq("id", props.userId)
+            // .from("favourites")
+            // .select("*")
+            // .eq("user_id", props.userId)
+            .from("michapio")
+            .select("*,status:favourites!likes_chapio_id_foreign(status)")
+            // .select("*,status:favourites!inner(status)")
+            .eq("favourites.user_id", props.userId)
+            .eq("favourites.status", true)
             .range(info.from, info.to);
           return data;
         }
@@ -184,9 +189,14 @@ const loadData = async (tab = "Michapio") => {
         "likes",
         async () => {
           const { data } = await client
-            .from("likes")
-            .select("*")
-            .eq("id", props.userId)
+            // .from("likes")
+            // .select("*")
+            // .eq("user_id", props.userId)
+            .from("michapio")
+            .select("*,status:likes!likes_chapio_id_foreign(status)")
+            // .select("*,status:likes!outer(status)")
+            .eq("likes.user_id", props.userId)
+            .eq("likes.status", true)
             .range(info.from, info.to);
           return data;
         }
@@ -210,7 +220,7 @@ const loadData = async (tab = "Michapio") => {
         async () => {
           const { count, data } = await client
             .from("michapio")
-            .select("*", { count: "exact", head: true })
+            .select("*", { count: "exact" })
             .eq("id", props.userId)
             .range(info.from, info.to);
           return { count, data };
