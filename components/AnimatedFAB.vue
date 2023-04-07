@@ -22,7 +22,7 @@ const open = ref(false);
     @apply flex h-10 w-10 items-center justify-center rounded-full bg-slate-700 text-xl text-slate-200;
   }
   &-item {
-    @apply absolute top-[20%] left-[20%] z-[-1];
+    @apply absolute left-[20%] top-[20%] z-[-1];
     .item {
       @apply absolute flex h-8 w-8 items-center justify-center rounded-full text-lg text-slate-200 opacity-0;
     }

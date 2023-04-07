@@ -13,7 +13,7 @@ const toggle = () => {
 
 <template>
   <div
-    class="animate__animated animate__fadeIn absolute top-[4rem] right-[5rem] z-10 transform rounded-lg bg-slate-700 shadow-lg transition hover:scale-110 active:scale-95"
+    class="animate__animated animate__fadeIn absolute right-[5rem] top-[4rem] z-10 transform rounded-lg bg-slate-700 shadow-lg transition hover:scale-110 active:scale-95"
   >
     <button class="cursor-pointer p-3" @click="toggle">
       <PlusIcon

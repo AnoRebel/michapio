@@ -2,7 +2,7 @@
   <div
     class="min-w-screen relative flex min-h-screen items-center justify-center bg-slate-900 font-sans"
   >
-    <div class="animate__animated animate__zoomIn container mx-auto py-10 px-4">
+    <div class="animate__animated animate__zoomIn container mx-auto px-4 py-10">
       <h1>{{ error.message }}</h1>
       There was an error 😱
 

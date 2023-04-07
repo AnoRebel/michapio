@@ -6,7 +6,7 @@
           src="/images/404.svg"
           class="animate__animated animate__fadeInDown my-7 h-full w-full rounded object-cover"
         />
-        <p class="animate__animated animate__fadeInUp mt-6 mb-10 text-white">
+        <p class="animate__animated animate__fadeInUp mb-10 mt-6 text-white">
           It seems
           <code class="border-1px rounded bg-slate-300 p-0.5 font-bold text-slate-900">{{
             slugs($route.params.slug)

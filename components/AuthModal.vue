@@ -21,7 +21,7 @@ const { isActiveForm } = storeToRefs(useForms());
   <TransitionRoot as="template" :show="isOpen && isActiveModal('auth')">
     <Dialog as="div" class="fixed inset-0 z-[70] overflow-y-auto" @close="setAuthState(false)">
       <div
-        class="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0"
+        class="flex min-h-screen items-end justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0"
       >
         <TransitionChild
           as="template"
@@ -54,7 +54,7 @@ const { isActiveForm } = storeToRefs(useForms());
           leave="animate__animated animate__bounceOut duration-200"
         >
           <div
-            class="inline-block transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"
+            class="inline-block transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"
           >
             <div>
               <div class="mt-3 text-center sm:mt-5">

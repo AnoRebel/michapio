@@ -309,7 +309,7 @@ const switchTab = async (tab: { name: string; href: string; show: boolean }) => 
                               </div>
                               <p class="text-sm text-gray-500">{{ info.count }}</p>
                             </div>
-                            <div class="mt-5 flex flex-wrap space-y-3 sm:space-y-0 sm:space-x-3">
+                            <div class="mt-5 flex flex-wrap space-y-3 sm:space-x-3 sm:space-y-0">
                               <button
                                 type="button"
                                 class="inline-flex w-full flex-shrink-0 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:flex-1"
@@ -329,7 +329,7 @@ const switchTab = async (tab: { name: string; href: string; show: boolean }) => 
                         </div>
                       </div>
                     </div>
-                    <div class="px-4 pt-5 pb-5 sm:px-0 sm:pt-0">
+                    <div class="px-4 pb-5 pt-5 sm:px-0 sm:pt-0">
                       <div class="border-b border-gray-200">
                         <div class="px-6">
                           <nav class="-mb-px flex space-x-6" x-descriptions="Tab component">
@@ -353,7 +353,7 @@ const switchTab = async (tab: { name: string; href: string; show: boolean }) => 
                       <PullRefresh v-model="loading" @refresh="onRefresh">
                         <ul role="list" class="flex-1 divide-y divide-gray-200 overflow-y-auto">
                           <li v-for="person in team" :key="person.handle">
-                            <div class="group relative flex items-center py-6 px-5">
+                            <div class="group relative flex items-center px-5 py-6">
                               <a :href="person.href" class="-m-1 block flex-1 p-1">
                                 <div
                                   class="absolute inset-0 group-hover:bg-gray-50"
@@ -369,7 +369,7 @@ const switchTab = async (tab: { name: string; href: string; show: boolean }) => 
                                     <span
                                       :class="[
                                         person.status === 'online' ? 'bg-green-400' : 'bg-gray-300',
-                                        'absolute top-0 right-0 block h-2.5 w-2.5 rounded-full ring-2 ring-white',
+                                        'absolute right-0 top-0 block h-2.5 w-2.5 rounded-full ring-2 ring-white',
                                       ]"
                                       aria-hidden="true"
                                     />
@@ -411,7 +411,7 @@ const switchTab = async (tab: { name: string; href: string; show: boolean }) => 
                                   leave-to-class="transform opacity-0 scale-95"
                                 >
                                   <MenuItems
-                                    class="absolute top-0 right-9 z-10 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                    class="absolute right-9 top-0 z-10 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                   >
                                     <div class="py-1">
                                       <MenuItem v-slot="{ active }">

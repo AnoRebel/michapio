@@ -24,7 +24,7 @@ defineEmits(["close"]);
   <TransitionRoot as="template" :show="open">
     <Dialog as="div" class="fixed inset-0 z-[70] overflow-y-auto" @close="$emit('close')">
       <div
-        class="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0"
+        class="flex min-h-screen items-end justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0"
       >
         <TransitionChild
           as="template"

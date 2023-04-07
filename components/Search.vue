@@ -133,7 +133,7 @@ onBeforeUnmount(() => {
                 <li class="p-2">
                   <h2
                     v-if="query === '' && recent.length > 0"
-                    class="mt-4 mb-2 px-3 text-xs font-semibold text-slate-800"
+                    class="mb-2 mt-4 px-3 text-xs font-semibold text-slate-800"
                   >
                     Recent searches
                   </h2>
@@ -184,7 +184,7 @@ onBeforeUnmount(() => {
 
               <div
                 v-if="query !== '' && searched.length === 0"
-                class="py-14 px-6 text-center text-sm sm:px-14"
+                class="px-6 py-14 text-center text-sm sm:px-14"
               >
                 <Icon
                   name="heroicons:exclamation-circle"

@@ -117,7 +117,7 @@ const user = useSupabaseUser();
         <div
           class="divide-y-2 divide-slate-100 rounded-lg bg-slate-50 shadow-lg ring-1 ring-black ring-opacity-5"
         >
-          <div class="px-5 pt-5 pb-6">
+          <div class="px-5 pb-6 pt-5">
             <div class="flex items-center justify-between">
               <div>
                 <!-- <span class="w-auto">Home</span> -->
@@ -161,7 +161,7 @@ const user = useSupabaseUser();
               </nav>
             </div>
           </div>
-          <div class="space-y-6 py-6 px-5">
+          <div class="space-y-6 px-5 py-6">
             <div v-if="isLoggedIn()">
               <NuxtLink
                 class="flex w-full cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-slate-50 shadow-sm hover:bg-indigo-700"

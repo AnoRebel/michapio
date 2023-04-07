@@ -42,7 +42,7 @@ const submit = handleSubmit((values, { resetForm }) => {
         v-model="email"
         type="email"
         name="email"
-        class="block w-full border-0 border-b-2 border-slate-800/70 bg-transparent py-2 px-9 text-slate-800 placeholder:text-sm placeholder:italic placeholder:text-slate-500 focus:border-slate-300 focus:ring-0"
+        class="block w-full border-0 border-b-2 border-slate-800/70 bg-transparent px-9 py-2 text-slate-800 placeholder:text-sm placeholder:italic placeholder:text-slate-500 focus:border-slate-300 focus:ring-0"
         :class="{
           'border-green-500/70': emailMeta.dirty && emailMeta.valid,
           'border-red-500/70': emailMeta.dirty && !emailMeta.valid,

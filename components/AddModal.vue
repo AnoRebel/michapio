@@ -59,7 +59,7 @@ const submit = handleSubmit((values, { resetForm }) => {
   <TransitionRoot as="template" :show="isOpen && isActiveModal('add')">
     <Dialog as="div" class="fixed inset-0 z-[70] overflow-y-auto" @close="setAuthState(false)">
       <div
-        class="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0"
+        class="flex min-h-screen items-end justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0"
       >
         <TransitionChild
           as="template"
@@ -92,7 +92,7 @@ const submit = handleSubmit((values, { resetForm }) => {
           leave="animate__animated animate__bounceOut duration-200"
         >
           <div
-            class="inline-block transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"
+            class="inline-block transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"
           >
             <div>
               <DialogTitle as="h3" class="text-lg font-medium leading-6 text-slate-900">
@@ -189,7 +189,7 @@ const submit = handleSubmit((values, { resetForm }) => {
                 <div class="my-2">
                   <button
                     type="submit"
-                    class="float-right inline-flex items-center rounded bg-indigo-800 py-2 px-5 text-slate-100 shadow hover:bg-indigo-700 active:scale-90"
+                    class="float-right inline-flex items-center rounded bg-indigo-800 px-5 py-2 text-slate-100 shadow hover:bg-indigo-700 active:scale-90"
                     :disabled="isSubmitting"
                   >
                     <svg

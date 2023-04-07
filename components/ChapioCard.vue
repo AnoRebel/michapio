@@ -239,7 +239,7 @@ onUnmounted(() => {
           <span class="sr-only">Share</span>
         </button>
       </div>
-      <div class="space-y-6 rounded-lg bg-gray-100 py-2 px-6 shadow-md">
+      <div class="space-y-6 rounded-lg bg-gray-100 px-6 py-2 shadow-md">
         <div class="flex items-center">
           <div>
             <span class="mb-1 font-semibold text-gray-800">They said: &nbsp;</span>
