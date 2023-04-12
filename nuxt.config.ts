@@ -151,7 +151,9 @@ export default defineNuxtConfig({
     viewTransition: true,
     renderJsonPayloads: true,
   },
-  devtools: process.env.NODE_ENV === "development",
+  devtools: {
+    enabled: process.env.NODE_ENV === "development",
+  },
   typescript: {
     shim: false,
     strict: false,
