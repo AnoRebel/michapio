@@ -14,3 +14,15 @@ node_modules
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+### yarn ###
+# https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+
+# if you are NOT using Zero-installs, then:
+# comment the following lines
+# !.yarn/cache
+
+# and uncomment the following lines
+# .pnp.*
+
+# End of https://www.toptal.com/developers/gitignore/api/yarn

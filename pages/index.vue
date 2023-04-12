@@ -36,7 +36,7 @@ const chapios = reactive({
   from: 0,
   to: 10,
   loading: false,
-  refresh: () => {},
+  refresh: async () => {},
   error: {},
 });
 
@@ -82,7 +82,7 @@ const onRefresh = () => {
   loading.value = false;
 };
 
-const load = async $state => {
+const load = async ($state: { complete: () => void; loaded: () => void; error: () => void }) => {
   notify(
     {
       group: "messages",
@@ -95,9 +95,12 @@ const load = async $state => {
   try {
     chapios.from = chapios.to;
     chapios.to = chapios.to + 10;
-    await loadData();
-    $state.loaded();
-    $state.complete();
+    if (chapios.data.length < 4) $state.complete();
+    else {
+      const data = await loadData();
+      chapios.data.push(...data.value);
+      $state.loaded();
+    }
   } catch (error) {
     $state.error();
   }
@@ -113,15 +116,17 @@ const loadData = async () => {
     return data;
   });
   chapios.loading = pending;
-  chapios.data.push(...data.value);
+  // chapios.data.push(...data.value);
   chapios.refresh = refresh;
   chapios.error = error;
+  return data;
 };
 
 onBeforeMount(async () => {
   // Fetch michapio and get the refresh method provided by useAsyncData
   chapios.data = [];
-  await loadData();
+  const data = await loadData();
+  chapios.data.push(...data.value);
 });
 
 // Once page is mounted, listen to changes on the `collaborators` table and refresh collaborators when receiving event
@@ -133,6 +138,7 @@ onMounted(() => {
       chapios.refresh()
     );
   realtimeChannel.subscribe();
+  console.info(chapios.data);
 });
 
 const selected = reactive({
@@ -188,3 +194,9 @@ onUnmounted(() => {
     <ChapioModal :open="selected.show" :chapio="selected.chapio" @close="selected.show = false" />
   </div>
 </template>
+
+<style lang="scss">
+.loader {
+  height: 1px;
+}
+</style>

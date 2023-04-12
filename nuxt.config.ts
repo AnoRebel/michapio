@@ -1,7 +1,7 @@
 import fs from "fs";
 import { fileURLToPath } from "url";
 
-const locales = fs.readdirSync("locales").map((file) => {
+const locales = fs.readdirSync("locales").map(file => {
   return { code: file.replace(".json", ""), file };
 });
 
@@ -79,11 +79,7 @@ export default defineNuxtConfig({
     // },
     transpile: ["@heroicons/vue"],
   },
-  css: [
-    "animate.css/animate.min.css",
-    "v3-infinite-loading/lib/style.css",
-    "@/assets/main.scss",
-  ],
+  css: ["animate.css/animate.min.css", "v3-infinite-loading/lib/style.css", "@/assets/main.scss"],
   telemetry: false,
   // image: {
   //   dir: "assets/images", // "static" // default
@@ -127,6 +123,15 @@ export default defineNuxtConfig({
     preference: "system", // default value of $colorMode.preference
     fallback: "dark",
   },
+  // For local projects, you do not need any configuration to try it out.
+  security: {
+    headers: {
+      crossOriginEmbedderPolicy: {
+        value: process.env.NODE_ENV === "development" ? "unsafe-none" : "require-corp",
+        route: "/**",
+      },
+    },
+  },
   runtimeConfig: {
     public: {
       BASE_URL: process.env.NUXT_PUBLIC_BASE_URL,
@@ -146,25 +151,15 @@ export default defineNuxtConfig({
     viewTransition: true,
     renderJsonPayloads: true,
   },
-  devtools: true,
+  devtools: process.env.NODE_ENV === "development",
   typescript: {
     shim: false,
     strict: false,
     tsConfig: {
       compilerOptions: {
-        types: [
-          "@vueuse/nuxt",
-          "@nuxtjs/i18n",
-          "@pinia/nuxt",
-          "@intlify/nuxt3",
-        ],
+        types: ["@vueuse/nuxt", "@nuxtjs/i18n", "@pinia/nuxt", "@intlify/nuxt3"],
       },
-      include: [
-        "server/**/*.{ts,js}",
-        "src/**/*.{ts,js}",
-        "src/**/*.d.ts",
-        "src/**/*.vue",
-      ],
+      include: ["server/**/*.{ts,js}", "src/**/*.{ts,js}", "src/**/*.d.ts", "src/**/*.vue"],
     },
   },
 });
