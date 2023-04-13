@@ -7,6 +7,9 @@ definePageMeta({
   layout: false,
 });
 
+const tempChapios = reactive({
+  data: ref([]),
+});
 const chapios = reactive({
   data: [
     {
@@ -35,7 +38,7 @@ const chapios = reactive({
   ],
   from: 0,
   to: 10,
-  loading: false,
+  loading: ref(false),
   refresh: async () => {},
   error: {},
 });
@@ -115,7 +118,8 @@ const loadData = async () => {
     return data;
   });
   chapios.loading = pending;
-  chapios.data.push(...data.value);
+  tempChapios.data = data;
+  // chapios.data.push(...data);
   chapios.refresh = refresh;
   chapios.error = error;
 };
@@ -136,6 +140,13 @@ onMounted(() => {
     );
   realtimeChannel.subscribe();
 });
+
+watch(
+  () => chapios.loading,
+  val => {
+    if (val) chapios.data.push(...tempChapios.data);
+  }
+);
 
 const selected = reactive({
   chapio: {},
