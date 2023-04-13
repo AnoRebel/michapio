@@ -111,7 +111,7 @@ onBeforeUnmount(() => {
           <DialogPanel
             class="mx-auto max-w-xl transform divide-y divide-slate-500/10 overflow-hidden rounded-xl bg-white/80 shadow-2xl ring-1 ring-black ring-opacity-5 backdrop-blur backdrop-filter transition-all"
           >
-            <Combobox @update:modelValue="onSelect">
+            <Combobox @update:model-value="onSelect">
               <div class="relative">
                 <Icon
                   name="heroicons:magnifying-glass-solid"

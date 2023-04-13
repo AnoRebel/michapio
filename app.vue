@@ -3,12 +3,12 @@ const { $pinia } = useNuxtApp();
 
 const piniaLogger = ({ store }) => {
   store.$subscribe((mutation, _) => {
-    // const mut = `{"store": ${mutation.storeId}, "type": ${mutation.type}, "payload": ${mutation.payload}}`;
-    // console.info(JSON.parse(JSON.stringify(mut)));
+    const mut = `{"store": ${mutation.storeId}, "type": ${mutation.type}, "payload": ${mutation.payload}}`;
+    console.info(JSON.parse(JSON.stringify(mut)));
   });
   store.$onAction(action => {
-    // const act = `{"store": ${action.store.$id}, "action": ${action.name}, "payload": ${action.args}}`;
-    // console.info(JSON.parse(JSON.stringify(act)));
+    const act = `{"store": ${action.store.$id}, "action": ${action.name}, "payload": ${action.args}}`;
+    console.info(JSON.parse(JSON.stringify(act)));
   });
 };
 

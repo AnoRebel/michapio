@@ -2,7 +2,7 @@
 import {
   Dialog,
   DialogOverlay,
-  DialogTitle,
+  // DialogTitle,
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";

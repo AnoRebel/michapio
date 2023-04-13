@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { PlusIcon } from "@heroicons/vue/24/solid";
-import { storeToRefs } from "pinia";
-import { useModals } from "@/stores/modals";
+// import { storeToRefs } from "pinia";
+// import { useModals } from "@/stores/modals";
 
-const modal = useModals();
+// const modal = useModals();
 const isOpen = ref(false);
 const toggle = () => {
   // open.value = !open.value;
-  console.log("Toggled");
+  // console.log("Toggled");
 };
 </script>
 

@@ -1,9 +1,9 @@
-import dayjs from "dayjs";
+import dayjs, { extend } from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime.js";
 import { defineNuxtPlugin } from "#app";
 
 export default defineNuxtPlugin(() => {
-  dayjs.extend(relativeTime);
+  extend(relativeTime);
   return { provide: { dayjs } };
 });
 

@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { useField, useForm } from "vee-validate";
 import { string } from "yup";

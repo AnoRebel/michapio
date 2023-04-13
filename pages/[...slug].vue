@@ -31,14 +31,14 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: "user",
+  // layout: "user",
   title: "Not Found",
   // pageTransition: "moveUp",
   // layoutTransition: "moveUp",
 });
 const slugs = slugs => {
   let str = "/";
-  slugs.forEach(slug => (str = str == "/" ? `${str}${slug}` : `${str}/${slug}`));
+  slugs.forEach(slug => (str = str === "/" ? `${str}${slug}` : `${str}/${slug}`));
   return str;
 };
 </script>

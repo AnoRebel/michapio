@@ -227,9 +227,9 @@ const loadData = async (tab = "Michapio") => {
         }
         // { pick: ['title', 'description'] },
       );
-      info.count = _data.value.count;
+      info.count = _data.value?.count;
       info.loading = _pending;
-      info.data.push(..._data.value.data);
+      info.data.push(..._data.value?.data);
       info.refresh = _refresh;
       info.error = _error;
     }

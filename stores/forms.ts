@@ -1,6 +1,6 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
 import { useModals } from "@/stores/modals";
-import { Database } from "@/types/supabase.d";
+// import { Database } from "@/types/supabase.d";
 
 export const useForms = defineStore("forms", {
   state: () => ({
@@ -9,7 +9,7 @@ export const useForms = defineStore("forms", {
   actions: {
     async submitForm(form: String, data: Object) {
       const auth = useAuth();
-      const client = useSupabaseClient<Database>();
+      // const client = useSupabaseClient<Database>();
       const modals = useModals();
       const notify = useNotify();
       switch (form) {
@@ -66,7 +66,7 @@ export const useForms = defineStore("forms", {
           break;
         case "forgot":
           try {
-            const resMail = await auth.resetEmail(data as any);
+            await auth.resetEmail(data as any);
             // const { data } = await $fetch("/api/auth/forgot", { method: "POST", body: {} }).catch(error => error.data);
             modals.setAuthState(false);
           } catch (error) {

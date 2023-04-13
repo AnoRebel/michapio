@@ -97,8 +97,7 @@ const load = async ($state: { complete: () => void; loaded: () => void; error: (
     chapios.to = chapios.to + 10;
     if (chapios.data.length < 4) $state.complete();
     else {
-      const data = await loadData();
-      chapios.data.push(...data.value);
+      await loadData();
       $state.loaded();
     }
   } catch (error) {
@@ -116,17 +115,15 @@ const loadData = async () => {
     return data;
   });
   chapios.loading = pending;
-  // chapios.data.push(...data.value);
+  chapios.data.push(...data.value);
   chapios.refresh = refresh;
   chapios.error = error;
-  return data;
 };
 
 onBeforeMount(async () => {
   // Fetch michapio and get the refresh method provided by useAsyncData
   chapios.data = [];
-  const data = await loadData();
-  chapios.data.push(...data.value);
+  await loadData();
 });
 
 // Once page is mounted, listen to changes on the `collaborators` table and refresh collaborators when receiving event
@@ -138,7 +135,6 @@ onMounted(() => {
       chapios.refresh()
     );
   realtimeChannel.subscribe();
-  console.info(chapios.data);
 });
 
 const selected = reactive({
@@ -172,7 +168,7 @@ onUnmounted(() => {
       <div class="h-full w-full px-4 sm:px-0">
         <div class="rounded-xl bg-slate-800 px-3 focus:outline-none">
           <PullRefresh v-model="loading" @refresh="onRefresh">
-            <ul v-auto-animate role="list" class="space-y-4">
+            <ul v-if="!chapios.loading" v-auto-animate role="list" class="space-y-4">
               <li
                 v-for="chapio in chapios.data"
                 :key="chapio.id"
@@ -182,6 +178,7 @@ onUnmounted(() => {
               </li>
               <InfiniteLoading class="loader" @infinite="load" />
             </ul>
+            <div v-else>Loading...</div>
           </PullRefresh>
         </div>
       </div>

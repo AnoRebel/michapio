@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import type { Ref } from "vue";
 import type { Handler } from "mitt";
-import { TransitionGroup } from "vue";
+// import { TransitionGroup } from "vue";
 import { inject, computed, onMounted, ref, reactive } from "#imports";
 import type { NotificationContext, Notification, AddSignature } from "@/notiwind.d";
 
@@ -67,7 +67,7 @@ const add = ({ notification, timeout }: AddSignature) => {
   const DEFAULT_TIMEOUT = 3000;
 
   if (!notification) {
-    console.error({ notification, timeout });
+    // console.error({ notification, timeout });
     throw new Error("No Notification sent");
   }
 

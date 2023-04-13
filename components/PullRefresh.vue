@@ -6,7 +6,7 @@
       @touchstart="onTouchStart"
       @touchmove="onTouchMove"
       @touchend="onTouchEnd"
-      @touchcancel="onTouchend"
+      @touchcancel="onTouchEnd"
     >
       <div :style="getHeadStyle" class="pull-refresh__head">
         <div v-if="TEXT_STATUS.includes(status)" class="pull-text">{{ getStatusText() }}</div>
@@ -220,7 +220,8 @@ watch(
   }
 );
 
-const { status, distance, duration } = toRefs(state);
+// const { status, distance, duration } = toRefs(state);
+const { status } = toRefs(state);
 </script>
 
 <style lang="scss">

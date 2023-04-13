@@ -186,14 +186,14 @@ const share = async (data: { title: string; text: string; url: string }) => {
   }
 };
 
-const modal = hash => router.replace({ hash: `#${hash}` });
+// const modal = hash => router.replace({ hash: `#${hash}` });
 const profile = (id: number) => {
   sbar.user_id = id;
   sbar.open = true;
 };
 
 // Don't forget to unsubscribe when user left the page
-onUnmounted(() => {
+onBeforeUnmount(() => {
   client.removeChannel(realtimeChannel);
 });
 </script>
